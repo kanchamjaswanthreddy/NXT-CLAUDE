@@ -1,9 +1,12 @@
 'use client'
 import Link from 'next/link'
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
-import { ArrowRight, ShieldCheck, MapPin, BadgeCheck, TrendingUp } from 'lucide-react'
+import Image from 'next/image'
+import { ArrowRight, ShieldCheck, MapPin, BadgeCheck } from 'lucide-react'
 import { useRef, type MouseEvent } from 'react'
-import Illo3D from './Illo3D'
+
+/** Set to a file in /public (for example '/videos/hero.mp4') to play a video behind the hero instead of the photo. */
+const HERO_VIDEO = ''
 
 const ease = [0.22, 0.61, 0.36, 1] as const
 const up = (d: number) => ({ initial: { opacity: 0, y: 26 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.8, delay: d, ease } })
@@ -17,8 +20,8 @@ export default function HeroV6() {
   const my = useMotionValue(0)
   const sx = useSpring(mx, { stiffness: 80, damping: 16 })
   const sy = useSpring(my, { stiffness: 80, damping: 16 })
-  const farX = useTransform(sx, (v) => v * 26)
-  const farY = useTransform(sy, (v) => v * 26)
+  const farX = useTransform(sx, (v) => v * 18)
+  const farY = useTransform(sy, (v) => v * 18)
   const nearX = useTransform(sx, (v) => v * -44)
   const nearY = useTransform(sy, (v) => v * -44)
   const move = (e: MouseEvent<HTMLDivElement>) => {
@@ -35,7 +38,10 @@ export default function HeroV6() {
 
       <div className="container pb-16 md:pb-24">
         <motion.div onMouseMove={move} style={{ scale: stageScale }} className="stage relative isolate -mt-2 grid min-h-[600px] grid-cols-1 items-end overflow-hidden rounded-[36px] border border-white/10 lg:grid-cols-[1.1fr_1fr]">
-          <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" />
+          <motion.div aria-hidden="true" style={{ x: farX, y: farY, scale: 1.08 }} className="absolute inset-0 -z-20">
+            {HERO_VIDEO ? <video src={HERO_VIDEO} poster="/images/family-advisor.png" autoPlay muted loop playsInline className="h-full w-full object-cover" /> : <Image src="/images/family-advisor.png" alt="" fill priority sizes="100vw" className="object-cover" />}
+          </motion.div>
+          <div aria-hidden="true" className="photo-fade absolute inset-0 -z-10" />
           <div className="relative p-7 pt-10 md:p-12 lg:p-14">
             <motion.p {...up(0.1)} className="label-sm mb-6">Retirement &amp; protection planning</motion.p>
             <motion.h1 {...up(0.18)} className="display text-white md:text-[3.6rem]">Income you can&rsquo;t <span className="text-sunrise">outlive.</span> Care you can <span className="text-sunrise">choose.</span> A legacy that <span className="text-sunrise">lands.</span></motion.h1>
@@ -45,12 +51,11 @@ export default function HeroV6() {
               <Link href="/solutions" className="btn btn-ghost">Explore solutions</Link>
             </motion.div>
           </div>
-          <div className="relative mx-auto w-full max-w-[520px] p-6 lg:self-center lg:p-10">
-            <motion.div style={{ x: farX, y: farY }}><Illo3D icon={TrendingUp} /></motion.div>
-            <motion.div style={{ x: nearX, y: nearY }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.6, ease }} className="glass-card absolute left-0 top-[12%] w-[200px] p-4 md:w-[214px]">
+          <div className="relative flex flex-col items-end gap-4 p-7 md:p-12 lg:self-end lg:p-14">
+            <motion.div style={{ x: nearX, y: nearY }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.6, ease }} className="glass-card w-[214px] p-4">
               <p className="text-[11px] font-extrabold uppercase tracking-[.1em] !text-sunrise">Guaranteed income</p><p className="mt-1 font-display text-3xl font-extrabold !text-white">$4,850<span className="text-base font-semibold text-platinum">/mo</span></p><p className="mt-1 text-xs">Illustrative lifetime payout</p>
             </motion.div>
-            <motion.div style={{ x: nearX, y: nearY }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.75, ease }} className="glass-card absolute bottom-[10%] right-0 w-[220px] p-4 md:w-[236px]">
+            <motion.div style={{ x: nearX, y: nearY }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.75, ease }} className="glass-card w-[236px] p-4">
               <div className="flex items-center gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sunrise text-midnight"><ShieldCheck size={20} /></span><div><p className="text-sm font-bold !text-white">Care plan funded</p><p className="text-xs">Hybrid LTC · $300k benefit</p></div></div>
             </motion.div>
           </div>

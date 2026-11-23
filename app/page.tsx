@@ -5,7 +5,6 @@ import { ArrowRight, ArrowUpRight, Check, X, Scale, Landmark, Users, PhoneCall }
 import HeroV6 from '@/components/HeroV6'
 import CrossBands from '@/components/CrossBands'
 import StartHere from '@/components/StartHere'
-import Illo3D from '@/components/Illo3D'
 import SolutionCards from '@/components/SolutionCards'
 import CarrierWall from '@/components/CarrierWall'
 import Faq from '@/components/Faq'
@@ -59,7 +58,7 @@ export default function Home() {
         <div aria-hidden="true" className="glow -left-40 top-20 h-[460px] w-[460px] bg-sunrise/15" />
         <div className="container grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
           <Reveal className="relative">
-            <div className="stage relative isolate overflow-hidden rounded-[36px] p-8 md:p-12"><div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" /><Illo3D icon={Users} className="mx-auto w-[82%]" /></div>
+            <div className="relative aspect-[5/5] overflow-hidden rounded-[36px] shadow-lift"><Image src="/images/advisors.png" alt="NXT advisors in a planning meeting" fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" /></div>
             <div className="card absolute -bottom-6 -right-2 w-[260px] rounded-2xl p-5 shadow-lift md:-right-8"><p className="label-sm">Your first meeting</p><p className="mt-1 font-display text-xl font-semibold text-navy">45 minutes. No products. Just where you stand.</p></div>
           </Reveal>
           <div>
