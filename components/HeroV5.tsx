@@ -29,7 +29,7 @@ export default function HeroV5() {
   return (
     <section ref={ref} className="on-dark relative isolate overflow-hidden bg-midnight pt-[84px]">
       <motion.div aria-hidden="true" style={{ y: yWord }} className="outline-text pointer-events-none absolute -right-6 top-24 -z-10 select-none whitespace-nowrap font-display text-[clamp(13rem,34vw,32rem)] font-extrabold leading-[.8] tracking-[-.06em]">NXT</motion.div>
-      <Rings className="pointer-events-none absolute -bottom-72 -left-64 -z-10 h-[640px] w-[640px] text-sunrise/40" />
+      <Rings className="pointer-events-none absolute -bottom-80 -left-72 -z-10 hidden h-[640px] w-[640px] text-sunrise/30 lg:block" />
 
       <div className="container grid grid-cols-1 items-center gap-16 pb-24 pt-14 md:pt-20 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:pb-32">
         <div>

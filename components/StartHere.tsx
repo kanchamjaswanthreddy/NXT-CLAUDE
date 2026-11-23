@@ -22,7 +22,8 @@ export default function StartHere() {
     <section aria-labelledby="start-here" className="pb-20 md:pb-28">
       <div className="container">
         <Reveal className="on-dark relative isolate grid grid-cols-1 items-center gap-12 overflow-hidden rounded-[32px] bg-navy p-8 md:p-14 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:p-20">
-          <div aria-hidden="true" className="arch absolute -right-10 -top-24 -z-10 h-[340px] w-[260px] border-2 border-sunrise/50" />
+          <div aria-hidden="true" className="absolute -right-28 -top-36 -z-10 hidden h-[380px] w-[380px] rounded-full border-2 border-sunrise/50 md:block" />
+          <div aria-hidden="true" className="absolute -right-12 -top-20 -z-10 hidden h-[250px] w-[250px] rounded-full border-2 border-dashed border-sunrise/40 md:block" />
           <div>
             <p className="label-sm mb-6">Start here</p>
             <h2 id="start-here" className="display text-white">Where are you <span className="text-sunrise">right now?</span></h2>
