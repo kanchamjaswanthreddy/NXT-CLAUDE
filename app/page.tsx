@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, Check, X, Scale, Landmark, Users, PhoneCall } from 'lucide-react'
-import HeroV5 from '@/components/HeroV5'
+import HeroV6 from '@/components/HeroV6'
 import CrossBands from '@/components/CrossBands'
 import StartHere from '@/components/StartHere'
-import ShapedPhoto from '@/components/ShapedPhoto'
+import Illo3D from '@/components/Illo3D'
 import SolutionCards from '@/components/SolutionCards'
 import CarrierWall from '@/components/CarrierWall'
 import Faq from '@/components/Faq'
@@ -39,26 +39,27 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
-      <HeroV5 />
+      <HeroV6 />
+
+      <CrossBands />
 
       {/* STATS */}
-      <section className="bg-sunrise text-midnight">
-        <Stagger as="ul" className="container grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-4 md:py-14">
+      <section className="on-dark bg-midnight pb-20 md:pb-28">
+        <Stagger as="ul" className="container grid grid-cols-2 gap-4 md:grid-cols-4">
           {STATS.map(([Icon, v, suf, l]) => (
-            <Item as="li" key={l} className="border-l-2 border-midnight/25 pl-5"><Icon size={22} aria-hidden="true" /><p className="mt-3 font-display text-5xl font-extrabold leading-none tracking-[-.04em] md:text-7xl"><Counter value={v} suffix={suf} /></p><p className="mt-2 text-sm font-semibold">{l}</p></Item>
+            <Item as="li" key={l} className="glass-card p-6 md:p-8"><span className="flex h-11 w-11 items-center justify-center rounded-full bg-sunrise/15 text-sunrise"><Icon size={20} aria-hidden="true" /></span><p className="mt-5 font-display text-5xl font-extrabold leading-none tracking-[-.04em] !text-white md:text-6xl"><Counter value={v} suffix={suf} /></p><p className="mt-2 text-sm font-semibold">{l}</p></Item>
           ))}
         </Stagger>
       </section>
 
-      <CrossBands />
-      <StartHere />
+      <div className="pt-20 md:pt-28"><StartHere /></div>
 
       {/* BRING YOUR PLAN TO LIFE */}
       <section className="relative overflow-hidden pb-20 md:pb-28">
         <div aria-hidden="true" className="glow -left-40 top-20 h-[460px] w-[460px] bg-sunrise/15" />
         <div className="container grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
           <Reveal className="relative">
-            <ShapedPhoto src="/images/advisors.png" alt="NXT advisors in a planning meeting" shape="leafR" sizes="(min-width:1024px) 45vw, 100vw" className="mr-4" />
+            <div className="stage relative isolate overflow-hidden rounded-[36px] p-8 md:p-12"><div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" /><Illo3D icon={Users} className="mx-auto w-[82%]" /></div>
             <div className="card absolute -bottom-6 -right-2 w-[260px] rounded-2xl p-5 shadow-lift md:-right-8"><p className="label-sm">Your first meeting</p><p className="mt-1 font-display text-xl font-semibold text-navy">45 minutes. No products. Just where you stand.</p></div>
           </Reveal>
           <div>
@@ -73,7 +74,7 @@ export default function Home() {
       {/* SOLUTIONS */}
       <section className="section bg-stone">
         <div className="container">
-          <Reveal className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div className="max-w-[640px]"><p className="label-sm mb-5">Five solutions</p><h2 className="display">Everything we do fits on <span className="text-gold">one hand.</span></h2></div><Link href="/solutions" className="link self-start">All five, in detail <ArrowRight size={16} /></Link></Reveal>
+          <Reveal className="mx-auto mb-14 max-w-[900px] text-center"><p className="label-sm mb-5">Five solutions</p><h2 className="display-xl">Everything we do fits on <span className="text-gold">one hand.</span></h2><Link href="/solutions" className="link mt-6">All five, in detail <ArrowRight size={16} /></Link></Reveal>
           <SolutionCards />
         </div>
       </section>
@@ -98,9 +99,9 @@ export default function Home() {
               <h3 className="text-lg font-bold !text-platinum">A captive agent</h3>
               <ul className="mt-6 divide-y divide-white/10 text-[17px] text-platinum">{['Recommends from one company\u2019s products', 'Works toward a sales quota', 'Starts the conversation with the product'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10"><X size={13} strokeWidth={3} /></span>{t}</li>)}</ul>
             </Item>
-            <Item className="rounded-[28px] bg-sunrise p-8 text-midnight shadow-lift md:p-10 lg:-rotate-1">
-              <h3 className="text-lg font-extrabold !text-midnight">NXT Financial Group</h3>
-              <ul className="mt-6 divide-y divide-midnight/20 text-[17px] font-semibold">{['Recommends from any of forty carriers', 'Carries no quota with any of them', 'Starts with your income gap, your health, your family, your timeline'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-midnight text-sunrise"><Check size={13} strokeWidth={3} /></span>{t}</li>)}</ul>
+            <Item className="rounded-[28px] border border-sunrise/60 bg-[linear-gradient(160deg,rgba(232,184,32,.2),rgba(255,255,255,.05))] p-8 shadow-[0_0_70px_-12px_rgba(232,184,32,.5)] backdrop-blur md:p-10 lg:-rotate-1">
+              <h3 className="text-lg font-extrabold !text-sunrise">NXT Financial Group</h3>
+              <ul className="mt-6 divide-y divide-white/15 text-[17px] font-semibold text-white">{['Recommends from any of forty carriers', 'Carries no quota with any of them', 'Starts with your income gap, your health, your family, your timeline'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sunrise text-midnight"><Check size={13} strokeWidth={3} /></span>{t}</li>)}</ul>
             </Item>
           </Stagger>
           <Reveal delay={0.1} className="mt-12"><Link href="/about" className="btn btn-ghost">About NXT <ArrowUpRight size={16} /></Link></Reveal>

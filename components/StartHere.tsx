@@ -21,9 +21,9 @@ export default function StartHere() {
   return (
     <section aria-labelledby="start-here" className="pb-20 md:pb-28">
       <div className="container">
-        <Reveal className="on-dark relative isolate grid grid-cols-1 items-center gap-12 overflow-hidden rounded-[32px] bg-navy p-8 md:p-14 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:p-20">
-          <div aria-hidden="true" className="absolute -right-28 -top-36 -z-10 hidden h-[380px] w-[380px] rounded-full border-2 border-sunrise/50 md:block" />
-          <div aria-hidden="true" className="absolute -right-12 -top-20 -z-10 hidden h-[250px] w-[250px] rounded-full border-2 border-dashed border-sunrise/40 md:block" />
+        <Reveal className="on-dark relative isolate grid grid-cols-1 items-center gap-12 overflow-hidden rounded-[36px] stage p-8 md:p-14 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:p-20">
+          <div aria-hidden="true" className="grid-lines absolute inset-0 -z-10" />
+          <div aria-hidden="true" className="glow -right-24 -top-24 -z-10 h-[360px] w-[360px] bg-sunrise/20" />
           <div>
             <p className="label-sm mb-6">Start here</p>
             <h2 id="start-here" className="display text-white">Where are you <span className="text-sunrise">right now?</span></h2>
@@ -34,7 +34,7 @@ export default function StartHere() {
               ))}
             </div>
           </div>
-          <div aria-live="polite" className="-rotate-2 rounded-3xl bg-white p-8 shadow-[14px_14px_0_var(--color-sunrise)] md:p-10">
+          <div aria-live="polite" className="-rotate-2 rounded-3xl bg-white p-8 shadow-[0_40px_80px_-24px_rgba(0,0,0,.7),0_0_70px_-16px_rgba(232,184,32,.55)] md:p-10">
             <p className="text-xs font-extrabold uppercase tracking-[.12em] !text-gold">A good place to start</p>
             <AnimatePresence mode="wait">
               <motion.div key={s.slug} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }} transition={{ duration: 0.22 }}>
