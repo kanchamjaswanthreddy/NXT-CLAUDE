@@ -179,8 +179,8 @@ export default function Nav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled || open
-          ? 'border-b border-platinum bg-white/92 backdrop-blur-md'
-          : 'bg-transparent'
+          ? 'border-b border-platinum bg-white/95 shadow-soft backdrop-blur-md'
+          : 'border-b border-transparent bg-white'
       }`}
     >
       <a

@@ -5,25 +5,21 @@ import { solutions } from '@/lib/solutions'
 import { Stagger, Item } from './motion'
 
 export default function SolutionCards() {
-  const [first, ...rest] = solutions
   return (
-    <Stagger className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
-      <Item className="md:col-span-2 lg:row-span-2">
-        <Link href={`/solutions/${first.slug}`} className="card card-hover group relative block h-full min-h-[420px] overflow-hidden rounded-[28px]">
-          <Image src={first.image} alt="" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/45 to-transparent" />
-          <div className="on-dark absolute inset-x-0 bottom-0 p-8 md:p-10">
-            <h3 className="display text-white">{first.title}</h3>
-            <p className="mt-3 max-w-[460px] text-[15px]">{first.short} {first.sub.map((s) => s.name).slice(0, 3).join(' · ')}.</p>
-            <span className="link mt-5 text-sunrise">Explore {first.title.toLowerCase()} <ArrowUpRight size={16} /></span>
-          </div>
-        </Link>
-      </Item>
-      {rest.map((s) => (
+    <Stagger className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {solutions.map((s, i) => (
         <Item key={s.slug}>
-          <Link href={`/solutions/${s.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden rounded-[24px]">
-            <div className="relative aspect-[16/10] bg-stone"><Image src={s.image} alt="" fill sizes="25vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.05]" style={{ filter: 'saturate(0.85)' }} /></div>
-            <div className="flex flex-1 flex-col p-6"><h3 className="display-sm text-[1.4rem]">{s.title}</h3><p className="mt-2 flex-1 text-[14px] text-ink-soft">{s.short}</p><span className="link mt-4 text-sm">Learn more <ArrowUpRight size={15} /></span></div>
+          <Link href={`/solutions/${s.slug}`} className="tilt-card on-dark group relative isolate flex min-h-[400px] flex-col justify-between overflow-hidden rounded-[28px] bg-midnight p-7 md:p-8">
+            <Image src={s.image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw" className="-z-20 object-cover transition-transform duration-700 group-hover:scale-[1.08]" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-midnight via-midnight/70 to-midnight/25" />
+            <div className="flex items-start justify-between">
+              <span className="font-display text-[5rem] font-extrabold leading-[.85] tracking-[-.05em] text-sunrise">{String(i + 1).padStart(2, '0')}</span>
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-navy transition-all duration-300 group-hover:rotate-45 group-hover:bg-sunrise group-hover:text-midnight"><ArrowUpRight size={22} /></span>
+            </div>
+            <div>
+              <h3 className="display-sm text-white">{s.title}</h3>
+              <p className="mt-2 max-w-[340px] text-[15px]">{s.short}</p>
+            </div>
           </Link>
         </Item>
       ))}
