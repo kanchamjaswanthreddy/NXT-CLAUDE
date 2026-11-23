@@ -49,7 +49,7 @@ export default function HeroV5() {
 
         <div className="relative mx-auto w-full max-w-[460px] lg:max-w-[520px]">
           <Rings className="spin-slower pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[125%] w-[125%] -translate-x-1/2 -translate-y-1/2 text-sunrise/70" />
-          <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.2, ease }} style={{ y }} className="arch relative mx-auto aspect-[4/5] w-[84%] overflow-hidden border-[3px] border-sunrise">
+          <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.2, ease }} style={{ y, borderRadius: '58% 42% 55% 45% / 48% 55% 45% 52%' }} className="blob-morph relative mx-auto aspect-square w-[92%] overflow-hidden border-[3px] border-sunrise">
             <Image src="/images/family-advisor.png" alt="A family meeting with their NXT advisor" fill priority sizes="(min-width:1024px) 40vw, 80vw" className="object-cover" />
           </motion.div>
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.6, ease }} style={{ y: y2 }} className="absolute -left-2 top-[14%] w-[210px] -rotate-3 rounded-2xl bg-white p-4 shadow-lift md:-left-10">

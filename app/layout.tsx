@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import ScrollProgress from '@/components/ScrollProgress'
+import PreFooterCta from '@/components/PreFooterCta'
 
 const SITE = 'https://www.nxtfinancialgroup.com'
 
@@ -50,8 +52,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="flex min-h-screen flex-col">
+        <ScrollProgress />
         <Nav />
         <main id="main" className="flex-1">{children}</main>
+        <PreFooterCta />
         <Footer />
       </body>
     </html>

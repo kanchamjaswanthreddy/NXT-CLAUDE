@@ -4,12 +4,14 @@ import { ArrowUpRight } from 'lucide-react'
 import { solutions } from '@/lib/solutions'
 import { Stagger, Item } from './motion'
 
+const RADII = ['28px 80px 28px 28px', '80px 28px 28px 28px', '28px 28px 80px 28px', '28px 28px 28px 80px', '28px 80px 28px 80px', '80px 28px 80px 28px']
+
 export default function SolutionCards() {
   return (
     <Stagger className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
       {solutions.map((s, i) => (
         <Item key={s.slug}>
-          <Link href={`/solutions/${s.slug}`} className="tilt-card on-dark group relative isolate flex min-h-[400px] flex-col justify-between overflow-hidden rounded-[28px] bg-midnight p-7 md:p-8">
+          <Link href={`/solutions/${s.slug}`} className="tilt-card on-dark group relative isolate flex min-h-[400px] flex-col justify-between overflow-hidden bg-midnight p-7 md:p-8" style={{ borderRadius: RADII[i % RADII.length] }}>
             <Image src={s.image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw" className="-z-20 object-cover transition-transform duration-700 group-hover:scale-[1.08]" />
             <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-midnight via-midnight/70 to-midnight/25" />
             <div className="flex items-start justify-between">

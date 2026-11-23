@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight, Check, X, Scale, Landmark, Users, PhoneCall }
 import HeroV5 from '@/components/HeroV5'
 import CrossBands from '@/components/CrossBands'
 import StartHere from '@/components/StartHere'
+import ShapedPhoto from '@/components/ShapedPhoto'
 import SolutionCards from '@/components/SolutionCards'
 import CarrierWall from '@/components/CarrierWall'
 import Faq from '@/components/Faq'
@@ -57,7 +58,7 @@ export default function Home() {
         <div aria-hidden="true" className="glow -left-40 top-20 h-[460px] w-[460px] bg-sunrise/15" />
         <div className="container grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
           <Reveal className="relative">
-            <div className="arch-r frame-gold relative aspect-[5/6] "><div className="photo"><Image src="/images/advisors.png" alt="NXT advisors in a planning meeting" fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" style={{ filter: 'saturate(0.9)' }} /></div></div>
+            <ShapedPhoto src="/images/advisors.png" alt="NXT advisors in a planning meeting" shape="leafR" sizes="(min-width:1024px) 45vw, 100vw" className="mr-4" />
             <div className="card absolute -bottom-6 -right-2 w-[260px] rounded-2xl p-5 shadow-lift md:-right-8"><p className="label-sm">Your first meeting</p><p className="mt-1 font-display text-xl font-semibold text-navy">45 minutes. No products. Just where you stand.</p></div>
           </Reveal>
           <div>
