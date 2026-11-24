@@ -3,6 +3,7 @@ import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import ScrollProgress from '@/components/ScrollProgress'
+import SmoothScroll from '@/components/SmoothScroll'
 import PreFooterCta from '@/components/PreFooterCta'
 
 const SITE = 'https://www.nxtfinancialgroup.com'
@@ -47,11 +48,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
         <meta name="theme-color" content="#080E28" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="flex min-h-screen flex-col">
+        <SmoothScroll />
         <ScrollProgress />
         <Nav />
         <main id="main" className="flex-1">{children}</main>

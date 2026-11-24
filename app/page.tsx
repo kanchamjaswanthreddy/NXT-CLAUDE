@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, Check, X, Scale, Landmark, Users, PhoneCall } from 'lucide-react'
-import HeroV6 from '@/components/HeroV6'
+import HeroFlat from '@/components/HeroFlat'
 import CrossBands from '@/components/CrossBands'
-import StartHere from '@/components/StartHere'
+import LifeTimeline from '@/components/LifeTimeline'
 import SolutionCards from '@/components/SolutionCards'
 import CarrierWall from '@/components/CarrierWall'
 import Faq from '@/components/Faq'
@@ -38,72 +38,71 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
-      <HeroV6 />
-
-      <CrossBands />
+      <HeroFlat />
 
       {/* STATS */}
-      <section className="on-dark bg-midnight pb-20 md:pb-28">
-        <Stagger as="ul" className="container grid grid-cols-2 gap-4 md:grid-cols-4">
+      <section className="bg-sky pb-16 md:pb-24">
+        <Stagger as="ul" className="container grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
           {STATS.map(([Icon, v, suf, l]) => (
-            <Item as="li" key={l} className="glass-card p-6 md:p-8"><span className="flex h-11 w-11 items-center justify-center rounded-full bg-sunrise/15 text-sunrise"><Icon size={20} aria-hidden="true" /></span><p className="mt-5 font-display text-5xl font-extrabold leading-none tracking-[-.04em] !text-white md:text-6xl"><Counter value={v} suffix={suf} /></p><p className="mt-2 text-sm font-semibold">{l}</p></Item>
+            <Item as="li" key={l} className="flat p-5 md:p-7"><span className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-midnight bg-sunrise text-midnight"><Icon size={20} aria-hidden="true" /></span><p className="mt-4 font-display text-5xl font-extrabold leading-none tracking-[-.04em] text-midnight md:text-6xl"><Counter value={v} suffix={suf} /></p><p className="mt-2 text-sm font-semibold text-ink-soft">{l}</p></Item>
           ))}
         </Stagger>
       </section>
 
-      <div className="pt-20 md:pt-28"><StartHere /></div>
+      <CrossBands />
+      <LifeTimeline />
 
       {/* BRING YOUR PLAN TO LIFE */}
-      <section className="relative overflow-hidden pb-20 md:pb-28">
-        <div aria-hidden="true" className="glow -left-40 top-20 h-[460px] w-[460px] bg-sunrise/15" />
-        <div className="container grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
-          <Reveal className="relative">
-            <div className="relative aspect-[5/5] overflow-hidden rounded-[36px] shadow-lift"><Image src="/images/advisors.png" alt="NXT advisors in a planning meeting" fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" /></div>
-            <div className="card absolute -bottom-6 -right-2 w-[260px] rounded-2xl p-5 shadow-lift md:-right-8"><p className="label-sm">Your first meeting</p><p className="mt-1 font-display text-xl font-semibold text-navy">45 minutes. No products. Just where you stand.</p></div>
+      <section className="section bg-white">
+        <div className="container grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <Reveal className="relative pb-4 pr-4">
+            <div aria-hidden="true" className="bob-slow absolute -left-6 -top-8 h-24 w-24 rounded-full border-2 border-midnight bg-sky" />
+            <div className="on-dark relative -rotate-2 rounded-[28px] border-2 border-midnight bg-navy p-8 shadow-[10px_10px_0_var(--color-sunrise)] md:p-12">
+              <p className="label-sm">Your first meeting</p>
+              <p className="display-xl mt-6 text-white">45 minutes. No products. Just where you stand.</p>
+            </div>
           </Reveal>
           <div>
-            <Reveal><p className="label-sm mb-5">Reach your retirement goals</p><h2 className="display">A plan that fits your family, built by one advisor <span className="text-gold">who stays.</span></h2></Reveal>
+            <Reveal><p className="chip mb-5">Reach your retirement goals</p><h2 className="display">A plan that fits your family, built by one advisor <span className="hl">who stays.</span></h2></Reveal>
             <Reveal delay={0.1}><p className="lead mt-6 text-ink-soft">The person who meets you first is the person who places your coverage, reviews it every year and picks up the phone when something changes. We map your income gap, your care plan, your Medicare choices and your legacy, then we put the whole market to work on each piece.</p></Reveal>
-            <Stagger as="ul" className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">{['Guaranteed income sized to your essentials', 'A funded long-term care plan', 'Medicare that keeps your doctors', 'Life insurance sized honestly, not by rule of thumb'].map((t) => <Item as="li" key={t} className="flex items-start gap-3 text-[15px]"><span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-midnight"><Check size={11} strokeWidth={3} /></span>{t}</Item>)}</Stagger>
+            <Stagger as="ul" className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">{['Guaranteed income sized to your essentials', 'A funded long-term care plan', 'Medicare that keeps your doctors', 'Life insurance sized honestly, not by rule of thumb'].map((t) => <Item as="li" key={t} className="flex items-start gap-3 text-[15px] font-medium text-midnight"><span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-midnight text-sunrise"><Check size={11} strokeWidth={3.5} /></span>{t}</Item>)}</Stagger>
             <Reveal delay={0.2}><Link href="/contact" className="btn btn-primary mt-10">Book a consultation <ArrowRight size={16} /></Link></Reveal>
           </div>
         </div>
       </section>
 
       {/* SOLUTIONS */}
-      <section className="section bg-stone">
+      <section className="section bg-sky">
         <div className="container">
-          <Reveal className="mx-auto mb-14 max-w-[900px] text-center"><p className="label-sm mb-5">Five solutions</p><h2 className="display-xl">Everything we do fits on <span className="text-gold">one hand.</span></h2><Link href="/solutions" className="link mt-6">All five, in detail <ArrowRight size={16} /></Link></Reveal>
+          <Reveal className="mx-auto mb-14 max-w-[900px] text-center"><p className="chip mb-5">Five solutions</p><h2 className="display-xl">Everything we do fits on <span className="hl">one hand.</span></h2><Link href="/solutions" className="link mt-6">All five, in detail <ArrowRight size={16} /></Link></Reveal>
           <SolutionCards />
         </div>
       </section>
 
       {/* CARRIERS */}
-      <section className="section overflow-hidden">
+      <section className="section overflow-hidden bg-cream">
         <div className="container">
-          <Reveal className="mb-12 max-w-[700px] text-center md:mx-auto"><p className="label-sm mb-5">Trusted partners</p><h2 className="display">Connected to the carriers behind the <span className="text-gold">guarantees.</span></h2><p className="lead mt-5 text-ink-soft">A promise to pay is only as good as the company making it. We place business only with carriers rated A- or better by AM Best, and we compare them for you.</p></Reveal>
+          <Reveal className="mb-12 max-w-[760px] text-center md:mx-auto"><p className="chip mb-5">Trusted partners</p><h2 className="display">Connected to the carriers behind the <span className="hl">guarantees.</span></h2><p className="lead mt-5 text-ink-soft">A promise to pay is only as good as the company making it. We place business only with carriers rated A- or better by AM Best, and we compare them for you.</p></Reveal>
           <CarrierWall />
           <div className="mt-8 text-center"><Link href="/carriers" className="btn btn-outline">See all carriers by solution <ArrowUpRight size={16} /></Link></div>
         </div>
       </section>
 
       {/* STATEMENT */}
-      <section className="on-dark relative isolate overflow-hidden bg-midnight">
-        <Image src="/images/atrium.png" alt="" fill sizes="100vw" className="-z-20 object-cover opacity-20" style={{ filter: 'saturate(0.5)' }} />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-midnight via-midnight/90 to-midnight/60" />
+      <section className="on-dark bg-midnight">
         <div className="container py-24 md:py-32">
-          <Reveal className="max-w-[980px]"><p className="label-sm mb-6">Why independent matters</p><h2 className="display-xl text-white">A captive agent has one product line and a quota. <span className="text-sunrise">We have neither.</span></h2></Reveal>
-          <Stagger className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
-            <Item className="rounded-[28px] border border-white/15 bg-white/[.06] p-8 md:p-10">
-              <h3 className="text-lg font-bold !text-platinum">A captive agent</h3>
-              <ul className="mt-6 divide-y divide-white/10 text-[17px] text-platinum">{['Recommends from one company\u2019s products', 'Works toward a sales quota', 'Starts the conversation with the product'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10"><X size={13} strokeWidth={3} /></span>{t}</li>)}</ul>
+          <Reveal className="max-w-[980px]"><p className="label-sm mb-6">Why independent matters</p><h2 className="display-xl text-white">A captive agent has one product line and a quota. <span className="hl">We have neither.</span></h2></Reveal>
+          <Stagger className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <Item className="rounded-[22px] border-2 border-white/40 p-8 md:p-10">
+              <h3 className="font-display text-xl font-bold !text-platinum">A captive agent</h3>
+              <ul className="mt-6 divide-y divide-white/15 text-[17px] text-platinum">{['Recommends from one company\u2019s products', 'Works toward a sales quota', 'Starts the conversation with the product'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white/40"><X size={12} strokeWidth={3} /></span>{t}</li>)}</ul>
             </Item>
-            <Item className="rounded-[28px] border border-sunrise/60 bg-[linear-gradient(160deg,rgba(232,184,32,.2),rgba(255,255,255,.05))] p-8 shadow-[0_0_70px_-12px_rgba(232,184,32,.5)] backdrop-blur md:p-10 lg:-rotate-1">
-              <h3 className="text-lg font-extrabold !text-sunrise">NXT Financial Group</h3>
-              <ul className="mt-6 divide-y divide-white/15 text-[17px] font-semibold text-white">{['Recommends from any of forty carriers', 'Carries no quota with any of them', 'Starts with your income gap, your health, your family, your timeline'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sunrise text-midnight"><Check size={13} strokeWidth={3} /></span>{t}</li>)}</ul>
+            <Item className="rounded-[22px] border-2 border-midnight bg-sky p-8 text-midnight shadow-[10px_10px_0_var(--color-sunrise)] md:p-10 lg:-rotate-1">
+              <h3 className="font-display text-xl font-extrabold !text-midnight">NXT Financial Group</h3>
+              <ul className="mt-6 divide-y divide-midnight/20 text-[17px] font-semibold">{['Recommends from any of forty carriers', 'Carries no quota with any of them', 'Starts with your income gap, your health, your family, your timeline'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-midnight text-sunrise"><Check size={13} strokeWidth={3.5} /></span>{t}</li>)}</ul>
             </Item>
           </Stagger>
-          <Reveal delay={0.1} className="mt-12"><Link href="/about" className="btn btn-ghost">About NXT <ArrowUpRight size={16} /></Link></Reveal>
+          <Reveal delay={0.1} className="mt-14"><Link href="/about" className="btn btn-ghost">About NXT <ArrowUpRight size={16} /></Link></Reveal>
         </div>
       </section>
 
@@ -113,18 +112,18 @@ export default function Home() {
       {/* FAQ */}
       <section className="section">
         <div className="container grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
-          <Reveal className="lg:sticky lg:top-32 lg:self-start"><p className="label-sm mb-5">Questions, answered</p><h2 className="display">What people ask before they <span className="text-gold">call.</span></h2><p className="lead mt-5 text-ink-soft">If yours is not here, ask it. We answer every message within a business day.</p><Link href="/contact" className="btn btn-outline mt-8">Ask a question</Link></Reveal>
+          <Reveal className="lg:sticky lg:top-32 lg:self-start"><p className="chip mb-5">Questions, answered</p><h2 className="display">What people ask before they <span className="hl">call.</span></h2><p className="lead mt-5 text-ink-soft">If yours is not here, ask it. We answer every message within a business day.</p><Link href="/contact" className="btn btn-outline mt-8">Ask a question</Link></Reveal>
           <Reveal delay={0.1}><Faq /></Reveal>
         </div>
       </section>
 
       {/* INSIGHTS */}
-      <section className="section bg-stone">
+      <section className="section bg-sky">
         <div className="container">
-          <Reveal className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="label-sm mb-5">Insights</p><h2 className="display">Read before you <span className="text-gold">decide.</span></h2></div><Link href="/insights" className="link self-start">All articles <ArrowRight size={16} /></Link></Reveal>
+          <Reveal className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="chip mb-5">Insights</p><h2 className="display">Read before you <span className="hl">decide.</span></h2></div><Link href="/insights" className="link self-start">All articles <ArrowRight size={16} /></Link></Reveal>
           <Stagger as="ul" className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {posts.slice(0, 3).map((p) => (
-              <Item as="li" key={p.slug}><Link href={`/insights/${p.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden rounded-[24px]"><div className="relative aspect-[4/3] bg-stone"><Image src={p.image} alt={p.title} fill sizes="33vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" style={{ filter: 'saturate(0.85)' }} /></div><div className="flex flex-1 flex-col p-6"><p className="mono text-xs text-gold">{p.date} · {p.readTime}</p><h3 className="display-sm mt-2 text-[1.35rem] group-hover:text-command">{p.title}</h3><p className="mt-2 flex-1 text-[14px] text-ink-soft">{p.excerpt}</p><span className="link mt-4 text-sm">Read the full story <ArrowRight size={15} /></span></div></Link></Item>
+              <Item as="li" key={p.slug}><Link href={`/insights/${p.slug}`} className="flat flat-hover group flex h-full flex-col overflow-hidden"><div className="relative aspect-[4/3] bg-stone"><Image src={p.image} alt={p.title} fill sizes="33vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" style={{ filter: 'saturate(0.85)' }} /></div><div className="flex flex-1 flex-col p-6"><p className="mono text-xs text-gold">{p.date} · {p.readTime}</p><h3 className="display-sm mt-2 text-[1.35rem] group-hover:text-command">{p.title}</h3><p className="mt-2 flex-1 text-[14px] text-ink-soft">{p.excerpt}</p><span className="link mt-4 text-sm">Read the full story <ArrowRight size={15} /></span></div></Link></Item>
             ))}
           </Stagger>
         </div>

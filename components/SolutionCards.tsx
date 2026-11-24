@@ -1,31 +1,32 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, TrendingUp, ShieldCheck, HeartHandshake, Stethoscope, Umbrella, House, Sparkles, type LucideIcon } from 'lucide-react'
 import { solutions } from '@/lib/solutions'
 import { Stagger, Item } from './motion'
-import Tilt from './Tilt'
+
+const ICONS: Record<string, LucideIcon> = { annuities: TrendingUp, 'life-insurance': ShieldCheck, 'care-planning': HeartHandshake, 'medicare-planning': Stethoscope, 'disability-income': Umbrella, 'home-auto': House }
+const TONES = ['bg-white', 'bg-sky', 'bg-cream']
 
 export default function SolutionCards() {
   return (
-    <Stagger className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-      {solutions.map((s, i) => (
-        <Item key={s.slug}>
-          <Tilt>
-            <Link href={`/solutions/${s.slug}`} className="depth-card on-dark group relative isolate flex min-h-[440px] flex-col justify-between overflow-hidden rounded-[28px] p-7 md:p-8">
-              <Image src={s.image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw" className="-z-20 object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-midnight via-midnight/55 to-midnight/10 transition-opacity duration-500 group-hover:opacity-80" />
+    <Stagger className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {solutions.map((s, i) => {
+        const Icon = ICONS[s.slug] ?? Sparkles
+        return (
+          <Item key={s.slug}>
+            <Link href={`/solutions/${s.slug}`} className={`flat flat-hover group flex min-h-[300px] flex-col justify-between p-7 ${TONES[i % TONES.length]}`}>
               <div className="flex items-start justify-between">
-                <span className="rounded-full bg-midnight/70 px-3 py-1 font-display text-lg font-extrabold tracking-[-.03em] text-sunrise backdrop-blur">{String(i + 1).padStart(2, '0')}</span>
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-navy transition-all duration-300 group-hover:rotate-45 group-hover:bg-sunrise group-hover:text-midnight"><ArrowUpRight size={22} /></span>
+                <span className="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-midnight bg-sunrise text-midnight shadow-[4px_4px_0_var(--color-midnight)] transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"><Icon size={30} strokeWidth={1.8} /></span>
+                <span className="mono text-xs text-ink-soft">{String(i + 1).padStart(2, '0')} / {String(solutions.length).padStart(2, '0')}</span>
               </div>
               <div>
-                <h3 className="display-sm text-white">{s.title}</h3>
-                <p className="mt-2 max-w-[340px] text-[15px]">{s.short}</p>
+                <h3 className="display-sm">{s.title}</h3>
+                <p className="mt-2 text-[15px] text-ink-soft">{s.short}</p>
+                <span className="mt-5 inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-midnight bg-white text-midnight transition-all duration-300 group-hover:rotate-45 group-hover:bg-midnight group-hover:text-sunrise"><ArrowUpRight size={20} /></span>
               </div>
             </Link>
-          </Tilt>
-        </Item>
-      ))}
+          </Item>
+        )
+      })}
     </Stagger>
   )
 }
