@@ -1,10 +1,17 @@
 import type { Metadata } from 'next'
+// Fonts are bundled with the site (no request to Google at load time).
+import '@fontsource-variable/bricolage-grotesque/opsz.css'
+import '@fontsource-variable/plus-jakarta-sans/wght.css'
+import '@fontsource-variable/plus-jakarta-sans/wght-italic.css'
+import '@fontsource/dm-mono/400.css'
+import '@fontsource/dm-mono/500.css'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import ScrollProgress from '@/components/ScrollProgress'
 import SmoothScroll from '@/components/SmoothScroll'
 import PreFooterCta from '@/components/PreFooterCta'
+import NightStrip from '@/components/NightStrip'
 
 const SITE = 'https://www.nxtfinancialgroup.com'
 
@@ -46,9 +53,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
         <meta name="theme-color" content="#080E28" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
@@ -58,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main id="main" className="flex-1">{children}</main>
         <PreFooterCta />
+        <NightStrip />
         <Footer />
       </body>
     </html>

@@ -16,10 +16,10 @@
   --color-success: #1a6b30;
   --color-alert: #8b1a1a;
 
-  --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", "Segoe UI", Arial, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", "Plus Jakarta Sans Variable", "Segoe UI", Arial, sans-serif;
   --color-cream: #fbf7ef;
   --color-sky: #dbe5ff;
-  --font-sans: "Plus Jakarta Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "DM Mono", "Courier New", Courier, monospace;
 
   --radius-lg: 28px;
@@ -215,4 +215,176 @@ h1, h2, h3, h4 { color: var(--color-midnight); }
 .prose-nxt .quote-block { background: var(--color-sky); border: 2px solid var(--color-midnight); border-radius: 16px; }
 .prose-nxt .quote-block cite { color: var(--color-navy); }
 .ital { font-style: normal; color: var(--color-navy); }
+}
+
+/* v8: one day, one life. The living landscape and the drag-the-sun hero. */
+@layer components {
+  /* --- landscape (shared by the hero, page openers and the night strip) --- */
+  .landscape { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 230px; pointer-events: none; --g: 84px; --house: 100px; --hr: 20%; --hills: 70px; --road-top: 46px; --road-h: 20px; }
+  @media (min-width: 1024px) { .landscape { height: 300px; --g: 140px; --house: 130px; --hr: 8%; --hills: 120px; --road-top: 80px; --road-h: 28px; } }
+  @media (min-width: 1440px) { .landscape { --house: 150px; --hr: 13%; } }
+  .landscape svg { display: block; overflow: visible; }
+  .landscape .hills { position: absolute; left: 0; width: 100%; bottom: calc(var(--g) - 3px); height: var(--hills); }
+  .landscape .ground { position: absolute; left: 0; right: 0; bottom: 0; height: var(--g); background: var(--ground, var(--color-cream)); border-top: 3px solid var(--color-midnight); }
+  .landscape .road { position: absolute; left: 0; right: 0; top: var(--road-top); height: var(--road-h); background: var(--color-midnight); }
+  .landscape .road::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; background: repeating-linear-gradient(90deg, var(--color-sunrise) 0 26px, transparent 26px 62px); }
+  .landscape .ls-house { position: absolute; right: var(--hr); bottom: calc(var(--g) * .78); width: var(--house); }
+  .landscape .ls-mailbox { position: absolute; right: calc(var(--hr) - var(--house) * .36); bottom: calc(var(--g) - var(--road-top) + 3px); width: calc(var(--house) * .27); }
+  .landscape .ls-tree-a { position: absolute; left: 6%; bottom: calc(var(--g) * .84); width: calc(var(--house) * .4); }
+  .landscape .ls-tree-b { position: absolute; left: calc(6% + var(--house) * .44); bottom: calc(var(--g) * .76); width: calc(var(--house) * .3); }
+  .landscape .ls-tree-c { position: absolute; right: 1.5%; bottom: calc(var(--g) * .87); width: calc(var(--house) * .32); display: none; }
+  @media (min-width: 1440px) { .landscape .ls-tree-c { display: block; } }
+  .night-strip .ls-tree-c, .landscape-sm .ls-tree-c { display: block; }
+  .landscape .flag { transform-box: fill-box; transform-origin: 0% 100%; transform: rotate(86deg); transition: transform .5s cubic-bezier(.34,1.56,.64,1); }
+  .landscape[data-active="1"] .flag { transform: rotate(0deg); }
+  .puff { transform-box: fill-box; transform-origin: center; opacity: 0; animation: puff 3.6s ease-out infinite; }
+  .puff-2 { animation-delay: 1.2s; }
+  .puff-3 { animation-delay: 2.4s; }
+  /* props: always animating, shown only for their moment */
+  .landscape .ls-car { position: absolute; left: 0; bottom: calc(var(--g) - var(--road-top) - var(--road-h) * .8); width: calc(var(--house) * .5); opacity: 0; transition: opacity .4s ease; animation: drive 11s linear infinite; }
+  .landscape[data-active="0"] .ls-car { opacity: 1; }
+  .landscape .ls-env { position: absolute; right: calc(var(--hr) - var(--house) * .335); bottom: calc(var(--g) - var(--road-top) + var(--house) * .44); width: calc(var(--house) * .22); opacity: 0; transition: opacity .3s ease; }
+  .landscape .ls-env svg { animation: envdrop 2.6s cubic-bezier(.5,0,.6,1) infinite; }
+  .landscape[data-active="1"] .ls-env { opacity: 1; }
+  .landscape .ls-balloon { position: absolute; right: calc(var(--hr) - var(--house) * .405); bottom: calc(var(--g) - var(--road-top) + var(--house) * .42); width: calc(var(--house) * .36); transform-origin: 50% 100%; opacity: 0; transform: translateY(30px) scale(.2); transition: opacity .35s ease, transform .6s cubic-bezier(.34,1.56,.64,1); }
+  .landscape[data-active="2"] .ls-balloon { opacity: 1; transform: none; }
+  .landscape .ls-balloon svg { transform-origin: 50% 100%; animation: sway 4s ease-in-out infinite; }
+  .landscape .ls-heart { position: absolute; right: calc(var(--hr) + var(--house) * .36); bottom: calc(var(--g) * .78 + var(--house) * .96); width: calc(var(--house) * .28); opacity: 0; transform: translateY(16px) scale(.2); transition: opacity .35s ease, transform .6s cubic-bezier(.34,1.56,.64,1); }
+  .landscape[data-active="3"] .ls-heart { opacity: 1; transform: none; }
+  .landscape .ls-heart svg { animation: beat 1.4s ease-in-out infinite; }
+
+  /* --- hero --- */
+  .sun-hero { --S: 640px; --sun-size: 88px; }
+  .sun-hero-content { padding-top: 30px; }
+  .sun-card { max-width: 740px; }
+  .sun-h1 { font-size: clamp(2.3rem, 9.4vw, 3.4rem); line-height: 1.04; letter-spacing: -.04em; color: var(--color-midnight); transition: color .35s ease; }
+  .sun-hero.is-dark .sun-h1 { color: #fff; }
+  .sun-cta { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 22px; padding-inline: 20px; }
+  .sun-scene { position: relative; height: 350px; margin-top: 20px; color: var(--color-midnight); transition: color .35s ease; }
+  .is-dark .sun-scene { color: #fff; }
+  @media (min-width: 1024px) {
+    .sun-hero { --S: clamp(640px, calc(100svh - 84px), 880px); --sun-size: 124px; height: calc(var(--S) + 84px); }
+    .sun-hero-content { padding-top: calc((var(--S) - 140px) * .188 + 124px); }
+    .sun-h1 { font-size: min(4.5vw, 4.25rem, max(2.7rem, calc(26svh - 146px))); }
+    .sun-card { max-width: min(740px, 56vw); }
+    .sun-cta { position: absolute; left: 0; right: 0; bottom: 82px; margin: 0; }
+    .sun-scene { position: absolute; left: 0; right: 0; top: 84px; bottom: 0; height: auto; margin: 0; }
+  }
+  .sun-arc { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .55; }
+  .sun-thumb { position: absolute; left: 0; top: 0; z-index: 2; width: 0; height: 0; cursor: grab; touch-action: none; outline: none; }
+  .sun-thumb:active { cursor: grabbing; }
+  .sun-thumb .sun-svg { position: absolute; width: var(--sun-size); height: var(--sun-size); left: calc(var(--sun-size) / -2); top: calc(var(--sun-size) / -2); }
+  .sun-thumb:focus-visible .sun-svg { outline: 3px solid currentColor; outline-offset: 2px; border-radius: 50%; }
+  .sun-rays { transform-origin: 50% 50%; animation: spin-slow 40s linear infinite; }
+  .sun-hint { position: absolute; left: calc(var(--sun-size) / 2 + 4px); top: -14px; white-space: nowrap; animation: nudge 1.6s ease-in-out infinite; }
+  .sun-stop { position: absolute; z-index: 4; width: 18px; height: 18px; margin: -9px 0 0 -9px; padding: 0; border-radius: 50%; border: 2.5px solid currentColor; background: #fff; cursor: pointer; transition: transform .2s ease, opacity .2s ease; }
+  .sun-stop::before { content: ""; position: absolute; inset: -14px; }
+  .sun-stop:hover { transform: scale(1.3); }
+  .sun-stop.is-on { opacity: 0; pointer-events: none; }
+  .stars { position: absolute; inset: 0; opacity: var(--stars, 0); pointer-events: none; }
+  .star { position: absolute; border-radius: 50%; background: #fff; animation: twinkle 2.6s ease-in-out infinite alternate; }
+  .sun-moon { position: absolute; left: 15%; top: 20%; width: 40px; opacity: var(--stars, 0); transform: rotate(-18deg); }
+  .cloud { position: absolute; opacity: var(--clouds, 1); animation: drift 24s ease-in-out infinite alternate; }
+  .cloud-a { left: 4%; top: 8%; width: 76px; }
+  .cloud-b { right: 4%; top: 16%; width: 96px; animation-duration: 30s; animation-direction: alternate-reverse; }
+  .cloud-c { left: 27%; top: 4%; width: 60px; animation-duration: 20s; }
+  @media (min-width: 1024px) {
+    .sun-moon { width: 54px; }
+    .cloud-a { width: 124px; }
+    .cloud-b { width: 152px; }
+    .cloud-c { width: 88px; }
+  }
+  .round-btn { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 999px; border: 2px solid var(--color-midnight); background: #fff; color: var(--color-midnight); cursor: pointer; transition: transform .15s ease, background-color .15s ease; }
+  .round-btn:hover:not(:disabled) { background: var(--color-sunrise); transform: translateY(-2px); }
+  .round-btn:disabled { opacity: .35; cursor: default; }
+  .rise { animation: rise .9s cubic-bezier(.22,.61,.36,1) both; animation-delay: calc(var(--i, 0) * 110ms + 350ms); }
+  .swap-in { animation: swap-in .28s ease both; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+@keyframes swap-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(7px); } }
+@keyframes twinkle { from { opacity: .25; transform: scale(.7); } to { opacity: 1; transform: scale(1.15); } }
+@keyframes drift { from { transform: translateX(-24px); } to { transform: translateX(32px); } }
+@keyframes puff { 0% { transform: translate(0, 0) scale(.4); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(14px, -40px) scale(1.5); opacity: 0; } }
+@keyframes drive { from { transform: translateX(-160px); } to { transform: translateX(calc(100vw + 40px)); } }
+@keyframes envdrop { 0% { transform: translate(-60px, -80px) rotate(-24deg); opacity: 0; } 18% { opacity: 1; } 70% { transform: translate(0, 0) rotate(0deg); opacity: 1; } 82%, 100% { transform: translate(0, 10px) scale(.5); opacity: 0; } }
+@keyframes sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(6deg); } }
+@keyframes beat { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.18); } 60% { transform: scale(.96); } }
+
+/* v8 continued: statement, solution scenes, clock, carrier dots */
+@layer components {
+  .manifesto { max-width: 1180px; font-family: var(--font-display); font-weight: 800; font-size: clamp(1.75rem, 4.1vw, 3.5rem); line-height: 1.12; letter-spacing: -.03em; color: var(--color-midnight); text-wrap: pretty; }
+  .manifesto-link { color: inherit; text-decoration: underline; text-decoration-color: var(--color-sunrise); text-decoration-thickness: .13em; text-underline-offset: .13em; transition: background-color .15s ease; }
+  .manifesto-link:hover { background: var(--color-sunrise); }
+  .rail-illo { height: clamp(190px, 31vh, 280px); padding: 8px; }
+  .nudge-x { animation: nudge 1.4s ease-in-out infinite; }
+  .svg-pop { transform-box: fill-box; transform-origin: center; }
+  .star-dot { animation: twinkle 2.4s ease-in-out infinite alternate; }
+  .lit { animation: lights 6s ease-in-out infinite; }
+  .choose { animation: choose 9s cubic-bezier(.6,0,.3,1) infinite; }
+  .sweep7 { animation: sweep7 7s steps(7, end) infinite; }
+  .rain { opacity: 0; animation: rain 1.5s linear infinite; }
+  .stamp { animation: stamp 5s ease-in-out infinite; }
+  .idle { animation: idle .7s ease-in-out infinite alternate; }
+  .pie45 { animation: pie45 6s ease-in-out infinite; }
+  .hand45 { transform-origin: 60px 60px; animation: hand45 6s ease-in-out infinite; }
+  .dot-grid { display: flex; flex-wrap: wrap; gap: 9px; }
+  .dot-grid li { width: 17px; height: 17px; border-radius: 50%; border: 2px solid currentColor; opacity: .45; }
+  .dot-grid li.is-lit { opacity: 1; background: var(--color-sunrise); border-color: var(--color-midnight); }
+  .dot-grid-one li.is-lit { border-color: var(--color-sunrise); }
+  .dot-grid-all li { animation: dotwave 3.4s ease-in-out infinite; cursor: default; }
+  .dot-grid-all li:hover { animation-play-state: paused; transform: scale(1.5); }
+}
+@keyframes lights { 0%, 8% { opacity: 0; } 16%, 84% { opacity: 1; } 94%, 100% { opacity: 0; } }
+@keyframes choose { 0%, 26% { transform: translateY(0); } 33%, 59% { transform: translateY(54px); } 66%, 92% { transform: translateY(108px); } 100% { transform: translateY(0); } }
+@keyframes sweep7 { from { transform: translateX(0); } to { transform: translateX(336px); } }
+@keyframes rain { 0% { transform: translate(0, -10px); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-9px, 30px); opacity: 0; } }
+@keyframes stamp { 0% { transform: scale(2.2); opacity: 0; } 12%, 82% { transform: scale(1); opacity: 1; } 94%, 100% { transform: scale(1); opacity: 0; } }
+@keyframes idle { from { translate: 0 0; } to { translate: 0 -2.5px; } }
+@keyframes pie45 { 0% { stroke-dasharray: 0 163.36; opacity: 1; } 55%, 86% { stroke-dasharray: 122.52 163.36; opacity: 1; } 94% { stroke-dasharray: 122.52 163.36; opacity: 0; } 100% { stroke-dasharray: 0 163.36; opacity: 0; } }
+@keyframes hand45 { 0% { transform: rotate(0deg); } 55%, 86% { transform: rotate(270deg); } 100% { transform: rotate(360deg); } }
+@keyframes dotwave { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.4); } 24% { transform: scale(1); } }
+
+/* v8 continued: the night strip that closes every page */
+@layer components {
+  .night-strip { position: relative; height: 240px; overflow: hidden; background: var(--color-navy); --hill-a: #131d58; --hill-b: #0e1748; --tree: #060a22; --glow: 1; --stars: 1; --ground: var(--color-midnight); }
+  @media (min-width: 1024px) { .night-strip { height: 330px; } }
+  .night-moon { position: absolute; right: 9%; top: 12%; width: 46px; transform: rotate(-18deg); }
+  .night-strip .ls-mailbox, .night-strip .ls-env, .night-strip .ls-balloon, .night-strip .ls-heart, .night-strip .ls-car { display: none; }
+  @media (min-width: 1024px) { .night-moon { width: 64px; } }
+  .shooting-star { position: absolute; left: 18%; top: 10%; width: 90px; height: 2.5px; border-radius: 2px; background: linear-gradient(90deg, #fff, rgba(255,255,255,0)); opacity: 0; transform: rotate(-24deg); animation: shoot 9s ease-in infinite; animation-delay: 2s; }
+}
+@keyframes shoot { 0%, 86% { opacity: 0; transform: rotate(-24deg) translateX(120px); } 88% { opacity: 1; } 96%, 100% { opacity: 0; transform: rotate(-24deg) translateX(-180px); } }
+
+/* v8 continued: inner page openers share the landscape, each at its own time of day */
+@layer components {
+  .landscape-sm { height: 150px; --g: 54px; --house: 80px; --hills: 56px; --road-top: 24px; --road-h: 14px; }
+  @media (min-width: 1024px) { .landscape-sm { height: 200px; --g: 72px; --house: 104px; --hills: 88px; --road-top: 34px; --road-h: 16px; } }
+  .landscape-sm .ls-house, .landscape-sm .ls-mailbox, .landscape-sm .ls-env, .landscape-sm .ls-balloon, .landscape-sm .ls-heart { display: none; }
+  .landscape-sm .ls-car { opacity: 1; animation-duration: 17s; }
+  .page-hero .cloud-a { left: 44%; top: 98px; }
+  .page-hero .cloud-b { right: 3%; top: auto; bottom: 200px; }
+  .page-sun { position: absolute; right: -16px; top: 84px; z-index: 1; width: 88px; height: 88px; color: var(--color-midnight); }
+  @media (min-width: 1024px) { .page-sun { right: auto; left: var(--sx); top: var(--sy); width: 136px; height: 136px; margin: -68px 0 0 -68px; } }
+}
+
+/* v8 continued: rail clipping that cannot be scrolled sideways by focus, and long buttons on phones */
+@layer components {
+  .rail-pin { overflow: hidden; }
+  @supports (overflow: clip) { .rail-pin { overflow: clip; } }
+  @media (max-width: 480px) { .btn { white-space: normal; text-align: center; line-height: 1.25; padding-block: 13px; } }
+}
+
+/* v8 continued: not-found page at night */
+@layer components {
+  .night-page { position: relative; overflow: hidden; min-height: max(680px, 92svh); padding-bottom: 320px; background: var(--color-navy); --hill-a: #131d58; --hill-b: #0e1748; --tree: #060a22; --glow: 1; --stars: 1; --ground: var(--color-midnight); }
+  .night-page .ls-mailbox, .night-page .ls-env, .night-page .ls-balloon, .night-page .ls-heart, .night-page .ls-car { display: none; }
+}
+
+/* v8 continued: scene band */
+@layer components {
+  .scene-band .cloud-a { left: 6%; top: 40px; }
+  .scene-band .cloud-b { right: 6%; top: 84px; }
+  .band-sun { position: absolute; left: 50%; bottom: 62px; z-index: 1; width: 150px; height: 150px; margin-left: -75px; color: var(--color-midnight); }
+  @media (min-width: 1024px) { .band-sun { bottom: 88px; width: 220px; height: 220px; margin-left: -110px; } }
 }

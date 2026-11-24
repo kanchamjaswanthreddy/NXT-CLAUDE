@@ -2,10 +2,12 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, Check, X, Scale, Landmark, Users, PhoneCall } from 'lucide-react'
-import HeroFlat from '@/components/HeroFlat'
+import SunHero from '@/components/SunHero'
+import Manifesto from '@/components/Manifesto'
 import CrossBands from '@/components/CrossBands'
-import LifeTimeline from '@/components/LifeTimeline'
-import SolutionCards from '@/components/SolutionCards'
+import SolutionsRail from '@/components/SolutionsRail'
+import PlanBoard from '@/components/PlanBoard'
+import CarrierDots from '@/components/CarrierDots'
 import CarrierWall from '@/components/CarrierWall'
 import Faq from '@/components/Faq'
 import Testimonials from '@/components/Testimonials'
@@ -38,44 +40,38 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
-      <HeroFlat />
+      <SunHero />
 
-      {/* STATS */}
-      <section className="bg-sky pb-16 md:pb-24">
-        <Stagger as="ul" className="container grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-          {STATS.map(([Icon, v, suf, l]) => (
-            <Item as="li" key={l} className="flat p-5 md:p-7"><span className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-midnight bg-sunrise text-midnight"><Icon size={20} aria-hidden="true" /></span><p className="mt-4 font-display text-5xl font-extrabold leading-none tracking-[-.04em] text-midnight md:text-6xl"><Counter value={v} suffix={suf} /></p><p className="mt-2 text-sm font-semibold text-ink-soft">{l}</p></Item>
-          ))}
-        </Stagger>
+      {/* WHO WE ARE: statement that fills in on scroll, then the numbers */}
+      <section className="bg-cream pb-20 pt-20 md:pb-28 md:pt-28">
+        <div className="container">
+          <p className="chip mb-8">Who we are</p>
+          <Manifesto />
+          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-[15px] font-semibold text-midnight">
+            {['A-rated carriers only', 'Licensed in 50 states', 'No cost to you'].map((t) => <li key={t} className="flex items-center gap-2.5"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-midnight text-sunrise"><Check size={13} strokeWidth={3.5} /></span>{t}</li>)}
+          </ul>
+          <Stagger as="ul" className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+            {STATS.map(([Icon, v, suf, l]) => (
+              <Item as="li" key={l} className="flat flat-hover p-5 md:p-7"><span className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-midnight bg-sunrise text-midnight"><Icon size={20} aria-hidden="true" /></span><p className="mt-4 font-display text-5xl font-extrabold leading-none tracking-[-.04em] text-midnight md:text-6xl"><Counter value={v} suffix={suf} /></p><p className="mt-2 text-sm font-semibold text-ink-soft">{l}</p></Item>
+            ))}
+          </Stagger>
+        </div>
       </section>
 
       <CrossBands />
-      <LifeTimeline />
+
+      <SolutionsRail />
 
       {/* BRING YOUR PLAN TO LIFE */}
-      <section className="section bg-white">
-        <div className="container grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <Reveal className="relative pb-4 pr-4">
-            <div aria-hidden="true" className="bob-slow absolute -left-6 -top-8 h-24 w-24 rounded-full border-2 border-midnight bg-sky" />
-            <div className="on-dark relative -rotate-2 rounded-[28px] border-2 border-midnight bg-navy p-8 shadow-[10px_10px_0_var(--color-sunrise)] md:p-12">
-              <p className="label-sm">Your first meeting</p>
-              <p className="display-xl mt-6 text-white">45 minutes. No products. Just where you stand.</p>
-            </div>
-          </Reveal>
+      <section className="section overflow-hidden bg-white">
+        <div className="container grid grid-cols-1 items-center gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-24">
+          <Reveal><PlanBoard /></Reveal>
           <div>
             <Reveal><p className="chip mb-5">Reach your retirement goals</p><h2 className="display">A plan that fits your family, built by one advisor <span className="hl">who stays.</span></h2></Reveal>
             <Reveal delay={0.1}><p className="lead mt-6 text-ink-soft">The person who meets you first is the person who places your coverage, reviews it every year and picks up the phone when something changes. We map your income gap, your care plan, your Medicare choices and your legacy, then we put the whole market to work on each piece.</p></Reveal>
             <Stagger as="ul" className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">{['Guaranteed income sized to your essentials', 'A funded long-term care plan', 'Medicare that keeps your doctors', 'Life insurance sized honestly, not by rule of thumb'].map((t) => <Item as="li" key={t} className="flex items-start gap-3 text-[15px] font-medium text-midnight"><span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-midnight text-sunrise"><Check size={11} strokeWidth={3.5} /></span>{t}</Item>)}</Stagger>
             <Reveal delay={0.2}><Link href="/contact" className="btn btn-primary mt-10">Book a consultation <ArrowRight size={16} /></Link></Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* SOLUTIONS */}
-      <section className="section bg-sky">
-        <div className="container">
-          <Reveal className="mx-auto mb-14 max-w-[900px] text-center"><p className="chip mb-5">Five solutions</p><h2 className="display-xl">Everything we do fits on <span className="hl">one hand.</span></h2><Link href="/solutions" className="link mt-6">All five, in detail <ArrowRight size={16} /></Link></Reveal>
-          <SolutionCards />
         </div>
       </section>
 
@@ -88,18 +84,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STATEMENT */}
+      {/* WHY INDEPENDENT: one carrier against the whole list */}
       <section className="on-dark bg-midnight">
         <div className="container py-24 md:py-32">
           <Reveal className="max-w-[980px]"><p className="label-sm mb-6">Why independent matters</p><h2 className="display-xl text-white">A captive agent has one product line and a quota. <span className="hl">We have neither.</span></h2></Reveal>
           <Stagger className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <Item className="rounded-[22px] border-2 border-white/40 p-8 md:p-10">
+            <Item className="rounded-[22px] border-2 border-white/40 p-8 text-platinum md:p-10">
               <h3 className="font-display text-xl font-bold !text-platinum">A captive agent</h3>
-              <ul className="mt-6 divide-y divide-white/15 text-[17px] text-platinum">{['Recommends from one company\u2019s products', 'Works toward a sales quota', 'Starts the conversation with the product'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white/40"><X size={12} strokeWidth={3} /></span>{t}</li>)}</ul>
+              <div className="mt-6"><CarrierDots mode="one" /></div>
+              <ul className="mt-6 divide-y divide-white/15 text-[17px]">{['Recommends from one company\u2019s products', 'Works toward a sales quota', 'Starts the conversation with the product'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-white/40"><X size={12} strokeWidth={3} /></span>{t}</li>)}</ul>
             </Item>
             <Item className="rounded-[22px] border-2 border-midnight bg-sky p-8 text-midnight shadow-[10px_10px_0_var(--color-sunrise)] md:p-10 lg:-rotate-1">
               <h3 className="font-display text-xl font-extrabold !text-midnight">NXT Financial Group</h3>
-              <ul className="mt-6 divide-y divide-midnight/20 text-[17px] font-semibold">{['Recommends from any of forty carriers', 'Carries no quota with any of them', 'Starts with your income gap, your health, your family, your timeline'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-midnight text-sunrise"><Check size={13} strokeWidth={3.5} /></span>{t}</li>)}</ul>
+              <div className="mt-6"><CarrierDots mode="all" /></div>
+              <ul className="mt-6 divide-y divide-midnight/20 text-[17px] font-semibold">{['Recommends from every carrier on the list', 'Carries no quota with any of them', 'Starts with your income gap, your health, your family, your timeline'].map((t) => <li key={t} className="flex items-start gap-4 py-4"><span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-midnight text-sunrise"><Check size={13} strokeWidth={3.5} /></span>{t}</li>)}</ul>
             </Item>
           </Stagger>
           <Reveal delay={0.1} className="mt-14"><Link href="/about" className="btn btn-ghost">About NXT <ArrowUpRight size={16} /></Link></Reveal>

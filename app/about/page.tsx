@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, MapPin, ShieldCheck, Building2, BookOpen, Eye, Globe, HeartHandshake, Handshake, CheckCircle, Crown, Lock, GraduationCap, Target, Heart } from 'lucide-react'
+import SceneBand from '@/components/SceneBand'
 import PageHero from '@/components/PageHero'
 import { Reveal, Stagger, Item } from '@/components/motion'
 import { leadership } from '@/lib/team'
@@ -147,25 +148,21 @@ export default function AboutPage() {
       </section>
 
       {/* Vision */}
-      <section className="relative overflow-hidden bg-navy py-28 md:py-36 on-dark">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        <div className="container relative text-center">
-          <Reveal>
-            <p className="label-sm mb-8">Our Vision</p>
-            <blockquote className="mx-auto max-w-4xl font-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-bold leading-[1.15] tracking-tight text-white">
-              To be a financial services company built on integrity and purpose — where advisors own their future and every family is protected.
-            </blockquote>
-          </Reveal>
-        </div>
-      </section>
+      <SceneBand time={0.12}>
+        <Reveal>
+          <p className="chip mb-8">Our Vision</p>
+          <blockquote className="mx-auto max-w-4xl font-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-extrabold leading-[1.1] tracking-[-.03em] text-midnight">
+            To be a financial services company built on integrity and purpose — where advisors own their future and every family is protected.
+          </blockquote>
+        </Reveal>
+      </SceneBand>
 
       {/* Mission */}
       <section className="relative overflow-hidden bg-white py-28 md:py-36">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-gold via-gold/40 to-transparent" />
         <div className="container relative text-center">
           <Reveal>
-            <p className="label-sm mb-8">Our Mission</p>
-            <blockquote className="mx-auto max-w-4xl font-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-bold leading-[1.15] tracking-tight text-navy">
+            <p className="chip mb-8">Our Mission</p>
+            <blockquote className="mx-auto max-w-4xl font-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-extrabold leading-[1.1] tracking-[-.03em] text-midnight">
               To build careers worth having, agencies worth owning, and legacies worth leaving — while giving every family access to financial protection they can trust.
             </blockquote>
           </Reveal>
@@ -234,7 +231,7 @@ export default function AboutPage() {
           <Stagger as="div" className="mx-auto max-w-4xl divide-y divide-navy/10">
             {PROTECT_VALUES.map(({ letter, word, desc }) => (
               <Item as="div" key={word} className="grid grid-cols-[auto_1fr] items-start gap-6 py-8 md:grid-cols-[80px_200px_1fr] md:items-center md:gap-10 md:py-10">
-                <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-navy font-display text-3xl font-black text-gold md:h-[72px] md:w-[72px] md:text-4xl">
+                <span className="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-midnight bg-sunrise font-display text-3xl font-black text-midnight shadow-[4px_4px_0_var(--color-midnight)] md:h-[72px] md:w-[72px] md:text-4xl">
                   {letter}
                 </span>
                 <div className="md:contents">

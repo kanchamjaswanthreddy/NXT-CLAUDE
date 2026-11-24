@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowRight, Check } from 'lucide-react'
 import PageHero from '@/components/PageHero'
-import Mock, { mockFor } from '@/components/Mock'
+import SolutionIllo, { SOLUTION_TONES } from '@/components/illos/SolutionIllos'
+import { SOLUTION_TIME } from '@/lib/sky'
 import { Reveal, Stagger, Item } from '@/components/motion'
 import { solutions, getSolution } from '@/lib/solutions'
 import { carrierGroups } from '@/lib/carriers'
@@ -21,7 +22,7 @@ export default async function SolutionPage({ params }: Params) {
   const next = solutions[(i + 1) % solutions.length]
   return (
     <>
-      <PageHero eyebrow={s.title} title={s.headline} intro={s.intro} visual={<Mock {...mockFor(slug)} className="max-w-none" />}>
+      <PageHero eyebrow={s.title} title={s.headline} intro={s.intro} time={SOLUTION_TIME[slug]} visual={<div className="flat overflow-hidden" style={{ background: SOLUTION_TONES[slug] }}><div className="aspect-[10/7] p-2"><SolutionIllo slug={slug} /></div></div>}>
         <Link href="/contact" className="btn btn-primary">Talk to an advisor about {s.title.toLowerCase()} <ArrowRight size={16} /></Link>
       </PageHero>
 
@@ -53,7 +54,7 @@ export default async function SolutionPage({ params }: Params) {
       <section className="bg-sky">
         <div className="container grid grid-cols-1 items-center gap-10 py-20 md:grid-cols-2">
           <Reveal><p className="chip mb-4">Next solution</p><Link href={`/solutions/${next.slug}`} className="group inline-block"><span className="display-xl block">{next.title}</span><span className="mt-3 block text-lg text-ink-soft">{next.short}</span><span className="btn btn-outline mt-6">See {next.title} <ArrowRight size={16} /></span></Link></Reveal>
-          <Reveal delay={0.1} className="flex justify-center md:justify-end"><div className="w-full max-w-[380px] -rotate-2"><Mock {...mockFor(next.slug)} /></div></Reveal>
+          <Reveal delay={0.1} className="flex justify-center md:justify-end"><div className="flat w-full max-w-[420px] -rotate-2 overflow-hidden" style={{ background: SOLUTION_TONES[next.slug] }}><div className="aspect-[10/7] p-2"><SolutionIllo slug={next.slug} /></div></div></Reveal>
         </div>
       </section>
     </>

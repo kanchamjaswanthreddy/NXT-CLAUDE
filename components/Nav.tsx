@@ -177,11 +177,7 @@ export default function Nav() {
   return (
     <>
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled || open
-          ? 'border-b border-platinum bg-white/95 shadow-soft backdrop-blur-md'
-          : 'border-b border-transparent bg-white'
-      }`}
+      className="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 xl:px-5"
     >
       <a
         href="#main"
@@ -190,10 +186,14 @@ export default function Nav() {
         Skip to content
       </a>
 
-      <div className="container">
+      <div
+        className={`pointer-events-auto mx-auto max-w-[1320px] rounded-[20px] border-2 border-midnight bg-white px-4 transition-shadow duration-300 xl:px-6 ${
+          scrolled || open ? 'shadow-[5px_5px_0_var(--color-midnight)]' : 'shadow-[3px_3px_0_var(--color-midnight)]'
+        }`}
+      >
         <nav
           aria-label="Main"
-          className="flex h-[84px] items-center justify-between gap-6"
+          className="flex h-[62px] items-center justify-between gap-6"
         >
           <Link
             href="/"
@@ -207,11 +207,11 @@ export default function Nav() {
               width={200}
               height={88}
               priority
-              className="h-12 w-auto md:h-14"
+              className="h-10 w-auto md:h-11"
             />
           </Link>
 
-          <ul className="hidden items-center gap-8 lg:flex">
+          <ul className="hidden items-center gap-4 whitespace-nowrap lg:flex xl:gap-8 max-xl:[&_a]:text-[14px] max-xl:[&_button]:text-[14px]">
             {NAV_ITEMS.map((item) => {
               const active = isActive(item)
               const hasDropdown = Boolean(item.children)
@@ -265,7 +265,7 @@ export default function Nav() {
                         animate="visible"
                         exit="exit"
                         transition={{ duration: 0.15, ease: 'easeOut' }}
-                        className="absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 rounded-xl border border-platinum bg-white px-2 py-2 shadow-lg shadow-black/8"
+                        className="absolute left-1/2 top-full z-50 mt-4 -translate-x-1/2 rounded-2xl border-2 border-midnight bg-white px-2 py-2 shadow-[4px_4px_0_var(--color-midnight)]"
                         style={{ minWidth: '220px' }}
                       >
                         {item.children!.map((child) => {
@@ -280,8 +280,8 @@ export default function Nav() {
                               onClick={handleDropdownLinkClick}
                               className={`block rounded-lg px-4 py-2.5 text-[14px] font-medium transition-colors ${
                                 childActive
-                                  ? 'bg-navy/5 text-navy'
-                                  : 'text-ink hover:bg-platinum/50 hover:text-navy'
+                                  ? 'bg-sky text-midnight'
+                                  : 'text-ink hover:bg-sky hover:text-midnight'
                               }`}
                             >
                               {child.label}
@@ -296,16 +296,16 @@ export default function Nav() {
             })}
           </ul>
 
-          <div className="hidden items-center gap-5 lg:flex">
+          <div className="hidden items-center gap-3 lg:flex xl:gap-5">
             <a
               href="https://crm.nxtfinancialgroup.com/auth/login"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-outline btn-sm"
+              className="btn btn-outline btn-sm max-xl:px-3.5"
             >
               Agent Login
             </a>
-            <Link href="/get-started" className="btn btn-primary btn-sm">
+            <Link href="/get-started" className="btn btn-primary btn-sm max-xl:px-3.5">
               Get Started
             </Link>
           </div>
@@ -316,7 +316,7 @@ export default function Nav() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="relative z-[60] flex h-12 w-12 items-center justify-center rounded-full text-navy active:bg-platinum/60 lg:hidden"
+            className="relative z-[60] flex h-11 w-11 items-center justify-center rounded-full border-2 border-midnight text-midnight active:bg-sky lg:hidden"
           >
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>

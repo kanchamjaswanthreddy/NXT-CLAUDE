@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
 import PageHero from '@/components/PageHero'
 import ContactForm from '@/components/ContactForm'
+import MeetingClock from '@/components/MeetingClock'
 
 export const metadata: Metadata = {
   title: 'Contact — Free Consultation',
@@ -26,19 +27,26 @@ export default function ContactPage() {
         title="Start with a conversation."
         intro="Tell us what prompted the call. A licensed advisor replies within one business day to schedule."
       />
-      <section className="section">
+      <section className="section bg-cream">
         <div className="container grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.5fr] lg:items-start">
           <aside className="space-y-8">
+            <div className="flat flat-gold flex -rotate-1 items-center gap-4 p-5">
+              <MeetingClock className="h-[92px] w-[92px] shrink-0" />
+              <div>
+                <p className="chip">Your first meeting</p>
+                <p className="mt-2 font-display text-[1.25rem] font-extrabold leading-[1.15] text-midnight">45 minutes. No products. Just where you stand.</p>
+              </div>
+            </div>
             <ul className="space-y-5">
               {INFO.map((item) => (
                 <li key={item.label} className="flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-navy ring-1 ring-platinum">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border-2 border-midnight bg-sunrise text-midnight">
                     <item.icon size={20} />
                   </span>
                   <div>
                     <p className="text-sm text-ink-soft">{item.label}</p>
                     {item.href ? (
-                      <a href={item.href} className="font-semibold text-navy hover:text-command">{item.value}</a>
+                      <a href={item.href} className="font-semibold text-midnight underline decoration-sunrise decoration-2 underline-offset-4">{item.value}</a>
                     ) : (
                       <p className="font-semibold">{item.value}</p>
                     )}
@@ -46,7 +54,7 @@ export default function ContactPage() {
                 </li>
               ))}
             </ul>
-            <div className="card rounded-[20px] border-l-[3px] border-l-gold p-6">
+            <div className="flat p-6">
               <h2 className="h3 mb-2">Prefer to talk?</h2>
               <p className="mb-4 text-[15px] text-ink-soft">Call during business hours and an advisor picks up. Medicare questions are often answered on the first call.</p>
               <a href="tel:8572053333" className="btn btn-primary btn-sm">Call now</a>

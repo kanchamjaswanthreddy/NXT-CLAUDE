@@ -80,10 +80,10 @@ export default function Testimonials() {
   const hasNext = idx < TESTIMONIALS.length - 1
 
   return (
-    <section className="section bg-stone">
+    <section className="section bg-cream">
       <div className="container max-w-4xl">
-        <p className="label-sm mb-5 text-center">Testimonials</p>
-        <h2 className="display text-center">What our clients and advisors say.</h2>
+        <div className="mb-5 text-center"><p className="chip">Testimonials</p></div>
+        <h2 className="display text-center">What our clients and advisors <span className="hl">say.</span></h2>
         <div className="relative mt-12">
           <AnimatePresence mode="wait">
             <motion.div
@@ -92,16 +92,16 @@ export default function Testimonials() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.3 }}
-              className="card rounded-[24px] p-8 md:p-12"
+              className="flat flat-gold relative p-8 pt-12 md:p-12 md:pt-14"
             >
-              <Quote size={36} className="mx-auto mb-6 text-gold/40" />
+              <span aria-hidden="true" className="absolute -top-7 left-8 flex h-14 w-14 items-center justify-center rounded-full border-2 border-midnight bg-sunrise text-midnight"><Quote size={24} /></span>
               <blockquote className="text-center">
-                <p className="text-lg leading-relaxed text-ink md:text-xl">
+                <p className="text-lg leading-relaxed text-midnight md:text-[1.3rem] md:leading-[1.55]">
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 <footer className="mt-8 flex flex-col items-center gap-4">
                   {t.image ? (
-                    <div className="relative h-16 w-16 overflow-hidden rounded-full bg-platinum">
+                    <div className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-midnight bg-platinum">
                       <Image
                         src={t.image}
                         alt={t.name}
@@ -111,12 +111,12 @@ export default function Testimonials() {
                       />
                     </div>
                   ) : (
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-navy text-white font-display text-xl font-semibold">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-midnight bg-navy font-display text-xl font-extrabold text-white">
                       {t.name.split(' ').map(n => n[0]).join('')}
                     </div>
                   )}
                   <cite className="not-italic text-center">
-                    <span className="block font-display text-lg font-semibold text-navy">{t.name}</span>
+                    <span className="block font-display text-lg font-extrabold text-midnight">{t.name}</span>
                     <span className="text-sm text-ink-soft">{t.role}</span>
                   </cite>
                   <div className="flex gap-1">
@@ -134,7 +134,7 @@ export default function Testimonials() {
               onClick={() => setIdx((i) => i - 1)}
               disabled={!hasPrev}
               aria-label="Previous testimonial"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-platinum text-navy transition-colors hover:bg-navy hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-navy"
+              className="round-btn"
             >
               <ChevronLeft size={18} />
             </button>
@@ -144,8 +144,8 @@ export default function Testimonials() {
                   key={i}
                   onClick={() => setIdx(i)}
                   aria-label={`Go to testimonial ${i + 1}`}
-                  className={`h-2 rounded-full transition-all ${
-                    i === idx ? 'w-6 bg-gold' : 'w-2 bg-platinum hover:bg-navy/30'
+                  className={`h-2.5 rounded-full transition-all ${
+                    i === idx ? 'w-7 bg-midnight' : 'w-2.5 bg-midnight/25 hover:bg-midnight/50'
                   }`}
                 />
               ))}
@@ -154,7 +154,7 @@ export default function Testimonials() {
               onClick={() => setIdx((i) => i + 1)}
               disabled={!hasNext}
               aria-label="Next testimonial"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-platinum text-navy transition-colors hover:bg-navy hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-navy"
+              className="round-btn"
             >
               <ChevronRight size={18} />
             </button>
