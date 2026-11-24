@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './preview.css'
 
-// Typefaces for the preview, shipped with the site: Plus Jakarta Sans for everything set in type,
-// Caveat for the handwritten notes. Both are under the SIL Open Font License (see ./fonts).
-const sans = localFont({ src: './fonts/plus-jakarta-sans-latin-wght-normal.woff2', weight: '200 800', style: 'normal', variable: '--pv-sans', display: 'swap' })
-const hand = localFont({ src: './fonts/caveat-latin-wght-normal.woff2', weight: '400 700', style: 'normal', variable: '--pv-hand', display: 'swap', preload: false })
+// Typefaces for the preview, shipped with the site: Archivo (variable weight and width) for
+// everything set in type, IBM Plex Mono for the small labels. Both are under the SIL Open Font
+// License (see ./fonts).
+const sans = localFont({ src: './fonts/archivo-latin-wdth-normal.woff2', weight: '100 900', style: 'normal', variable: '--pv-sans', display: 'swap', declarations: [{ prop: 'font-stretch', value: '62% 125%' }] })
+const mono = localFont({ src: './fonts/ibm-plex-mono-latin-500-normal.woff2', weight: '500', style: 'normal', variable: '--pv-mono', display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Design preview: home page',
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 }
 
 export default function PreviewLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`pv ${sans.variable} ${hand.variable}`}>{children}</div>
+  return <div className={`pv ${sans.variable} ${mono.variable}`}>{children}</div>
 }

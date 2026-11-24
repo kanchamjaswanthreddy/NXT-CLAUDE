@@ -11,39 +11,75 @@ opens back up to fill the screen.
 A second look for the home page is live at **`/preview`** for sign-off. It is not linked from the
 site and asks search engines not to index it. The pages above are untouched until it is approved.
 
-**The idea.** White page, very large centred headings, handwritten notes with drawn arrows, and
-the company name cut out of the opening film. Closer to the reference the client pointed at
-(dmdfinancialagency.com) than the film-led version, with more graphics and more motion.
+**The idea.** It follows the reference the client chose: "Alda", a Framer template for financial
+advisory firms (aldafinance.framer.website). Dark film behind the headline, square corners,
+hairline grids, section openers split across the page's two halves, small monospaced labels,
+numbered sliders, a list beside one large photograph, columns that climb, cards that stack, and
+the company's initials cut out of film in the footer.
+
+It is built from scratch in this project's own code. None of the template's files, pictures or
+text are used, and the colours, typefaces, film, photographs and copy are NXT's. If the client
+wants the template itself rather than a site in its style, it is sold as a Framer template and
+would be licensed and built in Framer, not here.
 
 | Part | What happens |
 |---|---|
-| Opening | A navy curtain with the logo lifts; the letters of NXT FINANCIAL rise out of the top edge of the film; the headline follows line by line |
-| Name in the film | The letters are holes in a white sheet (`mix-blend-mode: screen`), so the film plays inside them, washed with the brand blue |
-| Hero film | `/videos/montage-wide.mp4` and `-tall.mp4`: five scenes cross-faded into one 16 second loop (see `tools/media/montage.py`) |
-| Headings | Each letter rises from a mask and settles from blue to navy; the note beside it writes on and its arrow draws |
-| Statement | Words go from faint to solid as the paragraph moves up the screen |
-| Photographs | Three shapes, wiped in from below, each drifting at its own speed |
-| Carriers | Two rows of logos running in opposite directions, nudged by scrolling; they stop under the pointer |
-| Solutions | One list; the photograph of the row under the pointer follows the pointer (small pictures in the rows on touch screens) |
-| Band | Two lines of facts sliding against each other with the scroll |
-| Three steps | Cards that stick and stack; each has a small drawing that animates in |
-| Team | Portrait cards that lean towards the pointer |
-| Footer | Uncovered as the page lifts away; the name rises along its bottom edge |
+| Opening | The name is typed on a dark screen, which lifts; the headline rises line by line. Once per browser session |
+| Hero | `/videos/montage-wide.mp4` and `-tall.mp4` (five scenes, 16 second loop) under a navy wash. A small caption names the scene on screen. Strip along the bottom: two facts and a moving row of carrier marks |
+| Header | Takes its colours from the section under it (`data-tone` on each section), hides on the way down, returns on the way up |
+| Where are you right now | Six situations in a hairline grid. Pointing at one fills it with blue and brings up the solution it leads to |
+| Why independent | One photograph; five reasons in a numbered slider that moves on by itself and can be paused |
+| Solutions | The six names as a list; the one pointed at, focused or tapped shows its photograph and a line about it |
+| How it works | Four columns. A line across the top fills as the section is scrolled through and the numbers turn blue with it |
+| Who we are | The introduction fills in word by word with the scroll |
+| Numbers | Four columns that climb from left to right and grow in; the figures count up |
+| Carriers | The NXT mark wired to twelve carrier logos; the lines draw, then the logos arrive |
+| Values | Seven cards that stick and pile up. Each leaves its tab in view, so the pile reads P R O T E C T |
+| Leadership | Eight portraits in a hairline grid, grey until pointed at |
+| Testimonials | Numbered slider: who is speaking on the left, their words on a pale card |
+| Call to action | Evening photograph with a slow drift |
+| Questions | Heading stays put on the left; one answer open at a time on the right |
+| Footer | N X T cut out of the opening shoreline film |
 
-**Files.** `app/preview/` (page, layout, stylesheet, fonts), `components/pv/` (header, film,
-solutions list, testimonials, FAQ, heading), and `components/SiteFrame.tsx`, which leaves the
-site's own header and footer off this route.
+**Files.** `app/preview/` (page, layout, stylesheet, fonts) and `components/pv/`:
+`Nav` (header, menu, back to top), `HeroFilm`, `FootFilm`, `Slider` (shared by `Advantages` and
+`Voices`), `SolutionTabs`, `Faq`, `Motion`. `components/SiteFrame.tsx` leaves the site's own
+header and footer off this route.
 
 **How the motion is built.** Sections are plain server-rendered markup with `data-` attributes.
 One script, `components/pv/Motion.tsx`, switches entrances on as things scroll into view
-(`data-rv`) and writes scroll progress into a CSS variable (`data-prog` sets `--p`); the
-stylesheet does the rest. Without JavaScript, or with reduced motion, nothing is armed and every
-element is simply in its finished place. Do not hide an element with its own `clip-path` and wait
-for it to be reported on screen: it never is. Put the switch on its wrapper.
+(`data-rv`), writes scroll progress into a CSS variable (`data-prog` sets `--p`) and tells each
+stacked card how far the next one has covered it (`data-stack` sets `--c`); the stylesheet does
+the rest. Without JavaScript, or with reduced motion, nothing is armed and every element is simply
+in its finished place. Three things worth knowing before changing it:
 
-**Type and colour.** Plus Jakarta Sans (everything set in type) and Caveat (handwritten notes),
-both bundled in `app/preview/fonts`. Navy `#0b1736`, blue `#2c52c9`, pale blue `#dce4fb`, pale grey
-`#f1f3f8`; gold `#86641b` only in the handwriting.
+- Do not hide an element with its own `clip-path` and wait for it to be reported on screen: it
+  never is. Put `data-rv` on its wrapper.
+- The sliders advance when a CSS animation on their progress line ends (`Slider.tsx`). Anything
+  that stops the line stops the slider: the pointer resting on it, keyboard focus inside it, its
+  pause button, reduced motion.
+- Slides, captions and quotes that take turns share one grid cell (`.pv-sl-stack`, `.pv-tabs-cap`)
+  so the block keeps the height of its longest item and the page below never jumps.
+
+**Colour.** Navy `#0a1430` (text and dark sections), deeper navy `#060b1c` (footer), pale grey
+`#f2f4f8`, blue `#2c52c9` (numbers, icons, labels on light), signal blue `#3a63f2` and ice
+`#dce6ff` (the two fills), sky `#8faaff` (accents on dark). No gold outside the logo. Components
+do not use these directly: they use seven roles (`--fg`, `--bg`, `--dim`, `--ln`, `--acc`,
+`--fill`, `--on-fill`) that `.pv-dark` swaps, so the same button or slider is right on a light or
+a dark section. The rule behind the two fills: on light, the fill is the saturated blue with white
+text; on dark, it is the pale ice with navy text.
+
+**Type.** Archivo (variable weight and width) for everything set in type: headings at weight 700
+with tight tracking, the large numbers a little wider (`font-stretch: 112%`), the footer letters
+at full width and weight 800. IBM Plex Mono 500, in capitals, for the small labels and button
+text. Both are bundled in `app/preview/fonts` under the SIL Open Font License.
+
+**The footer letters.** The film sits underneath; over it lies a sheet in the footer's own colour
+carrying N X T in white with `mix-blend-mode: darken`, which keeps the darker of the two layers:
+white gives way to the film, the dark sheet stays as it is. The film layer is first lifted to at
+least the footer colour (`lighten`) so nothing darker than the sheet can show through outside the
+letters. The font size and left margin come from the letters' measured width, so the N starts and
+the T ends on the page margins.
 
 **Still to settle if this is approved:** the rest of the pages in this look; the insights and
 newsletter blocks on the home page; real footage for the hero if the client has any.
@@ -136,6 +172,13 @@ These lines were written with the design and should be reviewed like any other c
 - "Every dot is a carrier on our list." and "One carrier." under the dots.
 - Photograph descriptions (alt text) in `lib/media.ts`.
 - Small labels: "Page not found", and the "Tools" heading in the footer.
+- On `/preview` only: the six situations ("Retiring within ten years" and the rest), the section
+  headings and the short lines beside them, the four step names (Listen, Compare, Place, Review),
+  the scene captions on the film, and "See where you stand." The reasons in the slider and the
+  step descriptions are adapted from sentences on the live home page, the questions and the
+  solution pages. The seven value cards split
+  each About page sentence into a headline and a line; "Earned, never assumed." is a tightening of
+  "Trust is not assumed. It is earned".
 
 The rest of the copy is carried over from the original site.
 
