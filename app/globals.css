@@ -220,13 +220,13 @@
   @media (scripting: enabled) and (min-width: 1024px) and (min-height: 620px) and (prefers-reduced-motion: no-preference) {
     .seq-track { height: calc(100svh + var(--n, 5) * 82svh); padding-bottom: 0; }
     .seq-also { padding: 0; margin: 22px 0 0; max-width: none; }
-    .seq-stage { position: sticky; top: 0; height: 100svh; display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); align-items: center; gap: clamp(36px, 5vw, 96px); padding: 72px max(44px, calc((100vw - 1640px) / 2)) 40px max(44px, calc((100vw - 1288px) / 2 + 44px)); }
+    .seq-stage { position: sticky; top: 0; height: 100svh; display: grid; grid-template-columns: minmax(0, .74fr) minmax(0, 1.26fr); align-items: center; gap: clamp(36px, 5vw, 96px); padding: 72px max(44px, calc((100vw - 1800px) / 2)) 40px max(44px, calc((100vw - 1288px) / 2 + 44px)); }
     .seq-list { display: block; overflow: visible; padding: 0; max-width: none; margin: 0; }
     .seq-item { display: block; overflow: visible; border-radius: 0; background: none; border-top: 1px solid rgba(255,255,255,.12); }
     .seq-item:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
     .seq-card-img { display: none; }
     .seq-text { padding: 0; }
-    .seq-title { padding: clamp(12px, 2svh, 20px) 0; font-size: clamp(1.6rem, min(2.5vw, 4.4svh), 2.6rem); color: rgba(255,255,255,.42); transition: color .5s ease; }
+    .seq-title { padding: clamp(12px, 2svh, 20px) 0; font-size: clamp(1.6rem, min(2.5vw, 4.4svh), 2.9rem); color: rgba(255,255,255,.42); transition: color .5s ease; }
     .seq-title:hover { color: rgba(255,255,255,.7); }
     .seq-item[data-on="true"] .seq-title { color: #fff; }
     .seq-body { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .7s var(--ease-out-expo), opacity .45s ease; }
