@@ -10,7 +10,7 @@
   --color-sunrise: #e8b820;
   --color-silver: #9a9ab0;
   --color-platinum: #d0d0de;
-  --color-stone: #f5f4f0;
+  --color-stone: #fbf7ef;
   --color-ink: #1a1a2e;
   --color-ink-soft: #55556b;
   --color-success: #1a6b30;
@@ -158,6 +158,7 @@
 .photo-fade { background: linear-gradient(90deg, rgba(8,14,40,.96) 0%, rgba(8,14,40,.82) 42%, rgba(8,14,40,.35) 100%), linear-gradient(0deg, rgba(8,14,40,.75) 0%, transparent 45%); }
 
 /* v6: flat illustrated style. Solid colours, ink outlines, hard offset blocks, code-drawn animated graphics. */
+@layer components {
 html.lenis { scroll-behavior: auto; }
 .flat { background: #fff; border: 2px solid var(--color-midnight); border-radius: 22px; box-shadow: 6px 6px 0 var(--color-midnight); }
 .flat-gold { box-shadow: 6px 6px 0 var(--color-sunrise); }
@@ -175,10 +176,8 @@ html.lenis { scroll-behavior: auto; }
 .btn-outline:hover { background: var(--color-sky); }
 .btn-cta { box-shadow: 4px 4px 0 #fff; }
 .btn-cta:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 #fff; }
-@layer components {
-  .display-xl, .display, .display-sm { color: var(--color-midnight); letter-spacing: -.035em; }
-  .on-dark .display-xl, .on-dark .display, .on-dark .display-sm { color: #fff; }
-}
+.display-xl, .display, .display-sm { color: var(--color-midnight); letter-spacing: -.035em; }
+.on-dark .display-xl, .on-dark .display, .on-dark .display-sm { color: #fff; }
 @keyframes tick { 0% { transform: scale(0); } 6% { transform: scale(1.3); } 10%, 82% { transform: scale(1); } 90%, 100% { transform: scale(0); } }
 .tick { animation: tick 8s ease-in-out infinite backwards; }
 @keyframes fillbar { 0% { width: 4%; } 55%, 86% { width: 100%; } 100% { width: 4%; } }
@@ -190,3 +189,30 @@ html.lenis { scroll-behavior: auto; }
 .growbar { transform-origin: bottom; animation: growbar 6s ease-in-out infinite backwards; }
 @keyframes pulse-ring { 0% { transform: scale(.8); opacity: .9; } 100% { transform: scale(1.7); opacity: 0; } }
 .pulse-ring { animation: pulse-ring 2.4s ease-out infinite; }
+
+/* v7: the same flat language applied to every shared building block, so all pages match. */
+h1, h2, h3, h4 { color: var(--color-midnight); }
+.on-dark h1, .on-dark h2, .on-dark h3, .on-dark h4 { color: #fff; }
+.card { border: 2px solid var(--color-midnight); border-radius: 22px; box-shadow: 5px 5px 0 var(--color-midnight); }
+.card-hover:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--color-midnight); border-color: var(--color-midnight); }
+.field { border: 2px solid var(--color-midnight); border-radius: 12px; }
+.field:hover { border-color: var(--color-midnight); }
+.field:focus { border-color: var(--color-midnight); box-shadow: 4px 4px 0 var(--color-sunrise); }
+.field-label { color: var(--color-midnight); }
+.pill { border: 1.5px solid var(--color-midnight); box-shadow: none; color: var(--color-midnight); }
+.numeral { font-style: normal; font-weight: 800; color: var(--color-navy); letter-spacing: -.04em; }
+.glass { background: rgba(255,255,255,.06); border: 2px solid rgba(255,255,255,.35); backdrop-filter: none; border-radius: 22px; }
+.link { color: var(--color-midnight); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; text-decoration-color: var(--color-sunrise); }
+.on-dark .link { color: #fff; }
+.eyebrow { font-family: var(--font-mono); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; font-size: .72rem; color: var(--color-midnight); }
+.kicker { font-family: var(--font-mono); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; font-size: .72rem; color: var(--color-navy); }
+.gold-rule { height: 4px; background: var(--color-sunrise); }
+.arch, .arch-r { border-radius: 22px; }
+.frame-gold::before { transform: translate(12px, 12px); background: var(--color-sunrise); border: 2px solid var(--color-midnight); }
+.frame-gold > .photo { border: 2px solid var(--color-midnight); }
+.prose-nxt h2 { font-weight: 800; letter-spacing: -.03em; }
+.prose-nxt .callout { border: 2px solid var(--color-midnight); border-radius: 16px; box-shadow: 5px 5px 0 var(--color-sunrise); color: var(--color-midnight); }
+.prose-nxt .quote-block { background: var(--color-sky); border: 2px solid var(--color-midnight); border-radius: 16px; }
+.prose-nxt .quote-block cite { color: var(--color-navy); }
+.ital { font-style: normal; color: var(--color-navy); }
+}
