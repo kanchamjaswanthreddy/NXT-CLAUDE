@@ -145,7 +145,7 @@
 
   /* The name: a white sheet with the letters knocked out of it, so the film shows through them. */
   .pv-wm { position: relative; z-index: 1; height: var(--wm-h); overflow: hidden; background: #fff; color: #000; mix-blend-mode: screen; }
-  .pv-wm-line { display: flex; justify-content: space-between; align-items: flex-start; height: 100%; font-weight: 800; font-size: var(--wm-size); letter-spacing: 0; transform: translate3d(0, calc(var(--p, 0) * 62%), 0); }
+  .pv-wm-line { display: flex; justify-content: space-between; align-items: flex-start; height: 100%; padding-top: 1px; font-weight: 800; font-size: var(--wm-size); letter-spacing: 0; transform: translate3d(0, calc(var(--p, 0) * 62%), 0); }
   .pv-wm-ch { display: block; line-height: .742; animation: pv-rise 1.15s var(--e) both; animation-delay: calc(var(--t0) + var(--i) * 48ms); }
   .pv-wm-gap { flex: 0 0 .2em; }
   @media (max-width: 640px) {
@@ -432,7 +432,7 @@
   .pv-foot-legal { max-width: 78em; font-size: .8125rem; line-height: 1.6; color: rgba(255, 255, 255, .56); }
   .pv-foot-wm-wrap { container-type: inline-size; margin-top: clamp(2rem, 4vw, 3.5rem); }
   .pv-foot-wm { --wm-size: calc(100cqw / var(--wm-div, 7.88)); height: calc(var(--wm-size) * .778); overflow: hidden; }
-  .pv-foot-wm .pv-wm-line { transform: none; color: var(--peri-2); }
+  .pv-foot-wm .pv-wm-line { transform: none; padding-top: 0; color: var(--peri-2); }
   .pv-foot-wm .pv-wm-ch { animation: none; transition: translate 1.2s var(--e) calc(var(--i) * 45ms); }
   [data-rv="wm"][data-armed]:not([data-in]) .pv-wm-ch { translate: 0 128%; }
   .pv-foot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .14); font-size: .8125rem; color: rgba(255, 255, 255, .6); }
