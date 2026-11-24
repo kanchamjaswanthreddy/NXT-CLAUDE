@@ -48,3 +48,19 @@ ffmpeg -i clip.mov -an -vf "scale=1920:1080:force_original_aspect_ratio=increase
   -c:v libx264 -crf 23 -preset slow -pix_fmt yuv420p -movflags +faststart -t 15 hero-wide.mp4
 ffmpeg -i hero-wide.mp4 -frames:v 1 -q:v 3 hero-wide.jpg
 ```
+
+### Clips that would suit the frame
+
+Found on Pexels (free to use under the Pexels licence; check the licence page before publishing).
+They could not be downloaded into the workspace this site was built in, so they are listed here
+rather than included.
+
+| Clip | By | Where it fits |
+|---|---|---|
+| [Wide angle family playing on beach during sunset](https://www.pexels.com/video/wide-angle-family-playing-on-beach-during-sunset-19975930/) | iShoot Movies | Opening or closing frame: open sky above, small figures at the water's edge |
+| [Father and daughter walking along the shore](https://www.pexels.com/video/father-and-daughter-walking-along-the-shore-3120663/) | Pressmaster | Opening frame, daylight |
+| [A family holding hands while walking](https://www.pexels.com/video/a-family-holding-hands-while-walking-8620356/) | Kampus Production | Closing frame: three generations, seen from behind |
+
+If the opening film changes, the headline size in `app/globals.css` (`.hero-h1`) is worked out
+from where the heads sit in the current film; adjust the `37.5svh` and `7.03vw` figures to the new
+picture, or simply cap the size.
