@@ -178,9 +178,14 @@
   .hero-veil { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(110% 62% at 50% 0%, rgba(255,255,255,.66) 0%, rgba(255,255,255,.22) 48%, rgba(255,255,255,0) 72%); }
   .hero-copy, .hero-actions { pointer-events: none; }
   .hero-actions > * { pointer-events: auto; }
-  .hero-copy { position: absolute; inset-inline: 0; top: clamp(84px, 12svh, 150px); padding-inline: 22px; text-align: center; }
-  /* Sized to stay inside the sky, above the figures, on any screen shape. */
-  .hero-h1 { font-weight: 640; font-size: clamp(1.85rem, min(4.7vw, 7.4svh), 5.25rem); line-height: 1.03; letter-spacing: -.048em; color: var(--color-midnight); }
+  .hero-stage { --hero-top: clamp(78px, 11.5svh, 150px); }
+  .hero-copy { position: absolute; inset-inline: 0; top: var(--hero-top); padding-inline: 22px; text-align: center; }
+  /*
+   * Three lines that must end above the figures' heads. The heads sit 37.5% down the film; on
+   * screens wider than 16:9 the film is cropped top and bottom, which lifts them to
+   * 50svh - 7.03vw. The size is whatever fits between the top offset and that line.
+   */
+  .hero-h1 { font-weight: 640; font-size: clamp(1.85rem, min(4.7vw, calc((min(50svh - 7.03vw, 37.5svh) - var(--hero-top) - 46px) / 3.09)), 5.25rem); line-height: 1.03; letter-spacing: -.048em; color: var(--color-midnight); }
   .hero-h1 span { display: block; }
   .hero-sub { flex: 1 1 100%; margin-top: 6px; text-align: center; font-size: .9375rem; font-weight: 500; letter-spacing: -.012em; color: rgba(6,9,24,.8); }
   .hero-actions { position: absolute; inset-inline: 0; bottom: clamp(26px, 6.5svh, 68px); display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding-inline: 22px; }

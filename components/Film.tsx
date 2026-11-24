@@ -27,6 +27,9 @@ export default function Film({ film, priority = false, drift = true, scale }: { 
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || saveData) return
     setAllowed(true)
+    // Phones only start a film on their own when it is silent, and check the property, not the attribute.
+    v.muted = true
+    v.defaultMuted = true
     const mq = window.matchMedia(TALL)
     const pick = () => {
       const src = mq.matches ? film.tall : film.wide
