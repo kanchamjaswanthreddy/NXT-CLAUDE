@@ -103,13 +103,13 @@ export function Car({ className = '' }: { className?: string }) {
 export function Mailbox({ className = '' }: { className?: string }) {
   return (
     <svg viewBox="0 0 54 78" className={className} aria-hidden="true" {...base}>
-      <rect x="22" y="34" width="6" height="44" fill={INK} stroke="none" />
+      <rect x="22" y="34" width="6" height="44" fill="var(--post, #080e28)" stroke="none" />
       <g className="flag">
         <path d="M43 24 V5" />
         <rect x="43" y="4" width="9" height="8" fill="#e8b820" strokeWidth="2.5" />
       </g>
-      <rect x="5" y="12" width="40" height="25" rx="12.5" fill="#1b3272" />
-      <path d="M17 13 a12 12 0 0 0 0 23" stroke="#fff" strokeWidth="2.5" opacity=".5" />
+      <rect x="5" y="12" width="40" height="25" rx="12.5" fill="var(--box, #1b3272)" />
+      <path d="M17 13 a12 12 0 0 0 0 23" stroke="var(--box-line, #fff)" strokeWidth="2.5" opacity=".5" />
     </svg>
   )
 }
