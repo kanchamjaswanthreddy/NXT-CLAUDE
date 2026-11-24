@@ -32,6 +32,21 @@ python3 beach.py work/up/family.png work/depth/family.png ../../public/videos du
 python3 build_media.py work/up work/depth ../../public
 ```
 
+`montage.py` makes the opening film for `/preview`: the two beach loops and three photographs,
+each photograph given a slow camera move from its depth map, cross-faded into one seamless loop.
+
+```sh
+# 5. The montage (needs work/montage/up/fa-crop.png: rows 300 to 1280 of the enlarged
+#    family-advisor photograph, enlarged once more, and work/montage/fa-crop-depth.png, the same
+#    rows of its depth map)
+python3 montage.py ../../public work ../../public/videos wide
+python3 montage.py ../../public work ../../public/videos tall
+```
+
+Add `preview` as a last argument to write still frames instead of the film. Scenes, their length
+and their framing are the list at the top of `scenes()`. Each photograph's top edge is carried
+upwards into soft headroom, because the top fifth of the frame sits behind the letters of the name.
+
 `beach.py` holds the people still (their outline comes from the depth map), moves the water and
 sky with a looping flow, adds glints on the far water, and for the `dusk-` versions applies the
 evening grade. Add `preview` as a last argument to write still frames and the mask overlay instead

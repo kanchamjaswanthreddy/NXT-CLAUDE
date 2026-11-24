@@ -6,6 +6,48 @@ every page: **the frame**. The home page opens on a film that fills the screen a
 a rounded frame as you scroll; every page ends on the same shore in evening light, where the frame
 opens back up to fill the screen.
 
+## Proposed new direction: `/preview`
+
+A second look for the home page is live at **`/preview`** for sign-off. It is not linked from the
+site and asks search engines not to index it. The pages above are untouched until it is approved.
+
+**The idea.** White page, very large centred headings, handwritten notes with drawn arrows, and
+the company name cut out of the opening film. Closer to the reference the client pointed at
+(dmdfinancialagency.com) than the film-led version, with more graphics and more motion.
+
+| Part | What happens |
+|---|---|
+| Opening | A navy curtain with the logo lifts; the letters of NXT FINANCIAL rise out of the top edge of the film; the headline follows line by line |
+| Name in the film | The letters are holes in a white sheet (`mix-blend-mode: screen`), so the film plays inside them, washed with the brand blue |
+| Hero film | `/videos/montage-wide.mp4` and `-tall.mp4`: five scenes cross-faded into one 16 second loop (see `tools/media/montage.py`) |
+| Headings | Each letter rises from a mask and settles from blue to navy; the note beside it writes on and its arrow draws |
+| Statement | Words go from faint to solid as the paragraph moves up the screen |
+| Photographs | Three shapes, wiped in from below, each drifting at its own speed |
+| Carriers | Two rows of logos running in opposite directions, nudged by scrolling; they stop under the pointer |
+| Solutions | One list; the photograph of the row under the pointer follows the pointer (small pictures in the rows on touch screens) |
+| Band | Two lines of facts sliding against each other with the scroll |
+| Three steps | Cards that stick and stack; each has a small drawing that animates in |
+| Team | Portrait cards that lean towards the pointer |
+| Footer | Uncovered as the page lifts away; the name rises along its bottom edge |
+
+**Files.** `app/preview/` (page, layout, stylesheet, fonts), `components/pv/` (header, film,
+solutions list, testimonials, FAQ, heading), and `components/SiteFrame.tsx`, which leaves the
+site's own header and footer off this route.
+
+**How the motion is built.** Sections are plain server-rendered markup with `data-` attributes.
+One script, `components/pv/Motion.tsx`, switches entrances on as things scroll into view
+(`data-rv`) and writes scroll progress into a CSS variable (`data-prog` sets `--p`); the
+stylesheet does the rest. Without JavaScript, or with reduced motion, nothing is armed and every
+element is simply in its finished place. Do not hide an element with its own `clip-path` and wait
+for it to be reported on screen: it never is. Put the switch on its wrapper.
+
+**Type and colour.** Plus Jakarta Sans (everything set in type) and Caveat (handwritten notes),
+both bundled in `app/preview/fonts`. Navy `#0b1736`, blue `#2c52c9`, pale blue `#dce4fb`, pale grey
+`#f1f3f8`; gold `#86641b` only in the handwriting.
+
+**Still to settle if this is approved:** the rest of the pages in this look; the insights and
+newsletter blocks on the home page; real footage for the hero if the client has any.
+
 ## Look
 
 - **Palette** (`app/globals.css`, `@theme`): near-black navy `#060918` (text and dark sections),

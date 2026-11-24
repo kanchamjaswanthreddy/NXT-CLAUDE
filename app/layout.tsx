@@ -6,6 +6,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import SmoothScroll from '@/components/SmoothScroll'
 import ClosingFilm from '@/components/ClosingFilm'
+import SiteFrame from '@/components/SiteFrame'
 
 const SITE = 'https://www.nxtfinancialgroup.com'
 
@@ -54,10 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="flex min-h-screen flex-col">
         <SmoothScroll />
-        <Nav />
-        <main id="main" className="flex-1">{children}</main>
-        <ClosingFilm />
-        <Footer />
+        <SiteFrame nav={<Nav />} closing={<ClosingFilm />} footer={<Footer />}>{children}</SiteFrame>
       </body>
     </html>
   )
