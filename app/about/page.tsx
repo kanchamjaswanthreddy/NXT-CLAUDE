@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, MapPin, ShieldCheck, Building2, BookOpen, Eye, Globe, HeartHandshake, Handshake, CheckCircle, Crown, Lock, GraduationCap, Target, Heart } from 'lucide-react'
-import SceneBand from '@/components/SceneBand'
 import PageHero from '@/components/PageHero'
 import { Reveal, Stagger, Item } from '@/components/motion'
 import { leadership } from '@/lib/team'
@@ -125,7 +124,7 @@ export default function AboutPage() {
         eyebrow="About NXT"
         title="Built for Advisors. Built for Families. Built to Last."
         intro="NXT Financial Group is an independent marketing organization (IMO) headquartered in Malden, Massachusetts — built on the belief that financial advisors deserve real ownership and every family deserves real protection."
-        image="/images/advisors.png"
+        image="/media/advisors.jpg"
         imageAlt="NXT Financial Group advisors"
       >
         <Link href="/contact" className="btn btn-primary">Work with us <ArrowRight size={16} /></Link>
@@ -148,21 +147,23 @@ export default function AboutPage() {
       </section>
 
       {/* Vision */}
-      <SceneBand time={0.12}>
-        <Reveal>
-          <p className="chip mb-8">Our Vision</p>
-          <blockquote className="mx-auto max-w-4xl font-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-extrabold leading-[1.1] tracking-[-.03em] text-midnight">
-            To be a financial services company built on integrity and purpose — where advisors own their future and every family is protected.
-          </blockquote>
-        </Reveal>
-      </SceneBand>
+      <section className="section on-dark bg-midnight text-center">
+        <div className="container">
+          <Reveal>
+            <p className="chip mb-8">Our Vision</p>
+            <blockquote className="mx-auto max-w-[22em] text-[clamp(1.75rem,4.2vw,3.5rem)] font-semibold leading-[1.1] tracking-[-.04em] text-white">
+              To be a financial services company built on integrity and purpose — where advisors own their future and every family is protected.
+            </blockquote>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Mission */}
-      <section className="relative overflow-hidden bg-white py-28 md:py-36">
-        <div className="container relative text-center">
+      <section className="section bg-white text-center">
+        <div className="container">
           <Reveal>
             <p className="chip mb-8">Our Mission</p>
-            <blockquote className="mx-auto max-w-4xl font-display text-[clamp(1.75rem,4.5vw,3.75rem)] font-extrabold leading-[1.1] tracking-[-.03em] text-midnight">
+            <blockquote className="mx-auto max-w-[22em] text-[clamp(1.75rem,4.2vw,3.5rem)] font-semibold leading-[1.1] tracking-[-.04em] text-midnight">
               To build careers worth having, agencies worth owning, and legacies worth leaving — while giving every family access to financial protection they can trust.
             </blockquote>
           </Reveal>
@@ -220,7 +221,7 @@ export default function AboutPage() {
         <div className="container">
           <Reveal className="mb-16 text-center">
             <p className="label-sm mb-6">Our Values</p>
-            <h2 className="mx-auto max-w-3xl font-display text-[clamp(2.5rem,5vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-navy">
+            <h2 className="mx-auto max-w-3xl font-display text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1.05] tracking-tight text-navy">
               P.R.O.T.E.C.T
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft">
@@ -231,11 +232,11 @@ export default function AboutPage() {
           <Stagger as="div" className="mx-auto max-w-4xl divide-y divide-navy/10">
             {PROTECT_VALUES.map(({ letter, word, desc }) => (
               <Item as="div" key={word} className="grid grid-cols-[auto_1fr] items-start gap-6 py-8 md:grid-cols-[80px_200px_1fr] md:items-center md:gap-10 md:py-10">
-                <span className="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-midnight bg-sunrise font-display text-3xl font-black text-midnight shadow-[4px_4px_0_var(--color-midnight)] md:h-[72px] md:w-[72px] md:text-4xl">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-midnight text-2xl font-semibold text-white md:h-16 md:w-16 md:text-[1.75rem]">
                   {letter}
                 </span>
                 <div className="md:contents">
-                  <h3 className="font-display text-2xl font-bold text-navy md:text-[1.75rem]">{word}</h3>
+                  <h3 className="font-display text-2xl font-semibold text-navy md:text-[1.75rem]">{word}</h3>
                   <p className="col-span-2 mt-2 text-[16px] leading-relaxed text-ink-soft md:col-span-1 md:mt-0">{desc}</p>
                 </div>
               </Item>
@@ -268,14 +269,14 @@ export default function AboutPage() {
           {/* Top: Logo + Badge */}
           <Reveal className="mb-8 text-center">
             <Image src="/images/futureflow.png" alt="FutureFlow" width={480} height={320} className="mx-auto -mb-6 h-44 w-auto md:-mb-8 md:h-56" />
-            <span className="inline-block rounded-full border border-[#4353ff]/30 bg-[#4353ff]/10 px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-[#6b78ff]">From the NXT Family</span>
+            <span className="inline-block rounded-full border border-[#4353ff]/30 bg-[#4353ff]/10 px-5 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#6b78ff]">From the NXT Family</span>
           </Reveal>
 
           {/* Split: Left copy + Right phone mockup */}
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[1fr_auto] lg:gap-24">
             {/* Left */}
             <Reveal>
-              <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.1] tracking-tight text-white">
+              <h2 className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-[1.1] tracking-tight text-white">
                 One app. Total financial clarity.
               </h2>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#9a9a9a]">
@@ -290,16 +291,16 @@ export default function AboutPage() {
                   ['Advisor steps in', 'AI handles the day-to-day. A licensed NXT advisor steps in when the stakes are high — one tap away.'],
                 ].map(([title, desc], i) => (
                   <div key={title} className="flex gap-5">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#4353ff] font-display text-lg font-bold text-white">{i + 1}</div>
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#4353ff] font-display text-lg font-semibold text-white">{i + 1}</div>
                     <div>
-                      <h3 className="text-[17px] font-bold text-white">{title}</h3>
+                      <h3 className="text-[17px] font-semibold text-white">{title}</h3>
                       <p className="mt-1 text-[15px] leading-relaxed text-[#9a9a9a]">{desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <a href="https://joinfutureflow.com" target="_blank" rel="noopener noreferrer" className="mt-10 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-bold text-white transition-all hover:scale-105" style={{ background: 'linear-gradient(135deg, #4353ff, #6b78ff)' }}>
+              <a href="https://joinfutureflow.com" target="_blank" rel="noopener noreferrer" className="mt-10 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold text-white transition-all hover:scale-105" style={{ background: 'linear-gradient(135deg, #4353ff, #6b78ff)' }}>
                 Explore FutureFlow <ArrowRight size={16} />
               </a>
             </Reveal>
@@ -311,9 +312,9 @@ export default function AboutPage() {
                 <div className="col-span-2 rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
                   <div className="mb-3 flex items-center justify-between">
                     <p className="text-xs font-semibold text-[#9a9a9a]">Net Worth Growth</p>
-                    <span className="rounded-full bg-[#10b981]/15 px-2.5 py-0.5 text-[11px] font-bold text-[#10b981]">+12.4%</span>
+                    <span className="rounded-full bg-[#10b981]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[#10b981]">+12.4%</span>
                   </div>
-                  <p className="mb-4 text-2xl font-extrabold text-white">$124,850</p>
+                  <p className="mb-4 text-2xl font-semibold text-white">$124,850</p>
                   {/* Area chart SVG */}
                   <svg viewBox="0 0 360 80" className="w-full" preserveAspectRatio="none">
                     <defs>
@@ -335,7 +336,7 @@ export default function AboutPage() {
                     <circle cx="50" cy="50" r="38" fill="none" stroke="#4353ff" strokeWidth="10" strokeDasharray="120 999" strokeDashoffset="0" strokeLinecap="round" transform="rotate(-90 50 50)" />
                     <circle cx="50" cy="50" r="38" fill="none" stroke="#10b981" strokeWidth="10" strokeDasharray="60 999" strokeDashoffset="-120" strokeLinecap="round" transform="rotate(-90 50 50)" />
                     <circle cx="50" cy="50" r="38" fill="none" stroke="#d5c9f8" strokeWidth="10" strokeDasharray="40 999" strokeDashoffset="-180" strokeLinecap="round" transform="rotate(-90 50 50)" />
-                    <text x="50" y="48" textAnchor="middle" className="fill-white text-[11px] font-bold">$3,240</text>
+                    <text x="50" y="48" textAnchor="middle" className="fill-white text-[11px] font-semibold">$3,240</text>
                     <text x="50" y="60" textAnchor="middle" className="fill-[#9a9a9a] text-[7px]">this month</text>
                   </svg>
                   <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
@@ -348,7 +349,7 @@ export default function AboutPage() {
                 {/* Savings tracker — bar chart */}
                 <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
                   <p className="mb-3 text-xs font-semibold text-[#9a9a9a]">Savings Found</p>
-                  <p className="mb-3 text-xl font-extrabold text-[#10b981]">$312<span className="text-sm font-semibold text-[#9a9a9a]">/mo</span></p>
+                  <p className="mb-3 text-xl font-semibold text-[#10b981]">$312<span className="text-sm font-semibold text-[#9a9a9a]">/mo</span></p>
                   <div className="space-y-2">
                     {[
                       ['Subscriptions', 47, '#fb7185'],
@@ -358,7 +359,7 @@ export default function AboutPage() {
                       <div key={label as string}>
                         <div className="mb-1 flex items-center justify-between">
                           <span className="text-[10px] text-[#9a9a9a]">{label}</span>
-                          <span className="text-[10px] font-bold text-white">${val as number}</span>
+                          <span className="text-[10px] font-semibold text-white">${val as number}</span>
                         </div>
                         <div className="h-1.5 rounded-full bg-white/10">
                           <div className="h-full rounded-full" style={{ width: `${((val as number) / 156) * 100}%`, background: color as string }} />
@@ -373,11 +374,11 @@ export default function AboutPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-semibold text-[#9a9a9a]">Retirement Income Gap</p>
-                      <p className="mt-1 text-lg font-extrabold text-white">$1,420<span className="text-sm font-semibold text-[#9a9a9a]">/mo gap</span></p>
+                      <p className="mt-1 text-lg font-semibold text-white">$1,420<span className="text-sm font-semibold text-[#9a9a9a]">/mo gap</span></p>
                     </div>
                     <div className="text-right">
                       <p className="text-[11px] text-[#9a9a9a]">Goal: $5,200/mo</p>
-                      <p className="text-[11px] font-bold text-[#4353ff]">Current: $3,780/mo</p>
+                      <p className="text-[11px] font-semibold text-[#4353ff]">Current: $3,780/mo</p>
                     </div>
                   </div>
                   <div className="mt-3 h-3 rounded-full bg-white/10">
@@ -399,7 +400,7 @@ export default function AboutPage() {
                 ['1-Tap', 'Licensed advisor access'],
               ].map(([stat, label]) => (
                 <div key={label} className="text-center">
-                  <p className="font-display text-3xl font-black text-[#4353ff] md:text-4xl">{stat}</p>
+                  <p className="font-display text-3xl font-semibold text-[#4353ff] md:text-4xl">{stat}</p>
                   <p className="mt-1 text-sm text-[#9a9a9a]">{label}</p>
                 </div>
               ))}

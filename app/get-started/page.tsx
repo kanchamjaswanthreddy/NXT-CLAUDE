@@ -71,7 +71,7 @@ export default function GetStartedPage() {
           <Stagger className="mt-14 space-y-6">
             {STEPS.map((step) => (
               <Item key={step.num} className="flex items-start gap-5 rounded-2xl border border-rule bg-white p-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-midnight text-sm font-bold text-gold">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-midnight text-sm font-semibold text-gold">
                   {step.num}
                 </div>
                 <div>

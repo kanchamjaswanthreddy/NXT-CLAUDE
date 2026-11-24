@@ -88,7 +88,7 @@ export default function HomeAutoPage() {
         eyebrow="Home & Auto"
         title="Your home and your car are more than assets. They are how your life works."
         intro="A single storm, accident or liability claim can wipe out years of savings in minutes. We shop homeowners, auto, umbrella and specialty property coverage across top-rated carriers so you get the right limits, the right deductibles and a price that makes sense."
-        image="/images/atrium.png"
+        image="/media/atrium.jpg"
       >
         <Link href="/contact" className="btn btn-primary">Get a quote <ArrowRight size={16} /></Link>
       </PageHero>
@@ -103,7 +103,7 @@ export default function HomeAutoPage() {
           <Stagger as="div" className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {STATS.map(({ value, label }) => (
               <Item key={label} className="text-center">
-                <p className="font-display text-3xl font-black text-gold md:text-4xl">{value}</p>
+                <p className="font-display text-3xl font-semibold text-gold md:text-4xl">{value}</p>
                 <p className="mt-2 text-sm leading-relaxed text-platinum/70">{label}</p>
               </Item>
             ))}
@@ -155,8 +155,8 @@ export default function HomeAutoPage() {
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               {BUNDLE_BENEFITS.map(({ title, desc }, idx) => (
                 <div key={title} className="card rounded-[20px] p-6">
-                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-navy font-display text-sm font-bold text-gold">{idx + 1}</span>
-                  <h3 className="mb-2 text-[15px] font-bold text-navy">{title}</h3>
+                  <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-navy font-display text-sm font-semibold text-gold">{idx + 1}</span>
+                  <h3 className="mb-2 text-[15px] font-semibold text-navy">{title}</h3>
                   <p className="text-[14px] leading-relaxed text-ink-soft">{desc}</p>
                 </div>
               ))}
@@ -255,7 +255,7 @@ export default function HomeAutoPage() {
             {FAQ.map(({ q, a }) => (
               <Reveal key={q}>
                 <details className="group py-6">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-bold text-navy">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-semibold text-navy">
                     {q}
                     <ChevronDown size={18} className="shrink-0 text-ink-soft transition-transform group-open:rotate-180" />
                   </summary>

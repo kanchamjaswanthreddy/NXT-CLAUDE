@@ -1,11 +1,12 @@
 'use client'
 import Link from 'next/link'
 import { useRef, type ReactNode } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, type MotionValue } from 'framer-motion'
+import { useRamp } from '@/lib/ramp'
 
 /**
- * The opening statement, set large. Words fill in from faint to solid as the paragraph scrolls
- * up the screen, and each discipline links to its own page. The text itself is the site's
+ * The opening statement, set large and centred. Words fill in from faint to solid as the paragraph
+ * scrolls up the screen, and each discipline links to its own page. The text is the site's
  * existing introduction, unchanged.
  */
 const PARTS: { text: string; href?: string }[] = [
@@ -21,14 +22,14 @@ const PARTS: { text: string; href?: string }[] = [
 const TOTAL = PARTS.reduce((n, p) => n + p.text.split(' ').length, 0)
 
 function Word({ children, progress, i, still }: { children: ReactNode; progress: MotionValue<number>; i: number; still: boolean }) {
-  const opacity = useTransform(progress, [i / TOTAL, Math.min(1, (i + 2) / TOTAL)], [0.16, 1])
-  return <motion.span style={{ opacity: still ? 1 : opacity }}>{children}</motion.span>
+  const opacity = useRamp(progress, [i / TOTAL, Math.min(1, (i + 2) / TOTAL)], [0.14, 1])
+  return <motion.span data-reveal="" style={{ opacity: still ? 1 : opacity }}>{children}</motion.span>
 }
 
 export default function Manifesto() {
   const ref = useRef<HTMLParagraphElement>(null)
   const still = !!useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 88%', 'end 50%'] })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 82%', 'end 48%'] })
   let n = 0
   return (
     <p ref={ref} className="manifesto">

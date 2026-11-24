@@ -204,7 +204,7 @@ export default function FutureFlowSection() {
                     ].map((bar) => (
                       <div key={bar.m} className="flex flex-1 flex-col items-center gap-2">
                         <div className="w-full rounded-md transition-all" style={{ height: `${bar.h}%`, background: bar.active ? '#4353ff' : 'rgba(67,83,255,0.15)' }} />
-                        <span className={`text-[10px] ${bar.active ? 'font-bold text-[#4353ff]' : 'text-silver'}`}>{bar.m}</span>
+                        <span className={`text-[10px] ${bar.active ? 'font-semibold text-[#4353ff]' : 'text-silver'}`}>{bar.m}</span>
                       </div>
                     ))}
                   </div>
@@ -375,7 +375,7 @@ export default function FutureFlowSection() {
                       <span className="text-sm font-medium text-ink">{sub.name}</span>
                       <span className="text-sm text-ink-soft">{sub.price}</span>
                     </div>
-                    <span className={`rounded-full px-3 py-0.5 text-[11px] font-bold ${sub.bad ? 'bg-alert/10 text-alert' : 'bg-success/10 text-success'}`}>
+                    <span className={`rounded-full px-3 py-0.5 text-[11px] font-semibold ${sub.bad ? 'bg-alert/10 text-alert' : 'bg-success/10 text-success'}`}>
                       {sub.action}
                     </span>
                   </div>
@@ -397,7 +397,7 @@ export default function FutureFlowSection() {
             <div className="glass rounded-[20px] p-6 md:p-8">
               <div className="mb-5 flex items-center justify-between">
                 <p className="font-display text-lg font-semibold text-white">Tax Deductions Found</p>
-                <span className="rounded-full bg-sunrise/15 px-3 py-1 text-[11px] font-bold text-sunrise">USA &amp; Canada</span>
+                <span className="rounded-full bg-sunrise/15 px-3 py-1 text-[11px] font-semibold text-sunrise">USA &amp; Canada</span>
               </div>
               <div className="space-y-5">
                 {[
@@ -503,7 +503,7 @@ export default function FutureFlowSection() {
               <Item as="div" key={plan.name}>
                 <div className={`relative h-full rounded-[20px] p-7 ${plan.popular ? 'bg-navy text-white shadow-lift on-dark' : 'card'}`}>
                   {plan.popular && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[11px] font-bold text-midnight">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[11px] font-semibold text-midnight">
                       Most Popular
                     </span>
                   )}

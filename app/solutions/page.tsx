@@ -18,7 +18,7 @@ export default function SolutionsPage() {
         intro="From retirement income to your front door — we cover the decisions that shape your financial life, and we do them for a living."
       />
 
-      <section className="section bg-cream">
+      <section className="section bg-white">
         <div className="container">
           <SolutionCards />
         </div>

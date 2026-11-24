@@ -1,50 +1,49 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const TESTIMONIALS = [
   {
     name: 'Makeshwar Yadav',
     role: 'Financial Director',
-    image: '/images/testimonials/makeshwar-yadav.png',
+    image: '/media/avatars/makeshwar-yadav.jpg',
     quote: 'I have been in the financial services industry long enough to know the difference between a company that talks about agent success and one that actually builds systems around it. NXT is the latter. From the moment I joined, I had access to real training, carrier support, and a leadership team that is genuinely invested in my growth.',
   },
   {
     name: 'Pankaj Mandal',
     role: 'Financial Director',
-    image: '/images/testimonials/pankaj-mandal.png',
+    image: '/media/avatars/pankaj-mandal.jpg',
     quote: 'What drew me to NXT was the culture of ownership. This is not a place where you are just selling someone else\'s product — you are building something that belongs to you. The back-office platform, the training resources, and the support from leadership have made it possible for me to serve my clients at the highest level while also growing a team I am genuinely proud of.',
   },
   {
     name: 'Dipendra Thakur',
     role: 'Financial Director',
-    image: '/images/testimonials/dipendra-thakur.png',
+    image: '/media/avatars/dipendra-thakur.jpg',
     quote: 'Joining NXT was one of the most important professional decisions I have made. The structure here is different — you are never left to figure things out alone. From licensing preparation to carrier appointments to building your book of business, there is a clear path and people who will walk it with you.',
   },
   {
     name: 'Bimlesh Yadav',
     role: 'Client',
-    image: '/images/testimonials/bimlesh-yadav.png',
+    image: '/media/avatars/bimlesh-yadav.jpg',
     quote: 'I never thought about life insurance seriously until I sat down with my NXT advisor. The conversation was not about selling me something — it was about understanding what I actually needed to protect my family. By the end, I had a plan that fit my budget and gave me real peace of mind.',
   },
   {
     name: 'Carmelo Aguilar',
     role: 'Client',
-    image: '/images/testimonials/carmelo-aguilar.png',
+    image: '/media/avatars/carmelo-aguilar.jpg',
     quote: 'I came to NXT with a lot of questions and some skepticism. I left with a coverage plan I understood completely and a level of confidence I did not expect. My advisor was professional, knowledgeable, and never made me feel like just another sale. NXT truly cares about the people they serve.',
   },
   {
     name: 'Andy M. Martinez',
     role: 'Client',
-    image: '/images/testimonials/andy-martinez.jpg',
+    image: '/media/avatars/andy-martinez.jpg',
     quote: 'NXT made the process of getting life insurance simple and stress-free. I appreciated that my advisor listened first before recommending anything. The plan I ended up with was exactly what I needed — nothing more, nothing less. That kind of honest guidance is hard to find.',
   },
   {
     name: 'Rigoberto Ayala Rodas',
     role: 'Client',
-    image: '/images/team/rigoberto-ayala.png',
+    image: '/media/avatars/rigoberto-ayala.jpg',
     quote: 'I had been putting off getting coverage for years — I did not know where to start or who to trust. A friend referred me to NXT, and from the first call I knew I was in good hands. My advisor was patient, thorough, and made the process completely straightforward. I now have the protection my family deserves.',
   },
   {
@@ -62,105 +61,62 @@ const TESTIMONIALS = [
   {
     name: 'Ashish Sood',
     role: 'Technology & AI Advisor',
-    image: '/images/team/ashish-sood.png',
+    image: '/media/avatars/ashish-sood.jpg',
     quote: 'The financial services industry is undergoing a fundamental transformation driven by technology and artificial intelligence — and NXT is positioning itself at the forefront of that shift. NXT is not trying to digitize the old model. They are building the new one.',
   },
   {
     name: 'Sony Pradhan',
     role: 'Client Experience Advisor',
-    image: '/images/team/sony-pradhan.png',
+    image: '/media/avatars/sony-pradhan.jpg',
     quote: 'The measure of any financial services organization is not just the products it offers — it is how clients feel when they walk away. At NXT, the client experience is built into the DNA of how agents are trained and how the platform operates. Every touchpoint is designed to build trust, clarity, and confidence.',
   },
 ]
 
+/** Every testimonial in one sideways row: swipe, scroll, or use the arrows. */
 export default function Testimonials() {
-  const [idx, setIdx] = useState(0)
-  const t = TESTIMONIALS[idx]
-  const hasPrev = idx > 0
-  const hasNext = idx < TESTIMONIALS.length - 1
+  const rail = useRef<HTMLUListElement>(null)
+  const [edge, setEdge] = useState({ start: true, end: false })
+
+  const measure = () => {
+    const el = rail.current
+    if (!el) return
+    setEdge({ start: el.scrollLeft < 8, end: el.scrollLeft + el.clientWidth > el.scrollWidth - 8 })
+  }
+  useEffect(() => { measure() }, [])
+
+  const step = (dir: number) => {
+    const el = rail.current
+    const card = el?.querySelector('li')
+    if (!el || !card) return
+    el.scrollBy({ left: dir * (card.offsetWidth + 20), behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+  }
 
   return (
-    <section className="section bg-cream">
-      <div className="container max-w-4xl">
-        <div className="mb-5 text-center"><p className="chip">Testimonials</p></div>
-        <h2 className="display text-center">What our clients and advisors <span className="hl">say.</span></h2>
-        <div className="relative mt-12">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.3 }}
-              className="flat flat-gold relative p-8 pt-12 md:p-12 md:pt-14"
-            >
-              <span aria-hidden="true" className="absolute -top-7 left-8 flex h-14 w-14 items-center justify-center rounded-full border-2 border-midnight bg-sunrise text-midnight"><Quote size={24} /></span>
-              <blockquote className="text-center">
-                <p className="text-lg leading-relaxed text-midnight md:text-[1.3rem] md:leading-[1.55]">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <footer className="mt-8 flex flex-col items-center gap-4">
-                  {t.image ? (
-                    <div className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-midnight bg-platinum">
-                      <Image
-                        src={t.image}
-                        alt={t.name}
-                        fill
-                        sizes="64px"
-                        className="object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-midnight bg-navy font-display text-xl font-extrabold text-white">
-                      {t.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                  )}
-                  <cite className="not-italic text-center">
-                    <span className="block font-display text-lg font-extrabold text-midnight">{t.name}</span>
-                    <span className="text-sm text-ink-soft">{t.role}</span>
-                  </cite>
-                  <div className="flex gap-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} size={16} className="fill-gold text-gold" />
-                    ))}
-                  </div>
-                </footer>
-              </blockquote>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="mt-8 flex items-center justify-center gap-6">
-            <button
-              onClick={() => setIdx((i) => i - 1)}
-              disabled={!hasPrev}
-              aria-label="Previous testimonial"
-              className="round-btn"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <div className="flex gap-2">
-              {TESTIMONIALS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setIdx(i)}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                  className={`h-2.5 rounded-full transition-all ${
-                    i === idx ? 'w-7 bg-midnight' : 'w-2.5 bg-midnight/25 hover:bg-midnight/50'
-                  }`}
-                />
-              ))}
-            </div>
-            <button
-              onClick={() => setIdx((i) => i + 1)}
-              disabled={!hasNext}
-              aria-label="Next testimonial"
-              className="round-btn"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
+    <section aria-labelledby="voices-h" className="section overflow-hidden bg-stone">
+      <div className="container flex items-end justify-between gap-8">
+        <h2 id="voices-h" className="display max-w-[11em]">What our clients and advisors say.</h2>
+        <div className="hidden shrink-0 gap-2 pb-2 md:flex">
+          <button type="button" onClick={() => step(-1)} disabled={edge.start} aria-label="Earlier testimonials" className="round-btn"><ChevronLeft size={20} /></button>
+          <button type="button" onClick={() => step(1)} disabled={edge.end} aria-label="More testimonials" className="round-btn"><ChevronRight size={20} /></button>
         </div>
       </div>
+      <ul ref={rail} onScroll={measure} tabIndex={0} aria-label="Testimonials" className="gallery mt-12 md:mt-16">
+        {TESTIMONIALS.map((t) => (
+          <li key={t.name} className="flex">
+            <figure className="flex w-full flex-col rounded-[28px] bg-white p-7 md:p-9">
+              <blockquote className="flex-1"><p className="text-[1.0625rem] leading-[1.55] text-ink md:text-[1.125rem]">&ldquo;{t.quote}&rdquo;</p></blockquote>
+              <figcaption className="mt-8 flex items-center gap-4">
+                {t.image ? (
+                  <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-platinum"><Image src={t.image} alt="" fill sizes="48px" className="object-cover" /></span>
+                ) : (
+                  <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-midnight text-[.875rem] font-semibold text-white">{t.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}</span>
+                )}
+                <span><span className="block font-semibold tracking-[-.015em] text-midnight">{t.name}</span><span className="block text-[.875rem] text-ink-soft">{t.role}</span></span>
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

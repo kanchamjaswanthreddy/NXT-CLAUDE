@@ -1,17 +1,11 @@
 import type { Metadata } from 'next'
-// Fonts are bundled with the site (no request to Google at load time).
-import '@fontsource-variable/bricolage-grotesque/opsz.css'
-import '@fontsource-variable/plus-jakarta-sans/wght.css'
-import '@fontsource-variable/plus-jakarta-sans/wght-italic.css'
-import '@fontsource/dm-mono/400.css'
-import '@fontsource/dm-mono/500.css'
+// The typeface is bundled with the site (no request to a font service at load time).
+import '@fontsource-variable/inter/opsz.css'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import ScrollProgress from '@/components/ScrollProgress'
 import SmoothScroll from '@/components/SmoothScroll'
-import PreFooterCta from '@/components/PreFooterCta'
-import NightStrip from '@/components/NightStrip'
+import ClosingFilm from '@/components/ClosingFilm'
 
 const SITE = 'https://www.nxtfinancialgroup.com'
 
@@ -53,16 +47,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <meta name="theme-color" content="#080E28" />
+        <meta name="theme-color" content="#ffffff" />
+        {/* Without JavaScript: show everything that would otherwise fade in on scroll, and give the header its glass. */}
+        <noscript><style>{'[data-reveal]{opacity:1!important;transform:none!important}.nav{background:rgba(255,255,255,.9);border-bottom-color:rgba(6,9,24,.08)}'}</style></noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="flex min-h-screen flex-col">
         <SmoothScroll />
-        <ScrollProgress />
         <Nav />
         <main id="main" className="flex-1">{children}</main>
-        <PreFooterCta />
-        <NightStrip />
+        <ClosingFilm />
         <Footer />
       </body>
     </html>
