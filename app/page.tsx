@@ -1,22 +1,21 @@
 import type { Metadata } from 'next'
+import type { CSSProperties } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Check, ChevronRight, Minus } from 'lucide-react'
-import FilmHero from '@/components/FilmHero'
-import Manifesto from '@/components/Manifesto'
-import SolutionsFilm from '@/components/SolutionsFilm'
-import DepthPhoto from '@/components/DepthPhoto'
-import ScrollWords from '@/components/ScrollWords'
+import { ArrowUpRight, CalendarCheck, Car, Check, ChevronRight, HeartHandshake, Minus, Sunrise, Users, Wallet, type LucideIcon } from 'lucide-react'
+import './home.css'
+import Hero, { type Scene } from '@/components/home/Hero'
+import Hub from '@/components/home/Hub'
 import CarrierDots from '@/components/CarrierDots'
-import CarrierWall from '@/components/CarrierWall'
 import Faq from '@/components/Faq'
 import Testimonials from '@/components/Testimonials'
 import Newsletter from '@/components/Newsletter'
+import ScrollVars from '@/components/pv/Motion'
 import { Reveal, Stagger, Item, Counter } from '@/components/motion'
 import { posts } from '@/lib/insights'
 import { small } from '@/lib/media'
-
-const STATS = [[70, '+', 'Carrier partners'], [50, '', 'States licensed'], [5, '', 'Disciplines, practiced daily'], [1, ' day', 'To hear back from us']] as const
+import { solutions } from '@/lib/solutions'
+import { allCarriers, carrierGroups, whiteLogos } from '@/lib/carriers'
 
 export const metadata: Metadata = {
   title: 'NXT Financial Group | IMO — Independent Marketing Organization',
@@ -37,99 +36,215 @@ const homeFaqJsonLd = {
   ],
 }
 
+const v = (vars: Record<string, string | number>) => vars as CSSProperties
+const sol = (slug: string) => solutions.find((s) => s.slug === slug)!
+const carriersFor = (slug: string) => carrierGroups.find((g) => g.solution === slug)?.carriers.length ?? 0
+/** "Guaranteed income you cannot outlive." becomes "guaranteed income you cannot outlive". */
+const asNote = (s: string) => s.charAt(0).toLowerCase() + s.slice(1).replace(/\.$/, '')
+
+/** The opening's scenes: the word, the solution it stands for, and where its note sits on the picture. */
+const SCENES: Scene[] = ([
+  ['family', 'family', 'life-insurance', [61, 60], [56, 55]],
+  ['retirement', 'retirement', 'annuities', [36, 55], [30, 60]],
+  ['care', 'independence', 'care-planning', [50, 57], [44, 57]],
+  ['health', 'health', 'medicare-planning', [52, 60], [18, 60]],
+  ['paycheck', 'paycheck', 'disability-income', [24, 60], [22, 62]],
+] as [string, string, string, [number, number], [number, number]][]).map(([key, word, slug, at, atTall]) => ({
+  key, word, title: sol(slug).title, href: `/solutions/${slug}`, note: asNote(sol(slug).short), carriers: carriersFor(slug), at, atTall,
+}))
+
+const SITUATIONS: { title: string; slug: string; icon: LucideIcon }[] = [
+  { title: 'Retiring within ten years', slug: 'annuities', icon: Sunrise },
+  { title: 'Protecting a family', slug: 'life-insurance', icon: Users },
+  { title: 'Turning 65', slug: 'medicare-planning', icon: CalendarCheck },
+  { title: 'Thinking about future care', slug: 'care-planning', icon: HeartHandshake },
+  { title: 'Living on one paycheck', slug: 'disability-income', icon: Wallet },
+  { title: 'Insuring a home or a car', slug: 'home-auto', icon: Car },
+]
+
+const STEPS = [
+  ['Listen', 'We map your income gap, your health, your family and your timeline before any product comes up.'],
+  ['Compare', 'Rates, caps and rider costs from the carriers that fit, side by side.'],
+  ['Place', 'You choose. We handle the application, underwriting, transfer and delivery.'],
+  ['Review', 'The person who met you first goes through the plan with you every year.'],
+]
+
+const STATS = [[50, '', 'States licensed'], [5, '', 'Disciplines, practiced daily'], [1, ' day', 'To hear back from us']] as const
 const PLAN = ['Guaranteed income sized to your essentials', 'A funded long-term care plan', 'Medicare that keeps your doctors', 'Life insurance sized honestly, not by rule of thumb']
 const CAPTIVE = ['Recommends from one company’s products', 'Works toward a sales quota', 'Starts the conversation with the product']
 const INDEPENDENT = ['Recommends from every carrier on the list', 'Carries no quota with any of them', 'Starts with your income gap, your health, your family, your timeline']
+
+/** Two rows of carrier marks: every carrier with a logo that reads on a white tile. */
+const LOGOS = allCarriers.filter((c) => c.logo && !whiteLogos.has(c.slug))
+const ROWS = [LOGOS.filter((_, k) => k % 2 === 0), LOGOS.filter((_, k) => k % 2 === 1)]
 
 export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
 
-      {/* The film, full screen, drawing back into a frame as the page moves. */}
-      <FilmHero />
+      <Hero scenes={SCENES} />
 
-      {/* WHO WE ARE: the introduction fills in word by word, then the numbers. */}
-      <section className="bg-white pb-[clamp(5rem,11vw,10rem)] pt-[clamp(2rem,6vw,5rem)]">
+      {/* ONE ADVISOR, EVERY OPTION */}
+      <Hub tiles={solutions.map((s) => ({ slug: s.slug, title: s.title, carriers: carriersFor(s.slug) }))} total="70+" />
+
+      {/* WHERE ARE YOU RIGHT NOW */}
+      <section className="section" aria-labelledby="sit-h">
         <div className="container">
-          <Manifesto />
-          <ul className="mt-[clamp(4rem,9vw,8rem)] grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 md:gap-x-10">
-            {STATS.map(([v, suf, label]) => (
-              <li key={label} className="border-t border-midnight/15 pt-6">
-                <p className="stat-num"><Counter value={v} suffix={suf} /></p>
-                <p className="mt-3 text-ink-soft">{label}</p>
-              </li>
-            ))}
-          </ul>
+          <Reveal className="sec-head">
+            <p className="chip">Start here</p>
+            <h2 id="sit-h" className="display">Where are you right now<span className="dot">?</span></h2>
+            <p className="lead text-ink-soft">Pick the one closest to you. Each opens the plan that usually comes first.</p>
+          </Reveal>
+          <Stagger as="ul" className="sit-grid">
+            {SITUATIONS.map((s) => {
+              const Icon = s.icon
+              return (
+                <Item as="li" key={s.slug}>
+                  <Link href={`/solutions/${s.slug}`} className="sit">
+                    <span className="sit-ic"><Icon size={22} strokeWidth={1.6} aria-hidden="true" /></span>
+                    <span className="sit-t">{s.title}</span>
+                    <span className="sit-s"><b>{sol(s.slug).title}</b>{sol(s.slug).short}</span>
+                    <span className="sit-go" aria-hidden="true"><ArrowUpRight size={18} /></span>
+                  </Link>
+                </Item>
+              )
+            })}
+          </Stagger>
         </div>
       </section>
 
-      {/* SOLUTIONS: one pinned scene, five photographs dissolving into each other. */}
-      <SolutionsFilm />
+      {/* SOLUTIONS: six pictures */}
+      <section className="section bg-stone" aria-labelledby="sol-h">
+        <div className="container">
+          <Reveal className="sec-head sec-head-row">
+            <div>
+              <p className="chip">Solutions</p>
+              <h2 id="sol-h" className="display">Six kinds of cover, one plan<span className="dot">.</span></h2>
+            </div>
+            <Link href="/solutions" className="link">All solutions <ChevronRight size={17} /></Link>
+          </Reveal>
+          <Stagger as="ul" className="sol-grid">
+            {solutions.map((s) => (
+              <Item as="li" key={s.slug}>
+                <Link href={`/solutions/${s.slug}`} className="sol">
+                  <Image src={small(s.image)} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" />
+                  <span className="sol-chip">{carriersFor(s.slug)} carriers</span>
+                  <span className="sol-b">
+                    <span className="sol-t">{s.title}</span>
+                    <span className="sol-s">{s.short}</span>
+                  </span>
+                  <span className="sol-go" aria-hidden="true"><ArrowUpRight size={18} /></span>
+                </Link>
+              </Item>
+            ))}
+          </Stagger>
+        </div>
+      </section>
 
-      {/* BRING YOUR PLAN TO LIFE */}
-      <section className="section bg-white">
-        <div className="container grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-24">
+      {/* ONE ADVISOR WHO STAYS */}
+      <section className="section" aria-labelledby="plan-h">
+        <div className="container grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
           <Reveal>
-            <figure className="tile aspect-[4/5] w-full lg:aspect-[5/6]">
-              <DepthPhoto src="/media/family-advisor.jpg" depth="/media/depth/family-advisor.jpg" alt="A family around a table with their advisor" sizes="(min-width: 1024px) 46vw, 100vw" />
+            <figure className="tile plan-pic">
+              <Image src="/media/family-advisor.jpg" alt="A family around a table with their advisor" fill sizes="(min-width: 1024px) 46vw, 100vw" className="object-cover" />
+              <figcaption className="pin" style={v({ '--x': '8%', '--y': '9%' })}><i /><b>One advisor</b><span>from first meeting to yearly review</span></figcaption>
             </figure>
           </Reveal>
-          <div>
-            <p className="chip mb-4">Reach your retirement goals</p>
-            <h2 className="display">A plan that fits your family, built by one advisor who stays.</h2>
+          <Reveal delay={0.08}>
+            <p className="chip">Reach your retirement goals</p>
+            <h2 id="plan-h" className="display mt-5">A plan that fits your family, built by one advisor who stays<span className="dot">.</span></h2>
             <p className="lead mt-6 text-ink-soft">The person who meets you first is the person who places your coverage, reviews it every year and picks up the phone when something changes. We map your income gap, your care plan, your Medicare choices and your legacy, then we put the whole market to work on each piece.</p>
-            <ul className="mt-9 border-t border-midnight/10">
-              {PLAN.map((t) => <li key={t} className="flex items-center gap-4 border-b border-midnight/10 py-4 font-medium tracking-[-.015em] text-midnight"><Check size={18} strokeWidth={2.25} className="shrink-0 text-gold" aria-hidden="true" />{t}</li>)}
+            <ul className="checks mt-8">
+              {PLAN.map((t) => <li key={t}><span aria-hidden="true"><Check size={14} strokeWidth={2.6} /></span>{t}</li>)}
             </ul>
-            <Link href="/contact" className="btn btn-primary mt-10">Book a consultation</Link>
-          </div>
+            <Link href="/contact" className="btn btn-primary mt-9">Book a consultation</Link>
+          </Reveal>
         </div>
       </section>
 
-      {/* CARRIERS */}
-      <section className="section bg-stone">
+      {/* HOW IT WORKS */}
+      <section className="section bg-stone" aria-labelledby="how-h">
         <div className="container">
-          <Reveal className="mx-auto mb-16 max-w-[860px] text-center">
-            <p className="chip mb-4">Trusted partners</p>
-            <h2 className="display">Connected to the carriers behind the guarantees.</h2>
-            <p className="lead mx-auto mt-6 max-w-[640px] text-ink-soft">A promise to pay is only as good as the company making it. We place business only with carriers rated A- or better by AM Best, and we compare them for you.</p>
+          <Reveal className="sec-head">
+            <p className="chip">How it works</p>
+            <h2 id="how-h" className="display">The same four steps, whichever plan you need<span className="dot">.</span></h2>
           </Reveal>
-          <CarrierWall />
-          <div className="mt-16 text-center"><Link href="/carriers" className="link">See all carriers by solution <ChevronRight size={17} /></Link></div>
+          <Stagger as="ol" className="steps">
+            {STEPS.map(([title, text], k) => (
+              <Item as="li" key={title}>
+                <span className="steps-n" aria-hidden="true">{k + 1}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </Item>
+            ))}
+          </Stagger>
         </div>
       </section>
 
       {/* WHY INDEPENDENT: one carrier against the whole list */}
-      <section className="section on-dark bg-midnight">
-        <div className="container">
-          <p className="label-sm mb-5">Why independent matters</p>
-          <ScrollWords as="h2" className="display-xl max-w-[14.5em]" text="A captive agent has one product line and a quota. We have neither." />
-          <Stagger className="mt-[clamp(3.5rem,7vw,6rem)] grid grid-cols-1 gap-x-20 gap-y-16 lg:grid-cols-2">
-            <Item>
-              <h3 className="text-[1.375rem] font-semibold tracking-[-.03em] !text-silver">A captive agent</h3>
-              <div className="mt-7"><CarrierDots mode="one" /></div>
-              <ul className="mt-8 border-t border-white/10">{CAPTIVE.map((t) => <li key={t} className="flex items-start gap-4 border-b border-white/10 py-4 text-silver"><Minus size={18} className="mt-1 shrink-0" aria-hidden="true" />{t}</li>)}</ul>
+      <section className="panel" aria-labelledby="why-h">
+        <div className="panel-in on-dark" data-tone="dark">
+          <Reveal>
+            <p className="chip">Why independent matters</p>
+            <h2 id="why-h" className="display-xl mt-6 max-w-[15em]">A captive agent has one product line and a quota. We have neither<span className="dot">.</span></h2>
+          </Reveal>
+          <Stagger className="mt-[clamp(3rem,6vw,5rem)] grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <Item className="versus">
+              <h3>A captive agent</h3>
+              <CarrierDots mode="one" />
+              <ul>{CAPTIVE.map((t) => <li key={t}><Minus size={18} aria-hidden="true" />{t}</li>)}</ul>
             </Item>
-            <Item>
-              <h3 className="text-[1.375rem] font-semibold tracking-[-.03em]">NXT Financial Group</h3>
-              <div className="mt-7"><CarrierDots mode="all" /></div>
-              <ul className="mt-8 border-t border-white/15">{INDEPENDENT.map((t) => <li key={t} className="flex items-start gap-4 border-b border-white/15 py-4 font-medium text-white"><Check size={18} strokeWidth={2.25} className="mt-1 shrink-0 text-sunrise" aria-hidden="true" />{t}</li>)}</ul>
+            <Item className="versus versus-us">
+              <h3>NXT Financial Group</h3>
+              <CarrierDots mode="all" />
+              <ul>{INDEPENDENT.map((t) => <li key={t}><span aria-hidden="true"><Check size={13} strokeWidth={2.8} /></span>{t}</li>)}</ul>
             </Item>
           </Stagger>
-          <Link href="/about" className="link mt-14">About NXT <ChevronRight size={17} /></Link>
+          <ul className="stats">
+            {STATS.map(([n, suffix, label]) => (
+              <li key={label}>
+                <p className="stats-n"><Counter value={n} suffix={suffix} /></p>
+                <p>{label}</p>
+              </li>
+            ))}
+          </ul>
+          <Link href="/about" className="link mt-10">About NXT <ChevronRight size={17} /></Link>
         </div>
+      </section>
+
+      {/* CARRIERS */}
+      <section className="section overflow-hidden" aria-labelledby="car-h">
+        <div className="container">
+          <Reveal className="sec-head sec-head-center">
+            <p className="chip">Trusted partners</p>
+            <h2 id="car-h" className="display">Connected to the carriers behind the guarantees<span className="dot">.</span></h2>
+            <p className="lead text-ink-soft">A promise to pay is only as good as the company making it. We place business only with carriers rated A- or better by AM Best, and we compare them for you.</p>
+          </Reveal>
+        </div>
+        {/* the rows slide in opposite directions as the section is scrolled through */}
+        <div className="belt" data-prog="">
+          {ROWS.map((row, r) => (
+            <ul key={r} className={r ? 'belt-row belt-rev' : 'belt-row'}>
+              {row.map((c) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <li key={c.slug}><img src={c.logo} alt={c.name} loading="lazy" decoding="async" /></li>
+              ))}
+            </ul>
+          ))}
+        </div>
+        <div className="mt-12 text-center"><Link href="/carriers" className="link">See all carriers by solution <ChevronRight size={17} /></Link></div>
       </section>
 
       {/* TESTIMONIALS */}
       <Testimonials />
 
       {/* FAQ */}
-      <section className="section bg-white">
+      <section className="section">
         <div className="container grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-24">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="chip mb-4">Questions, answered</p>
-            <h2 className="display">What people ask before they call.</h2>
+            <p className="chip">Questions, answered</p>
+            <h2 className="display mt-5">What people ask before they call<span className="dot">.</span></h2>
             <p className="lead mt-6 text-ink-soft">If yours is not here, ask it. We answer every message within a business day.</p>
             <Link href="/contact" className="link mt-7">Ask a question <ChevronRight size={17} /></Link>
           </div>
@@ -140,17 +255,17 @@ export default function Home() {
       {/* INSIGHTS */}
       <section className="section bg-stone">
         <div className="container">
-          <div className="mb-14 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div><p className="chip mb-4">Insights</p><h2 className="display">Read before you decide.</h2></div>
-            <Link href="/insights" className="link self-start md:self-auto md:pb-2">All articles <ChevronRight size={17} /></Link>
+          <div className="sec-head sec-head-row">
+            <div><p className="chip">Insights</p><h2 className="display">Read before you decide<span className="dot">.</span></h2></div>
+            <Link href="/insights" className="link">All articles <ChevronRight size={17} /></Link>
           </div>
-          <Stagger as="ul" className="grid grid-cols-1 gap-x-7 gap-y-12 md:grid-cols-3">
+          <Stagger as="ul" className="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-3">
             {posts.slice(0, 3).map((p) => (
               <Item as="li" key={p.slug}>
                 <Link href={`/insights/${p.slug}`} className="group block">
                   <div className="tile aspect-[4/3] bg-platinum"><Image src={small(p.image)} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.045]" /></div>
                   <p className="mt-6 text-[.875rem] text-ink-soft">{p.date}, {p.readTime}</p>
-                  <h3 className="mt-2 text-[1.375rem] font-semibold leading-[1.18] tracking-[-.03em] text-midnight">{p.title}</h3>
+                  <h3 className="mt-2 text-[1.375rem] font-medium leading-[1.18] tracking-[-.03em] text-midnight">{p.title}</h3>
                   <p className="mt-3 text-[.9375rem] text-ink-soft">{p.excerpt}</p>
                   <span className="link mt-4 text-[.9375rem]">Read the full story <ChevronRight size={16} /></span>
                 </Link>
@@ -161,6 +276,7 @@ export default function Home() {
       </section>
 
       <Newsletter />
+      <ScrollVars />
     </>
   )
 }

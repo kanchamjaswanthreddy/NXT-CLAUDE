@@ -4,7 +4,7 @@ The people stay still; the surf creeps in as if in slow motion, the clouds drift
 water glints. Motion is a looping flow warp blended over several phases, so the last frame meets
 the first exactly and nothing pulses.
 
-  python3 -I beach.py <upscaled.png> <depth.png> <out_dir> <hero-wide|hero-tall|dusk-wide|dusk-tall> [preview]
+  python3 -I beach.py <upscaled.png> <depth.png> <out_dir> <hero-wide|hero-tall|dusk-wide|dusk-tall|dusk-open-wide|dusk-open-tall> [preview]
 
 The dusk versions are a tighter framing of the same scene, graded towards evening light.
 
@@ -43,6 +43,8 @@ def main():
         'hero-tall': (1080, 1920, 765, 0, 900, 1600),
         'dusk-wide': (1920, 1080, 415, 360, 1600, 900),
         'dusk-tall': (1080, 1920, 821, 190, 788, 1400),
+        'dusk-open-wide': (1920, 1080, 0, 70, 2400, 1350),      # the evening grade on the open, daytime framing
+        'dusk-open-tall': (1080, 1920, 765, 0, 900, 1600),
     }[shape]
     evening = shape.startswith('dusk')
     crop = lambda a: cv2.resize(a[y0:y0 + ch, x0:x0 + cw], (W, H), interpolation=cv2.INTER_AREA if cw > W else cv2.INTER_CUBIC)

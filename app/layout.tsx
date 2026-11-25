@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import SmoothScroll from '@/components/SmoothScroll'
 import ClosingFilm from '@/components/ClosingFilm'
 import SiteFrame from '@/components/SiteFrame'
+import Frame from '@/components/Frame'
 
 const SITE = 'https://www.nxtfinancialgroup.com'
 
@@ -48,14 +49,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <meta name="theme-color" content="#ffffff" />
-        {/* Without JavaScript: show everything that would otherwise fade in on scroll, and give the header its glass. */}
-        <noscript><style>{'[data-reveal]{opacity:1!important;transform:none!important}.nav{background:rgba(255,255,255,.9);border-bottom-color:rgba(6,9,24,.08)}'}</style></noscript>
+        <meta name="theme-color" content="#3a2b1c" />
+        {/* Without JavaScript: show everything that would otherwise fade in on scroll. */}
+        <noscript><style>{'[data-reveal]{opacity:1!important;transform:none!important}'}</style></noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body className="flex min-h-screen flex-col">
         <SmoothScroll />
-        <SiteFrame nav={<Nav />} closing={<ClosingFilm />} footer={<Footer />}>{children}</SiteFrame>
+        <SiteFrame frame={<Frame />} nav={<Nav />} closing={<ClosingFilm />} footer={<Footer />}>{children}</SiteFrame>
       </body>
     </html>
   )

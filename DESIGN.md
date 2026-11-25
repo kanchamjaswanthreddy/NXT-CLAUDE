@@ -1,10 +1,26 @@
 # NXT Financial Group: design notes
 
-The site is built like a product page from Apple or Tesla: film and photography carry it, the
-type is one quiet typeface set large, and the motion is tied to scrolling. One device runs through
-every page: **the frame**. The home page opens on a film that fills the screen and draws back into
-a rounded frame as you scroll; every page ends on the same shore in evening light, where the frame
-opens back up to fill the screen.
+**Current look (November 2026).** The whole site sits inside one rounded white frame with the logo
+in a notch at its top, after the reference the client chose (a Dribbble concept by Nixtio for an
+insurance agency). Outside the frame is a soft blur of the picture on show; inside it, warm paper,
+white tiles, navy-black panels, large light type and one amber accent. It is built from scratch
+with NXT's own pictures and copy; none of the reference's prices or figures are used.
+
+- **Frame** (`components/Frame.tsx`, `.frame-*` and `.notch` in `globals.css`): fixed, takes no
+  part in layout, the page scrolls normally underneath. The blur outside is one element masked by
+  an SVG with the frame's shape cut out (`--mat-mask`, three sizes); if the mask cannot be drawn,
+  the frame line's own wide shadow is the backdrop. `setBackdrop(src)` changes the picture.
+- **Header** (`components/Nav.tsx`): glass pills either side of the notch that turn white over
+  dark sections (`data-tone="dark"`, `.on-dark`), hide on the way down, and a menu sheet.
+- **Home** (`app/page.tsx`, `app/home.css`, `components/home/`): `Hero` is the sentence
+  "Protect your ..." with five scenes; each has a picture with a depth map (drawn in WebGL so it
+  drifts and dissolves, plain images otherwise), a pinned note and a card. The first scene is also
+  a film. `Hub` pins while six tiles arrive round a shield, gather, and leave "1 carrier" struck
+  out beside "70+". Scene pictures come from `tools/media/scenes.py`.
+- **Other pages** share the new colours, type, buttons, cards, header, closing tile and footer
+  through `globals.css`; their layouts have not been redrawn one by one yet.
+- The paragraphs below this point about film, the old frame and `/preview` describe earlier
+  versions. `/preview` still shows the previous (Alda-style) proposal for comparison.
 
 ## Proposed new direction: `/preview`
 

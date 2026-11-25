@@ -1,202 +1,120 @@
 'use client'
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Menu, X, ChevronDown } from 'lucide-react'
-
-interface DropdownItem {
-  href: string
-  label: string
-}
-
-interface NavItem {
-  key: string
-  href: string
-  label: string
-  children?: DropdownItem[]
-}
-
-const NAV_ITEMS: NavItem[] = [
-  { key: 'solutions', href: '/solutions', label: 'Solutions' },
-  {
-    key: 'about',
-    href: '/about',
-    label: 'About',
-    children: [
-      { href: '/about', label: 'About Us' },
-      { href: '/about#why-nxt', label: 'Why NXT' },
-      { href: '/about#team', label: 'Meet Our Team' },
-      { href: '/contact', label: 'Contact an Agent' },
-    ],
-  },
-  {
-    key: 'calculators',
-    href: '/calculators',
-    label: 'Calculators',
-    children: [
-      { href: '/calculators#life', label: 'Life Insurance Needs' },
-      { href: '/calculators#income', label: 'Retirement Income Gap' },
-      { href: '/calculators#annuity', label: 'Annuity Calculator' },
-      { href: '/calculators#401k', label: '401(k) Calculator' },
-      { href: '/calculators#mortgage', label: 'Mortgage Calculator' },
-      { href: '/calculators#care', label: 'Care Cost Calculator' },
-      { href: '/calculators#rule72', label: 'Rule of 72' },
-      { href: '/calculators#smoking', label: 'Smoking Cost' },
-      { href: '/calculators#breakfast', label: 'Breakfast Savings' },
-    ],
-  },
-  { key: 'carriers', href: '/carriers', label: 'Carriers' },
-  { key: 'nxt-life', href: '/nxt-life', label: 'NXT Life' },
-  { key: 'insights', href: '/insights', label: 'Insights' },
-  { key: 'careers', href: '/careers', label: 'Careers' },
-]
-
-const MOBILE_SECTIONS = [
-  { heading: null, links: [{ href: '/', label: 'Home' }, { href: '/solutions', label: 'Solutions' }] },
-  { heading: 'About', links: NAV_ITEMS[1].children! },
-  { heading: 'Calculators', links: NAV_ITEMS[2].children! },
-  { heading: null, links: [{ href: '/carriers', label: 'Carriers' }, { href: '/nxt-life', label: 'NXT Life' }, { href: '/insights', label: 'Insights' }, { href: '/careers', label: 'Careers' }] },
-]
+import { Menu, Phone, X } from 'lucide-react'
+import { solutions } from '@/lib/solutions'
 
 const LOGIN = 'https://crm.nxtfinancialgroup.com/auth/login'
-const linkClass = (active: boolean) => `nav-link relative flex items-center gap-1 py-2 text-[.875rem] tracking-[-.01em] ${active ? 'font-medium' : ''}`
+const PILLS = [['/solutions', 'Solutions'], ['/carriers', 'Carriers'], ['/about', 'About'], ['/insights', 'Insights']] as const
+
+const GROUPS: { title: string; links: [string, string][] }[] = [
+  { title: 'Solutions', links: solutions.map((s) => [`/solutions/${s.slug}`, s.title] as [string, string]) },
+  { title: 'Company', links: [['/about', 'About NXT'], ['/about#team', 'Meet our team'], ['/carriers', 'Carriers'], ['/nxt-life', 'NXT Life'], ['/insights', 'Insights'], ['/careers', 'Careers'], ['/partner', 'For advisors'], ['/contact', 'Contact an agent']] },
+  { title: 'Tools', links: [['/calculators', 'Calculators'], ['/resources', 'Planning tools'], ['/referral', 'Refer a friend'], ['/solutions', 'All solutions']] },
+]
+
+/** Sections the header should turn white over: anything marked dark, wide enough to sit under it. */
+const DARK = '[data-tone="dark"], main .on-dark, .footer'
 
 /**
- * Site header. Clear over the top of each page, frosted glass once the page has moved or a menu
- * is open, and dark glass with white type while a dark section is passing underneath.
+ * Site header: glass pills inside the frame, either side of the logo's notch. The pills turn
+ * white-on-glass over pictures and dark sections, step out of the way while the page is read
+ * downwards and return on the way back up. Everything else lives in the menu sheet.
  */
 export default function Nav() {
-  const pathname = usePathname()
+  const pathname = usePathname() ?? ''
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [dark, setDark] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [tone, setTone] = useState<'light' | 'dark'>('light')
+  const [hide, setHide] = useState(false)
+  const button = useRef<HTMLButtonElement>(null)
+  const sheet = useRef<HTMLDivElement>(null)
 
+  const close = useCallback(() => setOpen(false), [])
+  useEffect(() => { setOpen(false) }, [pathname])
+
+  // Tone and hiding follow the scroll.
   useEffect(() => {
-    // Full-width dark sections of the current page. The closing film is left out: it arrives as
-    // a window on white, so the light bar is right for it.
-    const sections = () => Array.from(document.querySelectorAll<HTMLElement>('main .on-dark')).filter((el) => el.offsetWidth >= window.innerWidth * 0.9)
-    let list = sections()
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-      setDark(list.some((el) => { const r = el.getBoundingClientRect(); return r.top <= 30 && r.bottom >= 30 }))
+    let zones: [number, number][] = []
+    let last = window.scrollY
+    let raf = 0
+    const measure = () => {
+      const y = window.scrollY
+      zones = Array.from(document.querySelectorAll<HTMLElement>(DARK))
+        .filter((el) => el.offsetWidth >= window.innerWidth * 0.6)
+        .map((el) => { const r = el.getBoundingClientRect(); return [r.top + y, r.bottom + y] as [number, number] })
+      apply()
     }
-    handleScroll()
-    const refresh = window.setTimeout(() => { list = sections(); handleScroll() }, 400)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleScroll)
-    return () => { window.clearTimeout(refresh); window.removeEventListener('scroll', handleScroll); window.removeEventListener('resize', handleScroll) }
+    const apply = () => {
+      raf = 0
+      const y = window.scrollY
+      const probe = y + 48
+      setTone(zones.some(([a, b]) => probe >= a && probe < b) ? 'dark' : 'light')
+      if (y < 200) setHide(false)
+      else if (y > last + 6) setHide(true)
+      else if (y < last - 6) setHide(false)
+      last = y
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(apply) }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(document.body)
+    const settle = window.setTimeout(measure, 600)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', measure)
+    return () => { cancelAnimationFrame(raf); window.clearTimeout(settle); ro.disconnect(); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', measure) }
   }, [pathname])
 
+  // While the menu is open: hold the page still, close on Escape, and keep focus in the sheet.
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); button.current?.focus() } }
+    window.addEventListener('keydown', onKey)
+    window.__lenis?.stop()
+    const html = document.documentElement
+    const was = html.style.overflow
+    html.style.overflow = 'hidden'
+    sheet.current?.querySelector<HTMLElement>('button, a')?.focus()
+    return () => { window.removeEventListener('keydown', onKey); window.__lenis?.start(); html.style.overflow = was }
   }, [open])
 
-  useEffect(() => { setActiveDropdown(null); setOpen(false) }, [pathname])
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setActiveDropdown(null); setOpen(false) } }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
-
-  const show = useCallback((key: string) => {
-    if (closeTimeoutRef.current) { clearTimeout(closeTimeoutRef.current); closeTimeoutRef.current = null }
-    setActiveDropdown(key)
-  }, [])
-  const hideSoon = useCallback(() => { closeTimeoutRef.current = setTimeout(() => setActiveDropdown(null), 160) }, [])
-
-  const isActive = (item: NavItem): boolean => {
-    const base = item.href.split('#')[0]
-    if (pathname === base || pathname?.startsWith(base + '/')) return true
-    return Boolean(item.children?.some((c) => { const b = c.href.split('#')[0]; return pathname === b || pathname?.startsWith(b + '/') }))
-  }
+  const current = (href: string) => (pathname === href || (href !== '/' && pathname.startsWith(href + '/')) ? 'page' as const : undefined)
 
   return (
     <>
-      <header className="nav fixed inset-x-0 top-0 z-50" data-solid={scrolled || open || activeDropdown !== null} data-tone={dark && !open ? 'dark' : 'light'}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-full focus:bg-midnight focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
-
-        <nav aria-label="Main" className="mx-auto flex h-[60px] max-w-[1480px] items-center justify-between gap-6 px-[22px] md:px-[44px]">
-          <Link href="/" onClick={() => setOpen(false)} aria-label="NXT Financial Group home" className="nav-logo shrink-0">
-            <Image src="/media/logo.png" alt="NXT Financial Group" width={200} height={88} priority className="h-[38px] w-auto" />
-            <Image src="/media/logo-white.png" alt="" aria-hidden="true" width={200} height={88} className="h-[38px] w-auto" />
-          </Link>
-
-          <ul className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-8">
-            {NAV_ITEMS.map((item) => {
-              const active = isActive(item)
-              const expanded = activeDropdown === item.key
-              return (
-                <li key={item.key} className="relative" onMouseEnter={item.children ? () => show(item.key) : undefined} onMouseLeave={item.children ? hideSoon : undefined}>
-                  {item.children ? (
-                    <button type="button" className={linkClass(active)} data-active={active} aria-expanded={expanded} aria-haspopup="true" onClick={() => setActiveDropdown(expanded ? null : item.key)}>
-                      {item.label}
-                      <ChevronDown size={13} className={`transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} />
-                    </button>
-                  ) : (
-                    <Link href={item.href} className={linkClass(active)} data-active={active} aria-current={active ? 'page' : undefined}>{item.label}</Link>
-                  )}
-
-                  <AnimatePresence>
-                    {item.children && expanded && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                        className="nav-menu absolute left-1/2 top-full z-50 mt-2 min-w-[232px] -translate-x-1/2 p-2"
-                      >
-                        {item.children.map((child) => (
-                          <Link key={child.href} href={child.href} onClick={() => setActiveDropdown(null)} className="block rounded-xl px-3.5 py-2.5 text-[.9375rem] text-ink transition-colors hover:bg-midnight/[.06]">
-                            {child.label}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </li>
-              )
-            })}
-          </ul>
-
-          <div className="hidden items-center gap-5 lg:flex">
-            <a href={LOGIN} target="_blank" rel="noopener noreferrer" className="nav-link text-[.875rem]">Agent login</a>
-            <Link href="/get-started" className="btn btn-primary btn-sm">Get started</Link>
-          </div>
-
-          <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls="mobile-nav" aria-label={open ? 'Close menu' : 'Open menu'} className="nav-burger relative z-[60] -mr-2 flex h-11 w-11 items-center justify-center rounded-full lg:hidden">
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-1/2 focus:top-24 focus:z-[90] focus:-translate-x-1/2 focus:rounded-full focus:bg-midnight focus:px-5 focus:py-3 focus:text-white">Skip to content</a>
+      <header className="nav" data-tone={tone} data-hide={hide && !open}>
+        <nav className="nav-group" aria-label="Main">
+          {PILLS.map(([href, label]) => <Link key={href} href={href} className="nav-pill nav-wide" aria-current={current(href)}>{label}</Link>)}
+          <a href="tel:8572053333" className="nav-pill nav-icon min-[1100px]:hidden" aria-label="Call 857-205-3333"><Phone size={16} aria-hidden="true" /></a>
         </nav>
+        <div className="nav-group">
+          <a href="tel:8572053333" className="nav-pill nav-wide"><Phone size={14} aria-hidden="true" />857-205-3333</a>
+          <Link href="/get-started" className="nav-pill nav-cta nav-mid">Get started</Link>
+          <button ref={button} type="button" className="nav-pill nav-icon" aria-label="Menu" aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen((o) => !o)}><Menu size={17} aria-hidden="true" /></button>
+        </div>
       </header>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div id="mobile-nav" data-lenis-prevent initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="fixed inset-x-0 bottom-0 top-[60px] z-[49] overflow-y-auto bg-white lg:hidden">
-            <div className="container flex flex-col pb-10 pt-2">
-              {MOBILE_SECTIONS.map((section, sectionIdx) => (
-                <div key={sectionIdx} className="flex flex-col">
-                  {section.heading && <p className="mb-1 mt-8 text-[.8125rem] font-medium text-ink-soft">{section.heading}</p>}
-                  {section.links.map(({ href, label }) => (
-                    <Link key={href} href={href} onClick={() => setOpen(false)} className={`block border-b border-midnight/10 font-semibold tracking-[-.03em] text-midnight ${section.heading ? 'py-3 text-[1.25rem]' : 'py-4 text-[1.75rem]'}`}>
-                      {label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-              <div className="mt-9 flex flex-col gap-3">
-                <Link href="/get-started" onClick={() => setOpen(false)} className="btn btn-primary">Get started</Link>
-                <a href={LOGIN} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="btn btn-outline">Agent login</a>
-              </div>
+      <div className="menu-scrim" data-open={open} onClick={close} aria-hidden="true" />
+      <div ref={sheet} id="site-menu" className="menu" data-open={open} role="dialog" aria-modal="true" aria-label="Menu" inert={!open}>
+        <div className="menu-head">
+          <span>Menu</span>
+          <button type="button" className="round-btn !h-10 !w-10" aria-label="Close the menu" onClick={() => { close(); button.current?.focus() }}><X size={17} aria-hidden="true" /></button>
+        </div>
+        {GROUPS.map((g) => (
+          <nav key={g.title} className="menu-group" aria-label={g.title}>
+            <p>{g.title}</p>
+            <div className="menu-links">
+              {g.links.map(([href, label]) => <Link key={href} href={href} onClick={close} aria-current={current(href)}>{label}</Link>)}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </nav>
+        ))}
+        <div className="menu-foot">
+          <Link href="/get-started" onClick={close} className="btn btn-primary">Get started</Link>
+          <a href={LOGIN} target="_blank" rel="noopener noreferrer" onClick={close} className="btn btn-outline">Agent login</a>
+          <a href="tel:8572053333" className="menu-tel"><Phone size={15} aria-hidden="true" />857-205-3333</a>
+        </div>
+      </div>
     </>
   )
 }

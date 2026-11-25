@@ -4,9 +4,9 @@ import { useState } from 'react'
 export default function Newsletter() {
   const [done, setDone] = useState(false)
   return (
-    <section aria-labelledby="brief-h" className="bg-white pb-[clamp(5rem,11vw,10rem)]">
+    <section aria-labelledby="brief-h" className="pb-[clamp(3rem,6vw,5rem)] pt-[clamp(4.5rem,10vw,9rem)]">
       <div className="container">
-        <div className="tile grid grid-cols-1 gap-10 px-7 py-12 md:px-14 md:py-16 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-20">
+        <div className="tile grid grid-cols-1 !bg-white gap-10 px-7 py-12 md:px-14 md:py-16 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-20">
           <div>
             <p className="chip mb-4">The NXT Brief</p>
             <h2 id="brief-h" className="display">Retirement, one idea at a time.</h2>
