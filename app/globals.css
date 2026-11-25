@@ -520,3 +520,25 @@
   }
   @keyframes shutter { from { clip-path: inset(16% 12% round 40px); } to { clip-path: inset(0 0 round 0px); } }
 }
+
+/* ================= Page change curtains and the back-to-top ring ================= */
+@layer components {
+  .curtain { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: var(--color-midnight); clip-path: inset(0 0 100% 0); pointer-events: none; animation: curtain 1s cubic-bezier(.76, 0, .24, 1) .28s backwards; }
+  .curtain img { width: clamp(150px, 18vw, 250px); height: auto; animation: curtain-logo 1s ease .0s both; }
+  .curtain-b { z-index: 79; background: var(--color-sunrise); animation-delay: .42s; }
+  .page-in { animation: page-in 1.1s var(--ease-out-expo) .55s backwards; }
+  @keyframes curtain { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+  @keyframes curtain-logo { 0% { opacity: 0; scale: .9; } 30% { opacity: 1; scale: 1; } 100% { opacity: 1; translate: 0 -40px; } }
+  @keyframes page-in { from { opacity: 0; translate: 0 60px; } }
+  @media print { .curtain { display: none; } }
+
+  .totop { position: fixed; z-index: 74; right: calc(var(--fi) + 18px); bottom: calc(var(--fi) + 18px); width: 52px; height: 52px; padding: 0; border: 0; border-radius: 50%; background: var(--color-midnight); color: #fff; cursor: pointer; opacity: 0; translate: 0 20px; scale: .7; pointer-events: none; box-shadow: 0 18px 40px -16px rgba(12, 16, 34, .7); transition: opacity .4s ease, translate .6s var(--ease-out-expo), scale .6s var(--ease-out-expo); }
+  .totop[data-on] { opacity: 1; translate: 0 0; scale: 1; pointer-events: auto; }
+  .totop:hover { scale: 1.1; }
+  .totop svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .totop circle { stroke: rgba(255, 255, 255, .16); stroke-width: 2.5; }
+  .totop circle + circle { stroke: var(--color-sunrise); stroke-dasharray: 100; stroke-dashoffset: 0; transform: rotate(-90deg); transform-origin: 50% 50%; }
+  @supports (animation-timeline: scroll()) { .totop circle + circle { animation: totop linear both; animation-timeline: scroll(root); } }
+  @keyframes totop { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+  @media print { .totop { display: none; } }
+}

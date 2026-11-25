@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 const TILT = '.card, main .tile, .sit, .sol, .stats li, .versus, .steps li'
 const PULL = '.btn-primary, .btn-cta, .btn-light, .nav-cta'
@@ -13,19 +14,27 @@ const PULL = '.btn-primary, .btn-cta, .btn-light, .nav-cta'
  */
 export default function Fx() {
   const cur = useRef<HTMLDivElement>(null)
+  const path = usePathname()
+  const [deep, setDeep] = useState(false)
 
+  // mark sections as they arrive; re-armed on every page change
   useEffect(() => {
     const io = new IntersectionObserver((es) => {
       for (const e of es) if (e.isIntersecting) { (e.target as HTMLElement).dataset.in = ''; io.unobserve(e.target) }
     }, { rootMargin: '0px 0px -18% 0px' })
-    const watch = () => document.querySelectorAll('main section, .footer, .closing-tile').forEach((el) => { if (!('in' in (el as HTMLElement).dataset)) io.observe(el) })
-    watch()
-    const mo = new MutationObserver(watch)
-    const main = document.querySelector('main')
-    if (main) mo.observe(main, { childList: true })
+    document.querySelectorAll('main section, .footer, .closing-tile').forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [path])
 
+  useEffect(() => {
+    const on = () => setDeep(scrollY > 700)
+    on(); addEventListener('scroll', on, { passive: true })
+    return () => removeEventListener('scroll', on)
+  }, [])
+
+  useEffect(() => {
     const fine = matchMedia('(hover: hover) and (pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!fine) return () => { io.disconnect(); mo.disconnect() }
+    if (!fine) return
 
     const el = cur.current
     let x = innerWidth / 2, y = innerHeight / 2, tx = x, ty = y, raf = 0, lit: HTMLElement | null = null, pulled: HTMLElement | null = null
@@ -58,8 +67,19 @@ export default function Fx() {
     const leave = () => { clear(); if (el) delete el.dataset.on }
     addEventListener('pointermove', move, { passive: true })
     document.documentElement.addEventListener('pointerleave', leave)
-    return () => { io.disconnect(); mo.disconnect(); removeEventListener('pointermove', move); document.documentElement.removeEventListener('pointerleave', leave); cancelAnimationFrame(raf); clear() }
+    return () => { removeEventListener('pointermove', move); document.documentElement.removeEventListener('pointerleave', leave); cancelAnimationFrame(raf); clear() }
   }, [])
 
-  return <div ref={cur} className="cur" aria-hidden="true"><i /></div>
+  const top = () => {
+    const l = (window as unknown as { __lenis?: { scrollTo: (y: number) => void } }).__lenis
+    if (l) l.scrollTo(0); else scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  return (
+    <>
+      <div ref={cur} className="cur" aria-hidden="true"><i /></div>
+      <button type="button" className="totop" data-on={deep || undefined} onClick={top} aria-label="Back to top" tabIndex={deep ? 0 : -1}>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" /><circle cx="24" cy="24" r="21" pathLength="100" /><path d="M24 31V18M18 23l6-6 6 6" /></svg>
+      </button>
+    </>
+  )
 }
