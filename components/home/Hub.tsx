@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import Link from 'next/link'
 import { Car, HeartHandshake, ShieldCheck, Stethoscope, Sunrise, Users, Wallet, type LucideIcon } from 'lucide-react'
 
-export interface HubTile { slug: string; title: string; carriers: number }
+export interface HubTile { slug: string; title: string; short: string; carriers: number }
 
 const ICONS: Record<string, LucideIcon> = {
   annuities: Sunrise, 'life-insurance': Users, 'care-planning': HeartHandshake, 'medicare-planning': Stethoscope, 'disability-income': Wallet, 'home-auto': Car,
@@ -11,7 +12,8 @@ const v = (vars: Record<string, string | number>) => vars as CSSProperties
 const LIVE = '(prefers-reduced-motion: no-preference) and (min-height: 560px)'
 
 /**
- * One advisor, every option: the six kinds of cover arrive around a shield one at a time, gather
+ * One advisor, every option: the six kinds of cover arrive around a shield one at a time (the words
+ * beside it say what each one is for), gather
  * into it, and leave a single comparison behind: one carrier with a captive agent, seventy with us.
  *
  * With motion allowed the section holds still while it is scrolled through and the scroll picks
@@ -70,22 +72,43 @@ export default function Hub({ tiles, total }: { tiles: HubTile[]; total: string 
   }, [step, live, goal])
 
   const suffix = total.replace(/^\d+/, '')
+  const now = live && step === 1 && shown > 0 ? shown - 1 : -1
+  const cur = now >= 0 ? tiles[now] : null
   return (
     <section ref={root} className="hub" data-live={live || undefined} data-step={live ? step : undefined} aria-labelledby="hub-h">
       <div className="hub-stage">
+        <div className="hub-copy">
+          <p className="chip">One advisor</p>
+          <h2 id="hub-h" className="hub-title">Every kind of cover, with one advisor in the middle<span className="dot">.</span></h2>
+          <p className="hub-lead">Six areas of cover, each with its own carriers. One person compares them for you.</p>
+          <div className="hub-now" aria-hidden="true">
+            <div className="hub-ticks">{tiles.map((t, k) => <i key={t.slug} data-on={k < shown || undefined} />)}</div>
+            {cur ? (
+              <div key={cur.slug} className="hub-now-card">
+                <b>{cur.title}</b>
+                <span>{cur.short}</span>
+                <small>{cur.carriers} carriers compared</small>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
         <div className="hub-web" style={v({ '--n': tiles.length })}>
+          <span className="hub-glow" aria-hidden="true" />
+          <span className="hub-ring" aria-hidden="true" />
+          <span className="hub-ring" aria-hidden="true" />
           <span className="hub-core" aria-hidden="true"><ShieldCheck strokeWidth={1.6} /></span>
           <ul>
             {tiles.map((t, k) => {
               const Icon = ICONS[t.slug] ?? ShieldCheck
               return (
-                <li key={t.slug} style={v({ '--i': k })} data-on={!live || k < shown || undefined}>
+                <li key={t.slug} style={v({ '--i': k })} data-on={!live || k < shown || undefined} data-now={k === now || undefined}>
                   <i aria-hidden="true" />
-                  <span className="hub-tile">
-                    <Icon size={17} strokeWidth={1.75} aria-hidden="true" />
+                  <Link href={`/solutions/${t.slug}`} className="hub-tile">
+                    <span className="hub-ic" aria-hidden="true"><Icon strokeWidth={1.75} /></span>
                     <b>{t.title}</b>
                     <small>{t.carriers} carriers</small>
-                  </span>
+                  </Link>
                 </li>
               )
             })}
@@ -94,7 +117,7 @@ export default function Hub({ tiles, total }: { tiles: HubTile[]; total: string 
 
         <div className="hub-sum">
           <span className="hub-badge" aria-hidden="true"><ShieldCheck strokeWidth={1.6} /></span>
-          <h2 id="hub-h" className="hub-h">Compare them all with one advisor<span className="dot">.</span></h2>
+          <p className="hub-h">Compare them all with one advisor<span className="dot">.</span></p>
           <p className="hub-old"><span><b>1</b> carrier</span> with a captive agent</p>
           <p className="hub-new"><b>{live ? count : goal}{suffix}</b><span>carriers</span></p>
           <p className="hub-note"><span className="hub-save">No cost to you</span>A-rated carriers only, licensed in 50 states</p>

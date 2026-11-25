@@ -86,7 +86,7 @@ export default function Home() {
       <Hero scenes={SCENES} />
 
       {/* ONE ADVISOR, EVERY OPTION */}
-      <Hub tiles={solutions.map((s) => ({ slug: s.slug, title: s.title, carriers: carriersFor(s.slug) }))} total="70+" />
+      <Hub tiles={solutions.map((s) => ({ slug: s.slug, title: s.title, short: s.short, carriers: carriersFor(s.slug) }))} total="70+" />
 
       {/* WHERE ARE YOU RIGHT NOW */}
       <section className="section" aria-labelledby="sit-h">
