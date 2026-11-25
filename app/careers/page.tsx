@@ -105,8 +105,8 @@ export default function CareersPage() {
                 >
                   <span className="shrink-0 font-display text-3xl font-semibold text-navy">{i + 1}.</span>
                   <div className="flex-1">
-                    <h3 className="mb-2 text-[15px] font-semibold text-navy">{reason.title}</h3>
-                    <p className="text-[14px] leading-relaxed text-ink-soft">{reason.desc}</p>
+                    <h3 className="mb-2 text-[17px] font-semibold text-navy">{reason.title}</h3>
+                    <p className="text-[16px] leading-relaxed text-ink-soft">{reason.desc}</p>
                   </div>
                 </Item>
               )
@@ -141,9 +141,9 @@ export default function CareersPage() {
                 className="card flex flex-col justify-between rounded-[24px] p-8"
               >
                 <div>
-                  <span className="inline-block rounded-full bg-navy/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-navy">{pos.dept}</span>
+                  <span className="inline-block rounded-full bg-navy/8 px-3 py-1 text-[13px] font-semibold uppercase tracking-wider text-navy">{pos.dept}</span>
                   <h3 className="display-sm mt-3">{pos.title}</h3>
-                  <p className="mt-2 text-[15px] text-ink-soft">
+                  <p className="mt-2 text-[17px] text-ink-soft">
                     {pos.location} &middot; {pos.type}
                   </p>
                 </div>

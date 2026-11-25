@@ -17,7 +17,7 @@ export default function SolutionCards() {
             </div>
             <h2 className="display-sm mt-6">{s.title}</h2>
             <p className="mt-2 text-ink-soft">{s.short}</p>
-            <p className="mt-3 text-[.9375rem] text-ink-soft">{s.sub.map((p) => p.name).join(', ')}.</p>
+            <p className="mt-3 text-[1.0625rem] text-ink-soft">{s.sub.map((p) => p.name).join(', ')}.</p>
             <span className="link mt-4">See {s.title} <ChevronRight size={17} /></span>
           </Link>
         </Item>

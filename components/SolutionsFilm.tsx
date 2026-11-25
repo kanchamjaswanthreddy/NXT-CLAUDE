@@ -135,9 +135,9 @@ export default function SolutionsFilm() {
                       <div className="seq-body" inert={!on}>
                         <div>
                           <div className="seq-body-pad">
-                            <p className="mt-2 text-[1.0625rem] leading-snug md:text-[1.1875rem]">{s.short}</p>
-                            <p className="mt-3 text-[.9375rem] leading-relaxed !text-silver">{s.sub.map((p) => p.name).join(', ')}.</p>
-                            <Link href={`/solutions/${s.slug}`} className="link mt-4 text-[.9375rem]">Explore {s.title.toLowerCase() === 'medicare planning' ? 'Medicare planning' : s.title.toLowerCase()} <ChevronRight size={16} /></Link>
+                            <p className="mt-2 text-[1.1875rem] leading-snug md:text-[1.1875rem]">{s.short}</p>
+                            <p className="mt-3 text-[1.0625rem] leading-relaxed !text-silver">{s.sub.map((p) => p.name).join(', ')}.</p>
+                            <Link href={`/solutions/${s.slug}`} className="link mt-4 text-[1.0625rem]">Explore {s.title.toLowerCase() === 'medicare planning' ? 'Medicare planning' : s.title.toLowerCase()} <ChevronRight size={16} /></Link>
                           </div>
                         </div>
                       </div>

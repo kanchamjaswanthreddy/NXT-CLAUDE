@@ -274,10 +274,10 @@ export default function Home() {
               <Item as="li" key={p.slug}>
                 <Link href={`/insights/${p.slug}`} className="group block">
                   <div className="tile aspect-[4/3] bg-platinum"><Image src={small(p.image)} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.045]" /></div>
-                  <p className="mt-6 text-[.875rem] text-ink-soft">{p.date}, {p.readTime}</p>
+                  <p className="mt-6 text-[1rem] text-ink-soft">{p.date}, {p.readTime}</p>
                   <h3 className="mt-2 text-[1.375rem] font-medium leading-[1.18] tracking-[-.03em] text-midnight">{p.title}</h3>
-                  <p className="mt-3 text-[.9375rem] text-ink-soft">{p.excerpt}</p>
-                  <span className="link mt-4 text-[.9375rem]">Read the full story <ChevronRight size={16} /></span>
+                  <p className="mt-3 text-[1.0625rem] text-ink-soft">{p.excerpt}</p>
+                  <span className="link mt-4 text-[1.0625rem]">Read the full story <ChevronRight size={16} /></span>
                 </Link>
               </Item>
             ))}

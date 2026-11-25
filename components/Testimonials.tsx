@@ -36,14 +36,14 @@ export default function Testimonials() {
         {TESTIMONIALS.map((t) => (
           <li key={t.name} className="flex">
             <figure className="flex w-full flex-col rounded-[28px] bg-white p-7 md:p-9">
-              <blockquote className="flex-1"><p className="text-[1.0625rem] leading-[1.55] text-ink md:text-[1.125rem]">&ldquo;{t.quote}&rdquo;</p></blockquote>
+              <blockquote className="flex-1"><p className="text-[1.1875rem] leading-[1.55] text-ink md:text-[1.125rem]">&ldquo;{t.quote}&rdquo;</p></blockquote>
               <figcaption className="mt-8 flex items-center gap-4">
                 {t.image ? (
                   <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-platinum"><Image src={t.image} alt="" fill sizes="48px" className="object-cover" /></span>
                 ) : (
-                  <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-midnight text-[.875rem] font-semibold text-white">{t.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}</span>
+                  <span aria-hidden="true" className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-midnight text-[1rem] font-semibold text-white">{t.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}</span>
                 )}
-                <span><span className="block font-semibold tracking-[-.015em] text-midnight">{t.name}</span><span className="block text-[.875rem] text-ink-soft">{t.role}</span></span>
+                <span><span className="block font-semibold tracking-[-.015em] text-midnight">{t.name}</span><span className="block text-[1rem] text-ink-soft">{t.role}</span></span>
               </figcaption>
             </figure>
           </li>

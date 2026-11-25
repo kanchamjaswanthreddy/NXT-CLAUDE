@@ -125,10 +125,10 @@ export default function HomeAutoPage() {
                   <Icon size={22} className="text-gold" />
                 </div>
                 <h3 className="display-sm mb-3">{title}</h3>
-                <p className="mb-5 text-[15px] leading-relaxed text-ink-soft">{summary}</p>
+                <p className="mb-5 text-[17px] leading-relaxed text-ink-soft">{summary}</p>
                 <ul className="mt-auto space-y-2 border-t border-platinum pt-5">
                   {details.map((d) => (
-                    <li key={d} className="flex items-start gap-2 text-[13px] text-ink-soft">
+                    <li key={d} className="flex items-start gap-2 text-[15px] text-ink-soft">
                       <Check size={14} className="mt-0.5 shrink-0 text-gold" />
                       {d}
                     </li>
@@ -156,8 +156,8 @@ export default function HomeAutoPage() {
               {BUNDLE_BENEFITS.map(({ title, desc }, idx) => (
                 <div key={title} className="card rounded-[20px] p-6">
                   <span className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-navy font-display text-sm font-semibold text-gold">{idx + 1}</span>
-                  <h3 className="mb-2 text-[15px] font-semibold text-navy">{title}</h3>
-                  <p className="text-[14px] leading-relaxed text-ink-soft">{desc}</p>
+                  <h3 className="mb-2 text-[17px] font-semibold text-navy">{title}</h3>
+                  <p className="text-[16px] leading-relaxed text-ink-soft">{desc}</p>
                 </div>
               ))}
             </div>
@@ -173,7 +173,7 @@ export default function HomeAutoPage() {
             <h2 className="display-sm mb-6">It usually fits when</h2>
             <ul className="space-y-4">
               {s.fit.map((f) => (
-                <li key={f} className="flex gap-3 text-[16px]">
+                <li key={f} className="flex gap-3 text-[18px]">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-midnight"><Check size={11} strokeWidth={3} /></span>
                   {f}
                 </li>
@@ -187,7 +187,7 @@ export default function HomeAutoPage() {
               {s.process.map((p, n) => (
                 <li key={p} className="flex gap-4">
                   <span className="numeral text-2xl">0{n + 1}</span>
-                  <p className="pt-1 text-[16px]">{p}</p>
+                  <p className="pt-1 text-[18px]">{p}</p>
                 </li>
               ))}
             </ol>
@@ -214,7 +214,7 @@ export default function HomeAutoPage() {
               <Item key={title} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
                 <Icon size={22} className="mb-4 text-gold" />
                 <h3 className="mb-2 font-display text-lg font-semibold text-white">{title}</h3>
-                <p className="text-[14px] leading-relaxed text-platinum/60">{desc}</p>
+                <p className="text-[16px] leading-relaxed text-platinum/60">{desc}</p>
               </Item>
             ))}
           </Stagger>
@@ -255,11 +255,11 @@ export default function HomeAutoPage() {
             {FAQ.map(({ q, a }) => (
               <Reveal key={q}>
                 <details className="group py-6">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-semibold text-navy">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[19px] font-semibold text-navy">
                     {q}
                     <ChevronDown size={18} className="shrink-0 text-ink-soft transition-transform group-open:rotate-180" />
                   </summary>
-                  <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">{a}</p>
+                  <p className="mt-4 text-[17px] leading-relaxed text-ink-soft">{a}</p>
                 </details>
               </Reveal>
             ))}

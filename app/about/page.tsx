@@ -102,7 +102,7 @@ function AgentsByState() {
                     </div>
                   )}
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-display text-[15px] font-semibold text-navy">{agent.name}</h4>
+                    <h4 className="font-display text-[17px] font-semibold text-navy">{agent.name}</h4>
                     <p className="text-xs text-gold">{agent.rank}</p>
                     <p className="mt-0.5 text-xs text-ink-soft">{agent.city}, {agent.state}</p>
                   </div>
@@ -137,7 +137,7 @@ export default function AboutPage() {
             <p className="label-sm mb-5">Our story</p>
             <h2 className="display">The old model was not built for the people working inside it.</h2>
           </Reveal>
-          <Reveal delay={0.1} className="space-y-5 text-[17px] leading-8">
+          <Reveal delay={0.1} className="space-y-5 text-[19px] leading-8">
             <p>NXT Financial Group was founded on a simple frustration: the financial services industry was not built for the people working inside it. Advisors were capped. Clients were confused. The old model rewarded institutions over individuals, and the people doing the hardest work — sitting across from families, asking the difficult questions, building trust one conversation at a time — had no real ownership of what they were building.</p>
             <p>We decided to change that. NXT Financial Group is a licensed Independent Marketing Organization (IMO) appointed with 70+ top-rated U.S. carriers across life, health, annuity, and wealth products. We operate as a nationwide platform where advisors are not just producers — they are owners.</p>
             <p>On the client side, our advisors are trained to lead with education, not sales. They sit down with families, listen first, and build protection plans that make sense — clearly explained, honestly priced, and built to last.</p>
@@ -184,7 +184,7 @@ export default function AboutPage() {
                   <Icon size={22} className="text-gold" />
                 </div>
                 <h3 className="display-sm">{title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">{desc}</p>
+                <p className="mt-3 text-[17px] leading-relaxed text-ink-soft">{desc}</p>
               </Item>
             ))}
           </Stagger>
@@ -203,7 +203,7 @@ export default function AboutPage() {
           <Reveal delay={0.1}>
             <ul className="space-y-4">
               {ADVISOR_BENEFITS.map((benefit) => (
-                <li key={benefit} className="flex gap-3 text-[16px] text-platinum">
+                <li key={benefit} className="flex gap-3 text-[18px] text-platinum">
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold text-midnight">
                     <CheckCircle size={12} strokeWidth={3} />
                   </span>
@@ -237,7 +237,7 @@ export default function AboutPage() {
                 </span>
                 <div className="md:contents">
                   <h3 className="font-display text-2xl font-semibold text-navy md:text-[1.75rem]">{word}</h3>
-                  <p className="col-span-2 mt-2 text-[16px] leading-relaxed text-ink-soft md:col-span-1 md:mt-0">{desc}</p>
+                  <p className="col-span-2 mt-2 text-[18px] leading-relaxed text-ink-soft md:col-span-1 md:mt-0">{desc}</p>
                 </div>
               </Item>
             ))}

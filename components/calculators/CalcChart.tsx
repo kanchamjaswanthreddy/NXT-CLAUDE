@@ -61,7 +61,7 @@ function KpiCard({ kpi }: { kpi: Kpi }) {
         )}
       </div>
       <p className="mono text-2xl font-semibold tracking-tight text-navy">{kpi.value}</p>
-      <p className="mt-1 text-[13px] font-semibold text-ink">{kpi.label}</p>
+      <p className="mt-1 text-[15px] font-semibold text-ink">{kpi.label}</p>
       {kpi.sub && <p className="mono mt-1 text-xs font-medium text-ink-soft">{kpi.sub}</p>}
     </div>
   )
@@ -75,8 +75,8 @@ function ProgressBar({ item }: { item: ProgressItem }) {
   return (
     <div>
       <div className="mb-1.5 flex items-baseline justify-between">
-        <span className="text-[13px] font-semibold text-ink">{item.label}</span>
-        <span className="mono text-[13px] font-semibold text-navy">{item.displayValue}</span>
+        <span className="text-[15px] font-semibold text-ink">{item.label}</span>
+        <span className="mono text-[15px] font-semibold text-navy">{item.displayValue}</span>
       </div>
       <div className="h-2 overflow-hidden rounded-full bg-platinum/60">
         <div className="h-full rounded-full transition-all duration-500" style={{ width: `${pct}%`, backgroundColor: item.color }} />
@@ -220,7 +220,7 @@ export default function CalcDashboard({ kpis, children, progress, comparisons }:
       {/* Progress bars */}
       {progress && progress.length > 0 && (
         <div className="space-y-3 rounded-2xl bg-white/60 p-4 ring-1 ring-platinum/40">
-          <p className="text-[13px] font-semibold tracking-tight text-navy">Breakdown</p>
+          <p className="text-[15px] font-semibold tracking-tight text-navy">Breakdown</p>
           {progress.map((p) => <ProgressBar key={p.label} item={p} />)}
         </div>
       )}
@@ -240,7 +240,7 @@ export default function CalcDashboard({ kpis, children, progress, comparisons }:
 export function ChartBlock({ title, children }: ChartSection) {
   return (
     <div className="rounded-2xl bg-white/60 p-4 ring-1 ring-platinum/40">
-      <p className="mb-3 text-[13px] font-semibold tracking-tight text-navy">{title}</p>
+      <p className="mb-3 text-[15px] font-semibold tracking-tight text-navy">{title}</p>
       {children}
     </div>
   )

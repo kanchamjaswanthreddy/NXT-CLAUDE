@@ -35,14 +35,14 @@ export default function ContactPage() {
             <dl className="mt-10 border-t border-midnight/10">
               {INFO.map((item) => (
                 <div key={item.label} className="grid grid-cols-[88px_1fr] gap-4 border-b border-midnight/10 py-4">
-                  <dt className="text-[.9375rem] text-ink-soft">{item.label}</dt>
+                  <dt className="text-[1.0625rem] text-ink-soft">{item.label}</dt>
                   <dd className="font-medium tracking-[-.015em] text-midnight">{item.href ? <a href={item.href} className="hover:underline">{item.value}</a> : item.value}</dd>
                 </div>
               ))}
             </dl>
             <div className="tile mt-10 p-7">
               <h2 className="h3 mb-2">Prefer to talk?</h2>
-              <p className="mb-5 text-[.9375rem] text-ink-soft">Call during business hours and an advisor picks up. Medicare questions are often answered on the first call.</p>
+              <p className="mb-5 text-[1.0625rem] text-ink-soft">Call during business hours and an advisor picks up. Medicare questions are often answered on the first call.</p>
               <a href="tel:8572053333" className="btn btn-primary btn-sm">Call now</a>
             </div>
           </aside>

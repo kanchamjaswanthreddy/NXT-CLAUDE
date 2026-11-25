@@ -21,7 +21,7 @@ export default function Newsletter() {
                 <div className="flex flex-col gap-3 sm:flex-row"><input id="nl-email" type="email" required autoComplete="email" placeholder="you@example.com" className="field flex-1" /><button className="btn btn-primary">Subscribe</button></div>
               </form>
             )}
-            <ul className="mt-6 space-y-1.5 text-[.9375rem] text-ink-soft">
+            <ul className="mt-6 space-y-1.5 text-[1.0625rem] text-ink-soft">
               {['Plain-language explanations', 'Enrollment and deadline reminders', 'What changed in the market this month'].map((t) => <li key={t}>{t}</li>)}
             </ul>
           </div>
