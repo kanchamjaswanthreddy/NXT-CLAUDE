@@ -176,8 +176,8 @@
   .frame-edge { position: fixed; inset: var(--fi); z-index: 70; pointer-events: none; border: var(--fb) solid #fff; border-radius: var(--fr); box-shadow: 0 0 0 100vmax #2b2218; }
   .notch { position: fixed; z-index: 73; top: var(--fi); left: 50%; width: var(--nw); height: var(--nh); translate: -50% 0; }
   .notch svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: #fff; }
-  .notch a { position: relative; display: grid; place-items: center; height: 100%; padding-bottom: 9%; }
-  .notch img { width: auto; height: calc(var(--nh) * .64); }
+  .notch a { position: relative; display: grid; place-items: center; height: 100%; }
+  .notch img { display: block; width: auto; height: calc(var(--nh) * .8); max-width: 56%; object-fit: contain; }
   .notch a:focus-visible { outline-offset: -6px; border-radius: 14px; }
 
   /* ---------- Header: glass pills inside the frame ---------- */

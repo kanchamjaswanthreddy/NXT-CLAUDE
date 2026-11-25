@@ -89,7 +89,7 @@ export default function Home() {
       <Hub tiles={solutions.map((s) => ({ slug: s.slug, title: s.title, short: s.short, carriers: carriersFor(s.slug) }))} total="70+" />
 
       {/* WHERE ARE YOU RIGHT NOW */}
-      <section className="section" aria-labelledby="sit-h">
+      <section className="section fx" aria-labelledby="sit-h">
         <div className="container">
           <Reveal className="sec-head">
             <p className="chip">Start here</p>
@@ -151,7 +151,7 @@ export default function Home() {
       </div>
 
       {/* ONE ADVISOR WHO STAYS */}
-      <section className="section" aria-labelledby="plan-h">
+      <section className="section fx fx-l fx-b" aria-labelledby="plan-h">
         <div className="container grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
           <Reveal>
             <figure className="tile plan-pic">
@@ -172,7 +172,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="section bg-stone" aria-labelledby="how-h">
+      <section className="section bg-stone fx" aria-labelledby="how-h">
         <div className="container">
           <Reveal className="sec-head">
             <p className="chip">How it works</p>
@@ -224,7 +224,7 @@ export default function Home() {
       </section>
 
       {/* CARRIERS */}
-      <section className="section overflow-hidden" aria-labelledby="car-h">
+      <section className="section overflow-hidden fx fx-l" aria-labelledby="car-h">
         <div className="container">
           <Reveal className="sec-head sec-head-center">
             <p className="chip">Trusted partners</p>

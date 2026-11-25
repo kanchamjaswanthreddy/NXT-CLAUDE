@@ -46,7 +46,7 @@ export default function Frame() {
         <svg viewBox="0 0 240 58" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0C26 0 22 58 50 58H190C218 58 214 0 240 0Z" /></svg>
         <Link href="/" aria-label="NXT Financial Group home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/media/logo.png" alt="" width={420} height={186} />
+          <img src="/media/logo-trim.png" alt="" width={420} height={154} />
         </Link>
       </div>
     </>

@@ -329,6 +329,46 @@
   .belt-row { display: flex; gap: 12px; width: max-content; translate: calc(var(--p, .5) * -22% - 1%) 0; }
   .belt-rev { translate: calc(var(--p, .5) * 22% - 26%) 0; }
   .belt-row li { flex: none; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); width: clamp(132px, 13vw, 188px); height: clamp(84px, 8.2vw, 118px); padding: 16px 24px; border-radius: 22px; background: #fff; }
-  .belt-row img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(1); opacity: .78; transition: filter .4s ease, opacity .4s ease; }
-  @media (hover: hover) { .belt-row li:hover img { filter: none; opacity: 1; } }
+  .belt-row img { width: 100%; height: 100%; object-fit: contain; }
+}
+
+/* ================= Graphics: orbits, sweeps and running lines, in the hub's language ================= */
+@layer components {
+  .fx { --fs: clamp(380px, 54vw, 860px); position: relative; overflow: clip; }
+  .fx > * { position: relative; z-index: 1; }
+  .fx::before, .fx::after { content: ""; position: absolute; z-index: 0; border-radius: 50%; pointer-events: none; }
+  .fx::before { top: calc(var(--fs) * -.42); right: calc(var(--fs) * -.3); width: var(--fs); aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 5px, var(--color-sunrise) 0 5px, rgba(246, 165, 43, .25) 6px 10px, rgba(246, 165, 43, 0) 11px), radial-gradient(circle at 50% calc(75% - 1px), var(--color-midnight) 0 3px, rgba(12, 16, 34, 0) 4px), conic-gradient(from 0deg, rgba(246, 165, 43, 0) 0 74%, rgba(246, 165, 43, .26) 99.5%, rgba(246, 165, 43, 0)), repeating-radial-gradient(closest-side, rgba(12, 16, 34, 0) 0, rgba(12, 16, 34, 0) calc(25% - 1.5px), rgba(12, 16, 34, .17) calc(25% - 1.5px), rgba(12, 16, 34, .17) 25%);
+    animation: hub-spin 26s linear infinite; }
+  .fx::after { top: calc(var(--fs) * -.23); right: calc(var(--fs) * -.11); width: calc(var(--fs) * .62); aspect-ratio: 1; border: 1.5px dashed rgba(246, 165, 43, .6); animation: hub-spin 34s linear infinite reverse; }
+  .fx-l::before { right: auto; left: calc(var(--fs) * -.3); }
+  .fx-l::after { right: auto; left: calc(var(--fs) * -.11); }
+  .fx-b::before { top: auto; bottom: calc(var(--fs) * -.42); }
+  .fx-b::after { top: auto; bottom: calc(var(--fs) * -.23); }
+  @media (max-width: 700px) { .fx::before, .fx::after { opacity: .7; } }
+
+  /* the dark panel: light rings, an amber sweep, a breathing glow */
+  .panel-in { position: relative; overflow: hidden; --fs: clamp(420px, 62vw, 980px); }
+  .panel-in > * { position: relative; z-index: 1; }
+  .panel-in::before, .panel-in::after { content: ""; position: absolute; z-index: 0; border-radius: 50%; pointer-events: none; }
+  .panel-in::before { top: calc(var(--fs) * -.45); right: calc(var(--fs) * -.25); width: var(--fs); aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 5px, var(--color-sunrise) 0 5px, rgba(246, 165, 43, .3) 6px 11px, rgba(246, 165, 43, 0) 12px), conic-gradient(from 0deg, rgba(246, 165, 43, 0) 0 70%, rgba(246, 165, 43, .34) 99.5%, rgba(246, 165, 43, 0)), repeating-radial-gradient(closest-side, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) calc(20% - 1.5px), rgba(255, 255, 255, .16) calc(20% - 1.5px), rgba(255, 255, 255, .16) 20%);
+    animation: hub-spin 18s linear infinite; }
+  .panel-in::after { left: -12%; bottom: -30%; width: 60%; aspect-ratio: 1; background: radial-gradient(closest-side, rgba(246, 165, 43, .22), rgba(246, 165, 43, 0)); animation: fx-breathe 6s ease-in-out infinite; }
+  .versus-us { animation: fx-glow 2.6s ease-in-out infinite; }
+  .stats li { position: relative; overflow: hidden; }
+  .stats li::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, rgba(246, 165, 43, 0), #f6a52b 55%, #ffd58a 70%, rgba(246, 165, 43, 0)) -50% 0 / 45% 100% no-repeat, rgba(255, 255, 255, .08); animation: fx-flow 2.4s linear infinite; }
+  .stats li:nth-child(2)::after { animation-delay: .8s; } .stats li:nth-child(3)::after { animation-delay: 1.6s; }
+
+  /* How it works: the thread between steps carries light from one to the next */
+  @media (min-width: 1000px) {
+    .steps li:not(:last-child)::after { height: 2px; background: linear-gradient(90deg, rgba(246, 165, 43, 0), #f6a52b 55%, #ffd58a 70%, rgba(246, 165, 43, 0)) -50% 0 / 42% 100% no-repeat, repeating-linear-gradient(90deg, rgba(12, 16, 34, .34) 0 6px, rgba(12, 16, 34, 0) 6px 12px) 0 0 / auto 100% repeat; animation: fx-flow 1.9s linear calc(var(--i) * .5s) infinite; }
+    .steps li:not(:last-child)::before { right: auto; left: 76px; top: 38px; width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(246, 165, 43, .22), 0 0 16px 3px rgba(246, 165, 43, .8); animation: fx-run 1.9s cubic-bezier(.45, 0, .55, 1) calc(var(--i) * .5s) infinite; }
+  }
+  .steps-wrap .steps-n { box-shadow: 0 0 0 calc(clamp(0, (var(--p, 1) - var(--i) * .23) * 7, 1) * 6px) rgba(246, 165, 43, .22); }
+
+  @keyframes fx-flow { from { background-position: -50% 0, 0 0; } to { background-position: 150% 0, 24px 0; } }
+  @keyframes fx-run { 0% { left: 70px; opacity: 0; scale: .4; } 15% { opacity: 1; scale: 1; } 85% { opacity: 1; scale: 1; } 100% { left: calc(100% + 26px); opacity: 0; scale: .4; } }
+  @keyframes fx-breathe { 50% { scale: 1.25; opacity: .6; } }
+  @keyframes fx-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(246, 165, 43, 0); } 50% { box-shadow: 0 0 0 2px rgba(246, 165, 43, .9), 0 0 60px 4px rgba(246, 165, 43, .4); } }
 }
