@@ -204,3 +204,14 @@ The rest of the copy is carried over from the original site.
 - Carrier counts differ between places: the copy says "70+", the list in `lib/carriers.ts` has 69.
 - The Home & Auto pages still use the office atrium photograph; there is no home or car picture
   in the project.
+
+## Movement tied to the scroll (home)
+
+- `components/pv/Motion.tsx` (imported as `ScrollVars`) sets `--p` on every `[data-prog]` inside `main`. Modes: default, `exit`, `enter`, `reveal`, `pin`.
+- Hero (`data-prog="exit"`): picture pushes in, headline lifts and fades as it leaves.
+- Solutions (`.sol-track` / `.sol-pin`, `data-prog="pin"`): on screens 1000px and wider the section holds and the six pictures travel sideways, with a thin line showing how far along. Plain grid on phones, with reduced motion, or without scripting.
+- `.band`: two lines of large words sliding in opposite directions.
+- `.steps-wrap`: the four numbers light amber in turn and a line runs under them.
+- `.frame-prog`: amber page-progress line on the frame's lower edge.
+- Under `@supports (animation-timeline: view())`: tiles settle in, headings sharpen, pictures pan inside their tiles. Browsers without it show the finished state.
+- All of it is off under `prefers-reduced-motion`; CSS defaults are the finished states.

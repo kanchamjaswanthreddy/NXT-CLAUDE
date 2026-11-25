@@ -41,6 +41,7 @@ export default function Frame() {
       <div className="frame-mat" aria-hidden="true">
         {state.srcs.map((src, k) => <i key={k} data-on={state.top === k || undefined} style={{ backgroundImage: `url(${src})` }} />)}
       </div>
+      <i className="frame-prog" aria-hidden="true" />
       <div className="notch">
         <svg viewBox="0 0 240 58" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0C26 0 22 58 50 58H190C218 58 214 0 240 0Z" /></svg>
         <Link href="/" aria-label="NXT Financial Group home">

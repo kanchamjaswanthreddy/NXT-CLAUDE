@@ -130,7 +130,7 @@ export default function Hero({ scenes }: { scenes: Scene[] }) {
 
   const s = scenes[i]
   return (
-    <section ref={root} className="hero" data-tone="dark" data-run={seen && !held ? '' : undefined} aria-labelledby="hero-h">
+    <section ref={root} className="hero" data-tone="dark" data-prog="exit" data-run={seen && !held ? '' : undefined} aria-labelledby="hero-h">
       <div className="hero-media" aria-hidden="true">
         {scenes.map((sc, k) => (
           <picture key={sc.key} data-on={k === i || undefined}>

@@ -16,7 +16,7 @@ interface Stack { el: HTMLElement; cards: HTMLElement[]; tops: number[]; hs: num
  *   data-prog      sets --p (0 to 1) on the element from its position on screen; the stylesheet
  *                  turns that into parallax, the word-by-word statement, the sliding band.
  *                  Modes: default (edge to edge through the screen, or data-from / data-to as
- *                  fractions of the screen height), "exit" (0 at the top of the screen, 1 once
+ *                  fractions of the screen height), "pin" (0 to 1 while a tall element holds a sticky child), "exit" (0 at the top of the screen, 1 once
  *                  scrolled past), "enter" (1 once its top reaches the top of the screen),
  *                  "reveal" (how far the element has come up from the bottom edge: 1 once it is all
  *                  in view, or fills the screen).
@@ -26,7 +26,7 @@ interface Stack { el: HTMLElement; cards: HTMLElement[]; tops: number[]; hs: num
  */
 export default function PvMotion() {
   useEffect(() => {
-    const root = document.querySelector<HTMLElement>('.pv')
+    const root = document.querySelector<HTMLElement>('.pv') ?? document.querySelector<HTMLElement>('main')
     if (!root) return
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (still) return
@@ -58,6 +58,7 @@ export default function PvMotion() {
       for (const it of items) {
         let p: number
         if (it.mode === 'exit') p = (sy - it.top) / it.h
+        else if (it.mode === 'pin') p = (sy - it.top) / Math.max(1, it.h - vh)
         else if (it.mode === 'enter') p = (sy + vh - it.top) / vh
         else if (it.mode === 'reveal') p = (sy + vh - it.top) / Math.min(it.h, vh)
         else p = (it.from * vh - (it.top - sy)) / (it.h + (it.from - it.to) * vh)

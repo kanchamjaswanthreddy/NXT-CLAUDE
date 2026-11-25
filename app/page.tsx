@@ -115,7 +115,8 @@ export default function Home() {
       </section>
 
       {/* SOLUTIONS: six pictures */}
-      <section className="section bg-stone" aria-labelledby="sol-h">
+      <section className="section sol-track bg-stone" data-prog="pin" aria-labelledby="sol-h">
+        <div className="sol-pin">
         <div className="container">
           <Reveal className="sec-head sec-head-row">
             <div>
@@ -140,7 +141,14 @@ export default function Home() {
             ))}
           </Stagger>
         </div>
+        </div>
       </section>
+
+      {/* a line of large words that slides with the scroll */}
+      <div className="band" data-prog="" aria-hidden="true">
+        <p>Income you can’t outlive<i className="dot">.</i> Care you can choose<i className="dot">.</i> A legacy that lands<i className="dot">.</i></p>
+        <p>One advisor<i className="dot">.</i> One plan<i className="dot">.</i> Every option<i className="dot">.</i> No cost to you<i className="dot">.</i></p>
+      </div>
 
       {/* ONE ADVISOR WHO STAYS */}
       <section className="section" aria-labelledby="plan-h">
@@ -170,6 +178,7 @@ export default function Home() {
             <p className="chip">How it works</p>
             <h2 id="how-h" className="display">The same four steps, whichever plan you need<span className="dot">.</span></h2>
           </Reveal>
+          <div className="steps-wrap" data-prog="" data-from="0.85" data-to="0.35">
           <Stagger as="ol" className="steps">
             {STEPS.map(([title, text], k) => (
               <Item as="li" key={title}>
@@ -179,6 +188,7 @@ export default function Home() {
               </Item>
             ))}
           </Stagger>
+          </div>
         </div>
       </section>
 
