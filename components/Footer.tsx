@@ -19,7 +19,7 @@ export default function Footer() {
         <div className="footer-top">
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/media/logo-white.png" alt="NXT Financial Group" width={420} height={186} loading="lazy" className="mb-9 h-[46px] w-auto" />
+            <span className="footer-logo"><img src="/media/logo-trim.png" alt="NXT Financial Group" width={420} height={154} loading="lazy" /></span>
             <p className="footer-h">Talk to us</p>
             <a href="tel:8572053333" className="footer-big">857-205-3333</a>
             <a href="mailto:info@nxtfinancialgroup.com" className="footer-big">info@nxtfinancialgroup.com</a>

@@ -551,3 +551,11 @@
   .cur b { position: absolute; left: -4.5px; top: -4.5px; width: 9px; height: 9px; border-radius: 50%; background: var(--color-sunrise); box-shadow: 0 0 0 2px rgba(255, 255, 255, .9), 0 0 12px rgba(246, 165, 43, .9); transition: scale .25s ease; }
   .cur[data-over] b { scale: .6; }
 }
+
+/* The real colour logo: on a pale opening curtain, and on a white plate in the footer */
+@layer components {
+  .curtain:not(.curtain-b) { background: var(--color-cream); }
+  .curtain img { width: clamp(190px, 24vw, 340px); }
+  .footer-logo { display: inline-flex; margin-bottom: 2.25rem; padding: 14px 22px; border-radius: 20px; background: #fff; box-shadow: 0 0 0 1.5px rgba(246, 165, 43, .55), 0 24px 50px -24px rgba(246, 165, 43, .5); }
+  .footer-logo img { display: block; width: auto; height: 56px; }
+}
