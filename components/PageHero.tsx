@@ -41,7 +41,7 @@ export default function PageHero({ eyebrow, title, intro, image, imageAlt = '', 
       </div>
       <div className="ph-shade" />
       <div className="ph-fx" aria-hidden="true">
-        <span className="ph-ring" /><span className="ph-ring" /><span className="ph-ring" /><span className="ph-sweep" />
+        <span className="ph-ring" /><span className="ph-ring" /><span className="ph-ring" />
       </div>
       <p className="ph-word" aria-hidden="true"><span>{band.map((w, k) => <span key={k}>{w}<i>.</i></span>)}</span></p>
       <div className="ph-in">
