@@ -45,7 +45,7 @@ export default function Footer() {
         <p className="footer-legal">NXT Financial Group is a licensed independent insurance agency headquartered in Massachusetts. Annuity and insurance guarantees are backed by the claims-paying ability of the issuing carrier. Product availability, features and rates vary by carrier and state. We do not offer every plan available in your area; contact Medicare.gov or 1-800-MEDICARE for all options. Estimates on this site are illustrative and not an offer of coverage.</p>
         <div className="footer-base">
           <p>© {new Date().getFullYear()} NXT Financial Group, NXT World Holdings, Inc. All Rights Reserved.</p>
-          <p className="flex gap-6"><Link href="/privacy-policy">Privacy</Link><Link href="/terms">Terms</Link></p>
+          <p className="flex gap-6"><a href="https://crm.nxtfinancialgroup.com/auth/login" target="_blank" rel="noopener noreferrer">Agent login</a><Link href="/privacy-policy">Privacy</Link><Link href="/terms">Terms</Link></p>
         </div>
       </div>
     </footer>

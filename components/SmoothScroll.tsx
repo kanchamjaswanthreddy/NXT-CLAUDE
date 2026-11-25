@@ -16,6 +16,8 @@ export function scrollToY(top: number) {
 export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    // Safari (and every iOS browser) already scrolls with momentum; a second smoothing layer on top makes it catch and stall
+    if (/^((?!chrome|chromium|android|crios|fxios|edg).)*safari/i.test(navigator.userAgent) || /iP(hone|ad|od)/.test(navigator.userAgent)) return
     const lenis = new Lenis({ lerp: 0.1 })
     window.__lenis = lenis
     let id = 0

@@ -88,6 +88,7 @@ export default function Nav() {
           {PILLS.map(([href, label]) => <Link key={href} href={href} className="nav-pill nav-wide" aria-current={current(href)}>{label}</Link>)}
         </nav>
         <div className="nav-group">
+          <a href="https://crm.nxtfinancialgroup.com/auth/login" target="_blank" rel="noopener noreferrer" className="nav-pill nav-login">Agent login</a>
           <Link href="/get-started" className="nav-pill nav-cta nav-mid">Get started</Link>
           <button ref={button} type="button" className="nav-pill nav-icon" aria-label="Menu" aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen((o) => !o)}><Menu size={17} aria-hidden="true" /></button>
         </div>
@@ -109,6 +110,7 @@ export default function Nav() {
         ))}
         <div className="menu-foot">
           <Link href="/get-started" onClick={close} className="btn btn-primary">Get started</Link>
+          <a href="https://crm.nxtfinancialgroup.com/auth/login" target="_blank" rel="noopener noreferrer" className="menu-tel">Agent login</a>
           <a href={LOGIN} target="_blank" rel="noopener noreferrer" onClick={close} className="btn btn-outline">Agent login</a>
           <a href="tel:8572053333" className="menu-tel"><Phone size={15} aria-hidden="true" />857-205-3333</a>
         </div>

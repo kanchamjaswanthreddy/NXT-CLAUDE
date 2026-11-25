@@ -559,3 +559,32 @@
   .footer-logo { display: inline-flex; margin-bottom: 2.25rem; padding: 14px 22px; border-radius: 20px; background: #fff; box-shadow: 0 0 0 1.5px rgba(246, 165, 43, .55), 0 24px 50px -24px rgba(246, 165, 43, .5); }
   .footer-logo img { display: block; width: auto; height: 56px; }
 }
+
+/* Agent login in the top bar (desktop); it is in the menu and footer on every size */
+@layer components {
+  .nav-login { display: none; }
+  @media (min-width: 1100px) { .nav-login { display: inline-flex; } }
+}
+/* Smooth scrolling library and the browser's own smooth scrolling must not both run */
+html.lenis, html.lenis body { height: auto; }
+html.lenis.lenis-smooth { scroll-behavior: auto !important; }
+html.lenis.lenis-stopped { overflow: hidden; }
+
+/* Safari and iOS: keep the look, drop the effects WebKit cannot keep up with while scrolling */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  html { scroll-behavior: auto; }
+  /* nothing tied to the scroll position through CSS timelines */
+  .sit, .steps li, .versus, .stats li, .card, .closing-tile, .panel-in, .footer, .plan-pic, main .tile, .hub-sum,
+  main :is(.display, .display-xl):not(.rise), main .tile img, .plan-pic img, .sol img, .closing-tile .film, .lead, .checks li, .versus ul li { animation: none !important; }
+  .frame-prog { display: none !important; }
+  .totop circle + circle { animation: none !important; }
+  /* large turning ring sets and breathing glows stay still */
+  .fx::before, .fx::after, .panel-in::before, .panel-in::after, .footer::before,
+  main section.section::before, main section.section::after, .hub-web::before, .hub-glow { animation: none !important; }
+  /* streaks that repaint every frame */
+  .card::after, .stats li::after, .ph-facts li::after, .steps li::after { animation: none !important; }
+  /* frosted glass is the costliest thing WebKit draws over moving content */
+  .hero-card, .hero-open, .hero-note, .ph-facts li, .menu { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .ph-media img { animation: none; }
+  .ph-media { will-change: auto; }
+}
