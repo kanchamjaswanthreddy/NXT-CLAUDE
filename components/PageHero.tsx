@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
 import ScrollVars from './pv/Motion'
+import { carrierGroups } from '@/lib/carriers'
 
 interface Props {
   /** Short label above the title, usually the section name. */
@@ -17,6 +18,7 @@ interface Props {
   time?: number
 }
 
+const SLUG: Record<string, string> = { Annuities: 'annuities', 'Life Insurance': 'life-insurance', 'Care Planning': 'care-planning', 'Medicare Planning': 'medicare-planning', 'Disability Income': 'disability-income', 'Home & Auto': 'home-auto' }
 const i = (n: number) => ({ '--i': n }) as CSSProperties
 /** Pages that pass no photograph get one that suits them, so no two openers look alike. */
 const FALLBACK: Record<string, string> = {
@@ -32,6 +34,8 @@ const FALLBACK: Record<string, string> = {
 export default function PageHero({ eyebrow, title, intro, image, imageAlt = '', children }: Props) {
   const src = image ?? (eyebrow ? FALLBACK[eyebrow] : undefined) ?? '/media/family-advisor.jpg'
   const words = title.split(' ')
+  // a solution page counts its own carriers; every other page shows the whole panel
+  const own = eyebrow && SLUG[eyebrow] ? carrierGroups.find((g) => g.solution === SLUG[eyebrow])?.carriers.length : undefined
   const band = Array.from({ length: 6 }, () => eyebrow ?? 'NXT Financial Group')
   return (
     <section className="ph on-dark" data-tone="dark" data-prog="exit">
@@ -50,7 +54,7 @@ export default function PageHero({ eyebrow, title, intro, image, imageAlt = '', 
         {children && <div className="ph-cta rise" style={i(words.length * 0.6 + 4)}>{children}</div>}
       </div>
       <ul className="ph-facts rise" style={i(words.length * 0.6 + 6)}>
-        <li><b>70+</b>carriers compared</li>
+        <li><b>{own ?? '70+'}</b>{own ? `${eyebrow?.toLowerCase().replace(' planning', '').replace(' insurance', '')} carriers compared` : 'carriers compared'}</li>
         <li><b>50</b>states licensed</li>
         <li><b>$0</b>cost to you</li>
       </ul>

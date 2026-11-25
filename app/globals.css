@@ -542,3 +542,11 @@
   @keyframes totop { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
   @media print { .totop { display: none; } }
 }
+
+/* The orange cursor replaces the system one (mouse users only): a dot exactly under the pointer and a ring that trails it */
+@layer components {
+  html.has-cur, html.has-cur * { cursor: none !important; }
+  .cur i { translate: var(--lx, 0) var(--ly, 0); }
+  .cur b { position: absolute; left: -4.5px; top: -4.5px; width: 9px; height: 9px; border-radius: 50%; background: var(--color-sunrise); box-shadow: 0 0 0 2px rgba(255, 255, 255, .9), 0 0 12px rgba(246, 165, 43, .9); transition: scale .25s ease; }
+  .cur[data-over] b { scale: .6; }
+}
