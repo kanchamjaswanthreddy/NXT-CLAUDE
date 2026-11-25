@@ -14,6 +14,7 @@ const SOCIAL = [
 export default function Footer() {
   return (
     <footer className="footer">
+      <p className="mq" aria-hidden="true"><span>{Array.from({ length: 4 }, (_, k) => <span key={k}>Protect what matters<i>.</i> Plan what&rsquo;s next<i>.</i></span>)}</span></p>
       <div className="container">
         <div className="footer-top">
           <div>

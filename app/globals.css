@@ -238,7 +238,7 @@
   .footer .container { padding-inline: clamp(20px, 3.6vw, 56px); }
   .footer-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3rem; }
   @media (min-width: 960px) { .footer-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 4rem; } }
-  .footer-big { display: block; width: fit-content; max-width: 100%; font-size: clamp(1.6rem, 3.4vw, 3rem); font-weight: 400; line-height: 1.12; letter-spacing: -.05em; color: #fff; text-decoration: none; overflow-wrap: anywhere; transition: color .25s ease; }
+  .footer-big { display: block; width: fit-content; max-width: 100%; font-size: clamp(1.35rem, 2.35vw, 2.3rem); font-weight: 400; line-height: 1.12; letter-spacing: -.05em; color: #fff; text-decoration: none; overflow-wrap: anywhere; transition: color .25s ease; }
   .footer-big:hover { color: var(--color-sunrise); }
   .footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1.5rem; }
   @media (min-width: 640px) { .footer-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -473,4 +473,50 @@
     .ph-facts li { padding: 8px 12px 9px; } .ph-facts b { font-size: 1.15rem; }
     .ph-word { bottom: 84px; }
   }
+}
+
+/* ================= Pointer and arrival effects on every page ================= */
+@layer components {
+  /* a ring follows the cursor and swells over anything clickable */
+  .cur { position: fixed; left: 0; top: 0; z-index: 90; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity .3s ease; }
+  .cur[data-on] { opacity: 1; }
+  .cur i { position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border: 1.5px solid var(--color-sunrise); border-radius: 50%; background: rgba(246, 165, 43, .1); box-shadow: 0 0 18px rgba(246, 165, 43, .45); transition: scale .35s var(--ease-out-expo), background-color .3s ease; }
+  .cur[data-over] i { scale: 1.9; background: rgba(246, 165, 43, .22); }
+  @media print { .cur { display: none; } }
+
+  /* tiles lean toward the pointer with a pool of light under it */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .card, main .tile, .sit, .sol, .stats li, .versus, .steps li { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s var(--ease-out-expo), box-shadow .5s ease; }
+    [data-lit] { transition-duration: .12s, .5s; box-shadow: 0 0 0 1.5px var(--color-sunrise), 0 34px 70px -30px rgba(246, 165, 43, .6); background-image: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(246, 165, 43, .2), rgba(246, 165, 43, 0) 70%); }
+    .btn-primary, .btn-cta, .btn-light, .nav-cta { transition: translate .45s var(--ease-out-expo), background-color .3s ease, box-shadow .3s ease; }
+  }
+
+  /* the closing line that runs across the footer in outline */
+  .mq { overflow: hidden; margin: calc(clamp(3rem, 6vw, 5.5rem) * -.45) 0 clamp(2rem, 4vw, 3.5rem); font-size: clamp(3.4rem, 10vw, 10.5rem); font-weight: 350; line-height: 1; letter-spacing: -.055em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, .5); }
+  .mq > span { display: inline-block; animation: ph-marq 46s linear infinite; }
+  .mq span span { margin-right: .3em; }
+  .footer .mq span { color: transparent; }
+  .footer .mq i { font-style: normal; color: var(--color-sunrise); -webkit-text-stroke: 0; }
+  .footer:hover .mq > span { animation-duration: 18s; }
+
+  /* When a section first arrives: its label snaps in, a line draws under its heading, its list items deal in */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    main section:not([data-in]) .chip { opacity: 0; translate: -24px 0; }
+    main section .chip { transition: opacity .6s ease, translate .9s var(--ease-out-expo); }
+    main section:not(.ph):not(.hero) :is(h2.display, h2.display-xl, h2.display-sm) { background: linear-gradient(90deg, var(--color-sunrise), #ffd58a) 0 100% / 0 3px no-repeat; padding-bottom: .14em; transition: background-size 1.3s var(--ease-out-expo) .25s; }
+    main section[data-in]:not(.ph):not(.hero) :is(h2.display, h2.display-xl, h2.display-sm) { background-size: min(100%, 7.5rem) 3px; }
+    main section:not([data-in]) :is(.grid, ul, ol) > :is(.card, li.card, a.card, article) { opacity: 0; translate: 0 44px; rotate: 2.5deg; }
+    main section :is(.grid, ul, ol) > :is(.card, li.card, a.card, article) { transition: opacity .7s ease, translate 1s var(--ease-out-expo), rotate 1s var(--ease-out-expo), transform .5s var(--ease-out-expo), box-shadow .5s ease; }
+    main section :is(.grid, ul, ol) > :nth-child(2) { transition-delay: .09s; } main section :is(.grid, ul, ol) > :nth-child(3) { transition-delay: .18s; }
+    main section :is(.grid, ul, ol) > :nth-child(4) { transition-delay: .27s; } main section :is(.grid, ul, ol) > :nth-child(5) { transition-delay: .36s; }
+    main section :is(.grid, ul, ol) > :nth-child(n + 6) { transition-delay: .45s; }
+  }
+
+  /* pictures open like a shutter as they arrive */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      main .tile, .plan-pic { animation: settle linear both, shutter linear both; animation-timeline: view(), view(); animation-range: entry 0% entry 70%, entry 0% entry 95%; }
+    }
+  }
+  @keyframes shutter { from { clip-path: inset(16% 12% round 40px); } to { clip-path: inset(0 0 round 0px); } }
 }

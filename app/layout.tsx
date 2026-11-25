@@ -8,6 +8,7 @@ import SmoothScroll from '@/components/SmoothScroll'
 import ClosingFilm from '@/components/ClosingFilm'
 import SiteFrame from '@/components/SiteFrame'
 import Frame from '@/components/Frame'
+import Fx from '@/components/Fx'
 
 const SITE = 'https://www.nxtfinancialgroup.com'
 
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-screen flex-col">
         <SmoothScroll />
         <SiteFrame frame={<Frame />} nav={<Nav />} closing={<ClosingFilm />} footer={<Footer />}>{children}</SiteFrame>
+        <Fx />
       </body>
     </html>
   )
