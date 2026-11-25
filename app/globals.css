@@ -375,40 +375,51 @@
   main .tile:hover { box-shadow: 0 0 0 1.5px var(--color-sunrise), 0 30px 60px -28px rgba(246, 165, 43, .55); }
 }
 
-/* ================= Page opener composition ================= */
+/* ================= Page opener diagram ================= */
 @layer components {
-  .ha { position: relative; width: 100%; max-width: 640px; margin-inline: auto; aspect-ratio: 1 / 1.02; }
-  .ha-glow { position: absolute; left: 50%; top: 52%; width: 92%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(246, 165, 43, .38), rgba(246, 165, 43, 0)); translate: -50% -50%; animation: gx-breathe 5s ease-in-out infinite; }
-  .ha-glow::after { content: ""; position: absolute; inset: -4%; border-radius: 50%; background: conic-gradient(from 0deg, rgba(246, 165, 43, 0) 0 72%, rgba(246, 165, 43, .45) 99.5%, rgba(246, 165, 43, 0)); -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 98%); mask-image: radial-gradient(closest-side, #000 30%, transparent 98%); animation: gx-spin 5s linear infinite; }
-  .ha-ring { position: absolute; left: 50%; top: 52%; width: 100%; aspect-ratio: 1; border: 1.5px dashed rgba(12, 16, 34, .28); border-radius: 50%; translate: -50% -50%; animation: gx-spin 30s linear infinite; }
+  .ha { position: relative; width: 100%; max-width: 640px; margin-inline: auto; aspect-ratio: 1; container-type: inline-size; }
+  .ha-glow { position: absolute; left: 50%; top: 50%; width: 92%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(246, 165, 43, .4), rgba(246, 165, 43, 0)); translate: -50% -50%; animation: gx-breathe 5s ease-in-out infinite; }
+  .ha-glow::after { content: ""; position: absolute; inset: -4%; border-radius: 50%; background: conic-gradient(from 0deg, rgba(246, 165, 43, 0) 0 72%, rgba(246, 165, 43, .5) 99.5%, rgba(246, 165, 43, 0)); -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 98%); mask-image: radial-gradient(closest-side, #000 30%, transparent 98%); animation: gx-spin 5s linear infinite; }
+  .ha-ring { position: absolute; left: 50%; top: 50%; width: 68%; aspect-ratio: 1; border: 1.5px dashed rgba(12, 16, 34, .28); border-radius: 50%; translate: -50% -50%; animation: gx-spin 30s linear infinite; }
   .ha-ring::before, .ha-ring::after { content: ""; position: absolute; left: 50%; top: -6px; width: 11px; height: 11px; border-radius: 50%; background: var(--color-sunrise); box-shadow: 0 0 0 5px rgba(246, 165, 43, .22), 0 0 16px 3px rgba(246, 165, 43, .8); }
   .ha-ring::after { top: auto; bottom: -4px; width: 7px; height: 7px; background: var(--color-midnight); box-shadow: none; }
-  .ha-ring:nth-of-type(3) { width: 72%; border-color: rgba(246, 165, 43, .65); animation-duration: 14s; animation-direction: reverse; }
-  .ha-ring:nth-of-type(4) { width: 126%; border-style: solid; border-width: 1px; border-color: rgba(12, 16, 34, .12); animation-duration: 50s; }
-  .ha-lines { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-  .ha-lines path { fill: none; stroke: var(--color-sunrise); stroke-width: 2; stroke-dasharray: 5 6; vector-effect: non-scaling-stroke; animation: ha-dash 1s linear infinite; }
-  .ha-dot { fill: var(--color-sunrise); filter: drop-shadow(0 0 2px rgba(246, 165, 43, .9)); }
-  @keyframes ha-dash { to { stroke-dashoffset: -22; } }
+  .ha-ring:nth-of-type(3) { width: 42%; border-color: rgba(246, 165, 43, .7); animation-duration: 12s; animation-direction: reverse; }
+  .ha-ring:nth-of-type(4) { width: 112%; border-color: rgba(246, 165, 43, .45); animation-duration: 46s; animation-direction: reverse; }
 
-  .ha-main { position: absolute; z-index: 2; left: 17%; top: 11%; width: 60%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 30px; background: var(--color-stone); box-shadow: 0 0 0 2px rgba(246, 165, 43, .7), 0 0 0 9px rgba(255, 255, 255, .7), 0 50px 90px -40px rgba(246, 165, 43, .7); }
-  .ha-thumb { position: absolute; z-index: 4; width: 29%; height: auto; aspect-ratio: 1; object-fit: cover; border: 5px solid #fff; border-radius: 26%; box-shadow: 0 24px 44px -20px rgba(12, 16, 34, .5); }
-  .ha-thumb-a { right: 0; top: 2%; }
-  .ha-thumb-b { left: 0; bottom: 3%; width: 26%; }
+  /* the six tiles circle the middle; each stays upright while the wheel turns */
+  .ha-orbit { position: absolute; inset: 0; animation: gx-spin 44s linear infinite; }
+  .ha-orbit li { position: absolute; left: 50%; top: 50%; width: 0; height: 0; rotate: calc(var(--k) * 60deg); }
+  .ha-orbit li > i { position: absolute; left: -1px; bottom: 0; width: 2px; height: 34cqw; background: linear-gradient(0deg, rgba(246, 165, 43, 0), #f6a52b 55%, #ffd58a 70%, rgba(246, 165, 43, 0)) 0 -50% / 100% 38% no-repeat, repeating-linear-gradient(0deg, rgba(12, 16, 34, .34) 0 7px, rgba(12, 16, 34, 0) 7px 14px); animation: ha-fall 1.5s linear calc(var(--k) * .25s) infinite; }
+  .ha-up { position: absolute; left: 0; top: -34cqw; rotate: calc(var(--k) * -60deg); }
+  .ha-chip { position: absolute; left: -8.5cqw; top: -8.5cqw; display: grid; place-content: center; justify-items: center; gap: .6cqw; width: 17cqw; height: 17cqw; padding: 1cqw; border-radius: 24%; background: #fff; text-align: center; box-shadow: 0 16px 36px -20px rgba(12, 16, 34, .4); animation: gx-spin 44s linear infinite reverse, ha-flash 1.5s ease-out calc(var(--k) * .25s) infinite; }
+  .ha-ic { display: grid; place-items: center; width: 5.6cqw; aspect-ratio: 1; border-radius: 50%; background: #fdefd3; color: var(--color-midnight); }
+  .ha-ic svg { width: 54%; height: 54%; }
+  .ha-chip b { font-size: clamp(.5625rem, 2.15cqw, .8125rem); font-weight: 600; line-height: 1.1; letter-spacing: -.012em; color: var(--color-midnight); }
+  .ha-orbit li[data-on] .ha-chip { background: var(--color-midnight); animation: gx-spin 44s linear infinite reverse; box-shadow: 0 0 0 3px var(--color-sunrise), 0 0 40px 4px rgba(246, 165, 43, .7); }
+  .ha-orbit li[data-on] .ha-chip b { color: #fff; }
+  .ha-orbit li[data-on] .ha-ic { background: var(--color-sunrise); }
+
+  .ha-core { position: absolute; z-index: 2; left: 50%; top: 50%; display: grid; place-items: center; width: 23cqw; height: 23cqw; margin: -11.5cqw 0 0 -11.5cqw; border-radius: 27%; background: var(--color-midnight); color: #fff; animation: ha-beat 1.5s ease-out infinite; }
+  .ha-core svg { width: 40%; height: 40%; }
+  .ha-core::before, .ha-core::after { content: ""; position: absolute; inset: 0; border: 2px solid var(--color-sunrise); border-radius: inherit; opacity: 0; animation: ha-ping 1.5s ease-out infinite; }
+  .ha-core::after { animation-delay: .75s; }
+  @keyframes ha-fall { from { background-position: 0 -50%, 0 0; } to { background-position: 0 150%, 0 28px; } }
+  @keyframes ha-ping { 0% { opacity: .9; scale: 1; } 100% { opacity: 0; scale: 2.1; } }
+  @keyframes ha-beat { 0%, 100% { scale: 1; box-shadow: 0 30px 60px -26px rgba(12, 16, 34, .6); } 12% { scale: 1.07; box-shadow: 0 30px 60px -26px rgba(12, 16, 34, .6), 0 0 44px 6px rgba(246, 165, 43, .6); } 30% { scale: 1; } }
+  @keyframes ha-flash { 0% { box-shadow: 0 0 0 3px var(--color-sunrise), 0 0 34px 2px rgba(246, 165, 43, .65); } 30% { box-shadow: 0 16px 36px -20px rgba(12, 16, 34, .4); } }
+
   .ha-card { position: absolute; z-index: 5; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 20px; background: #fff; font-size: .8125rem; font-weight: 600; line-height: 1.25; color: var(--color-midnight); box-shadow: 0 24px 44px -22px rgba(12, 16, 34, .45); white-space: nowrap; }
-  .ha-card-n { right: -3%; top: 50%; padding: 14px 18px; }
+  .ha-card-n { right: -5%; top: -2%; padding: 14px 18px; }
   .ha-card-n b { font-size: clamp(1.9rem, 3vw, 2.6rem); font-weight: 420; line-height: 1; letter-spacing: -.05em; }
   .ha-card-n span { font-weight: 500; color: var(--color-ink-soft); }
-  .ha-card-s { left: 2%; top: 5%; border-radius: 999px; }
+  .ha-card-s { left: -5%; top: 2%; border-radius: 999px; }
   .ha-card-s i { width: 9px; height: 9px; border-radius: 50%; background: #22a55b; animation: ha-live 1.6s ease-out infinite; }
-  .ha-card-c { right: 9%; bottom: 1%; border-radius: 999px; background: var(--color-sunrise); }
+  .ha-card-c { left: 0; bottom: 0; border-radius: 999px; background: var(--color-sunrise); }
   @keyframes ha-live { 0% { box-shadow: 0 0 0 0 rgba(34, 165, 91, .6); } 100% { box-shadow: 0 0 0 9px rgba(34, 165, 91, 0); } }
   @media (prefers-reduced-motion: no-preference) {
-    .ha-main { animation: rise 1.1s var(--ease-out-expo) calc(var(--i, 0) * 90ms + 120ms) both, gx-float 7s ease-in-out 1.4s infinite; }
-    .ha-thumb-a, .ha-card-s, .ha-card-c { animation: rise 1.1s var(--ease-out-expo) calc(var(--i, 0) * 90ms + 120ms) both, gx-float 5s ease-in-out -2s infinite; }
-    .ha-thumb-b, .ha-card-n { animation: rise 1.1s var(--ease-out-expo) calc(var(--i, 0) * 90ms + 120ms) both, gx-float 6s ease-in-out -4s infinite; }
+    .ha-card-s, .ha-card-c { animation: rise 1.1s var(--ease-out-expo) calc(var(--i, 0) * 90ms + 120ms) both, gx-float 5s ease-in-out -2s infinite; }
+    .ha-card-n { animation: rise 1.1s var(--ease-out-expo) calc(var(--i, 0) * 90ms + 120ms) both, gx-float 6s ease-in-out -4s infinite; }
   }
-  @media (prefers-reduced-motion: reduce) { .ha-dot { display: none; } }
-  @media (max-width: 640px) { .ha-card { padding: 9px 12px; font-size: .75rem; } .ha-card-n { right: 0; } .ha-main { border-radius: 22px; } }
-  /* the composition carries the rings now; the corner set would crowd it */
+  @media (max-width: 640px) { .ha { max-width: 420px; } .ha-card { padding: 8px 11px; font-size: .6875rem; } .ha-card-n { right: 0; top: 0; } .ha-card-s { left: 0; } }
   .page-hero:has(.ha)::before, .page-hero:has(.ha)::after { display: none; }
 }
