@@ -612,3 +612,14 @@ html.lenis.lenis-stopped { overflow: hidden; }
   @media (min-width: 640px) { .nav-login { display: inline-flex; } }
 }
 @layer components { .menu-foot .btn-primary { white-space: nowrap; } .menu-foot { flex-wrap: wrap; } }
+
+/* Room between the hot buttons, in the bar and in the menu */
+@layer components {
+  .nav .nav-group:last-child { gap: 16px; }
+  .menu-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; padding: 0 4px; }
+  .menu-foot .btn { width: 100%; height: 52px; justify-content: center; white-space: nowrap; }
+  .menu-foot .btn-outline { border: 1.5px solid var(--color-sunrise); background: var(--color-midnight); color: #fff; font-weight: 600; box-shadow: inset 0 0 18px rgba(246, 165, 43, .22); }
+  .menu-foot .btn-outline:hover { background: var(--color-sunrise); color: var(--color-midnight); }
+  .menu-tel { margin-top: 6px; }
+  @media (max-width: 380px) { .menu-foot { grid-template-columns: 1fr; } }
+}

@@ -110,7 +110,6 @@ export default function Nav() {
         ))}
         <div className="menu-foot">
           <Link href="/get-started" onClick={close} className="btn btn-primary">Get started</Link>
-          <a href="https://crm.nxtfinancialgroup.com/auth/login" target="_blank" rel="noopener noreferrer" className="menu-tel">Agent login</a>
           <a href={LOGIN} target="_blank" rel="noopener noreferrer" onClick={close} className="btn btn-outline">Agent login</a>
           <a href="tel:8572053333" className="menu-tel"><Phone size={15} aria-hidden="true" />857-205-3333</a>
         </div>
