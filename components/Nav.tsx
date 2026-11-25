@@ -86,10 +86,8 @@ export default function Nav() {
       <header className="nav" data-tone={tone} data-hide={hide && !open}>
         <nav className="nav-group" aria-label="Main">
           {PILLS.map(([href, label]) => <Link key={href} href={href} className="nav-pill nav-wide" aria-current={current(href)}>{label}</Link>)}
-          <a href="tel:8572053333" className="nav-pill nav-icon min-[1100px]:hidden" aria-label="Call 857-205-3333"><Phone size={16} aria-hidden="true" /></a>
         </nav>
         <div className="nav-group">
-          <a href="tel:8572053333" className="nav-pill nav-wide"><Phone size={14} aria-hidden="true" />857-205-3333</a>
           <Link href="/get-started" className="nav-pill nav-cta nav-mid">Get started</Link>
           <button ref={button} type="button" className="nav-pill nav-icon" aria-label="Menu" aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen((o) => !o)}><Menu size={17} aria-hidden="true" /></button>
         </div>
