@@ -588,3 +588,27 @@ html.lenis.lenis-stopped { overflow: hidden; }
   .ph-media img { animation: none; }
   .ph-media { will-change: auto; }
 }
+
+/* The two hot buttons in the top bar: Get started burns amber, Agent login is a lit dark pill */
+@layer components {
+  .nav .nav-cta, .nav[data-tone="dark"] .nav-cta { position: relative; overflow: hidden; height: 44px; padding: 0 6px 0 20px; border: 0; background: linear-gradient(100deg, #ff8a1f, #f6a52b 45%, #ffd36b); color: var(--color-midnight); font-weight: 650; box-shadow: 0 0 0 2px rgba(255, 255, 255, .55), 0 10px 30px -6px rgba(255, 138, 31, .85); animation: hot-pulse 1.9s ease-out infinite; }
+  .nav .nav-cta:hover, .nav[data-tone="dark"] .nav-cta:hover { background: linear-gradient(100deg, #ff7a00, #ffb02e 45%, #ffe08f); scale: 1.06; }
+  .nav-cta::after { position: relative; z-index: 1; width: 32px; height: 32px; background-color: var(--color-midnight); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E"); }
+  /* a band of light sweeps across */
+  .nav-cta::before, .nav-login::before { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .75), rgba(255, 255, 255, 0)); transform: skewX(-20deg); animation: hot-shine 2.6s ease-in-out infinite; pointer-events: none; }
+
+  .nav .nav-login, .nav[data-tone="dark"] .nav-login { position: relative; overflow: hidden; gap: 9px; height: 44px; padding: 0 18px 0 14px; border: 1.5px solid var(--color-sunrise); background: var(--color-midnight); color: #fff; font-weight: 600; box-shadow: 0 0 0 0 rgba(246, 165, 43, .6), 0 10px 26px -10px rgba(12, 16, 34, .8), inset 0 0 18px rgba(246, 165, 43, .22); -webkit-backdrop-filter: none; backdrop-filter: none; transition: scale .4s var(--ease-out-expo), background-color .3s ease, color .3s ease; }
+  .nav-login::before { background: linear-gradient(100deg, rgba(246, 165, 43, 0), rgba(246, 165, 43, .55), rgba(246, 165, 43, 0)); animation-delay: 1.3s; }
+  /* a live dot, then a small lock */
+  .nav-login::after { content: ""; order: -1; flex: none; width: 9px; height: 9px; border-radius: 50%; background: #35d07f; animation: ha-live 1.6s ease-out infinite; }
+  .nav .nav-login:hover, .nav[data-tone="dark"] .nav-login:hover { background: var(--color-sunrise); color: var(--color-midnight); scale: 1.06; }
+
+  @keyframes hot-pulse { 0% { box-shadow: 0 0 0 2px rgba(255, 255, 255, .55), 0 10px 30px -6px rgba(255, 138, 31, .85), 0 0 0 0 rgba(255, 138, 31, .75); } 100% { box-shadow: 0 0 0 2px rgba(255, 255, 255, .55), 0 10px 30px -6px rgba(255, 138, 31, .85), 0 0 0 16px rgba(255, 138, 31, 0); } }
+  @keyframes hot-shine { 0%, 35% { left: -60%; } 75%, 100% { left: 130%; } }
+
+  /* the same pair in the menu and on phones */
+  .menu-foot .btn-primary { background: linear-gradient(100deg, #ff8a1f, #f6a52b 45%, #ffd36b); color: var(--color-midnight); font-weight: 650; animation: hot-pulse 1.9s ease-out infinite; }
+  .menu-foot a.menu-tel[href*="crm."] { padding: 10px 16px; border: 1.5px solid var(--color-sunrise); border-radius: 999px; background: var(--color-midnight); color: #fff; font-weight: 600; }
+  @media (min-width: 640px) { .nav-login { display: inline-flex; } }
+}
+@layer components { .menu-foot .btn-primary { white-space: nowrap; } .menu-foot { flex-wrap: wrap; } }
